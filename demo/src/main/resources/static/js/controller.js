@@ -4,7 +4,8 @@
       $scope.aside = ts.ui.get('#home-aside');
       $scope.table = ts.ui.get('#home-table');
       $scope.topbar = ts.ui.get('#home-topbar');
-
+      $scope.showTab = 1;
+      
       /* Table */
       $scope.table
         .selectable()
@@ -43,11 +44,8 @@
             id: 'tab1',
             icon: 'ts-icon-apps',
             onselect : function() {
-              $('#tab2').hide();
-              $('#tab1').show();
-              $('#tab3').hide();
-              $('#tab4').hide();
-
+              $scope.showTab = 1;
+              $scope.$apply();
               scrollTo(0,0);
             }
           },
@@ -56,10 +54,8 @@
             icon: 'ts-icon-activity',
             id: 'tab2',
             onselect: function() {
-              $('#tab2').show();
-              $('#tab1').hide();
-              $('#tab3').hide();
-              $('#tab4').hide();
+              $scope.showTab = 2;
+              $scope.$apply(); // executing outside of angular
               scrollTo(0,0);
             }
           },
@@ -68,10 +64,8 @@
             icon: 'ts-icon-code',
             id: 'tab3',
             onselect: function() {
-              $('#tab3').show();
-              $('#tab1').hide();
-              $('#tab2').hide();
-              $('#tab4').hide();
+              $scope.showTab = 3;
+              $scope.$apply();
               scrollTo(0,0);
             }
           }
