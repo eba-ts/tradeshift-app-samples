@@ -21,7 +21,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final String CONTENT_TYPE = "application/x-www-form-urlencoded";
     private final String AUTHORIZATION = "Basic ";
     private final String CHAR_SET = "utf-8";
-    private final String GRANT_TYPE = "authorization_code";
+    private final String AUTHORIZATION_CODE_GRANT_TYPE = "authorization_code";
 
     @Value("${userAuthorizationUri}")
     private String AUTHORIZE_URL;
@@ -40,25 +40,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String getAuthorizationCodeURL() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(AUTHORIZE_URL);
-        sb.append("&client_id=");
-        sb.append(clientID);
-        sb.append("&redirect_uri=");
-        sb.append(redirectUri);
-        sb.append("&scope=openid");
+        String authorizationCodeURL = AUTHORIZE_URL + "&client_id=" + clientID + "&redirect_uri=" + redirectUri + "&scope=openid";
 
-        return sb.toString();
+        return authorizationCodeURL;
     }
 
     @Override
     public String getAuthorizationToken(String authorizationCode) throws IOException {
         OAuthRequest oAuthRequest = new OAuthRequest(Verb.POST, accessTokenUri);
         oAuthRequest.addHeader("Content-Type", CONTENT_TYPE);
-        oAuthRequest.addHeader("Authorization", AUTHORIZATION + Base64.encodeBase64String(new String(clientID + ":" +
-                clientSecret).getBytes()));
+        oAuthRequest.addHeader("Authorization", AUTHORIZATION + Base64.encodeBase64String(new String(clientID + ":" + clientSecret).getBytes()));
         oAuthRequest.setCharset(CHAR_SET);
-        oAuthRequest.addBodyParameter("grant_type", GRANT_TYPE);
+        oAuthRequest.addBodyParameter("grant_type", AUTHORIZATION_CODE_GRANT_TYPE);
         oAuthRequest.addBodyParameter("code", authorizationCode);
 
         LOGGER.info("send request for access token");
