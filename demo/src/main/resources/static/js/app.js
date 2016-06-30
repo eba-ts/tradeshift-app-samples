@@ -1,6 +1,6 @@
   angular.module('tradeshiftApp', [])
     .constant('Settings', {
-      url: 'http://localhost:8080'
+      url: 'https://testappkindgeek.herokuapp.com'
     })
     .factory('$req', function ($http, Settings) {
       return {
@@ -13,44 +13,42 @@
       }
     })
     .controller('HomeCtrl', function ($scope, $req) {
+
       $scope.ui = ts.ui; // So that we can access UIC from HTML
       $scope.aside = ts.ui.get('#home-aside');
       $scope.table = ts.ui.get('#home-table');
       $scope.topbar = ts.ui.get('#home-topbar');
       $scope.showTab = 1;
       $req.getData().then(function(response){
-        console.log(response);
-      });
-      /* Table */
-      $scope.table
-        .selectable()
-        .cols([
-          {label: 'ID', search: {
+        $scope.data = $scope.getArray(response.data);
+
+        /* Table */
+        $scope.table // to load when data ready
+          .selectable()
+          .cols([
+            {label: 'ID', search: {
               tip: 'Search by ID',
               onidle: function(value) {
                 $scope.table.search(0, value);
               }
             }
-          },
-          {label: 'Character', flex: 2, wrap: true},
-          {label: 'Alignment', flex: 2}
-        ])
-        .rows([
-          [1, 'Paladin Knight', 'Lawful Good'],
-          [2, 'Barbarian Queen', 'Neutral Evil'],
-          [3, 'Global Senior Vice President of Sales', 'Chaotic Evil'],
-          [4, 'Jonathan the Piggy', 'Glorious Good'],
-          [5, 'Potato Chip', 'Radiant Good']
-        ])
-        .sortable(function(index, ascending) {
-          $scope.table.sort(index, ascending);
-        })
-        .max(3)
-        .editable(function onedit(ri, ci, value){
-          this.cell(ri, ci, value);
-        })
-        .sort(0, true);
-
+            },
+            {label: 'Character', flex: 2, wrap: true},
+            {label: 'Alignment', flex: 2}
+          ])
+          .rows($scope.data)
+          .sortable(function(index, ascending) {
+            $scope.table.sort(index, ascending);
+          })
+          .max(3)
+          .editable(function onedit(ri, ci, value){
+            this.cell(ri, ci, value);
+          })
+          .sort(0, true);
+      });
+      $req.getToken().then(function(response){
+        console.log(response);
+      });
       /* Topbar */
       $scope.topbar
         .tabs([
@@ -97,7 +95,18 @@
           }
         });
       };
-
+      /* get array of arrays from array of objects */
+      $scope.getArray = function(data){
+        var result = [];
+        data.forEach(function(item){
+          var array = [];
+          for (p in item){
+            array.push(item[p] + ''); // here we get array of strings
+          }
+          result.push(array);
+        });
+        return result; // array of arrays
+      };
       $scope.submitForm = function(){
         ts.ui.Notification.success('Submit message :)');
       }
