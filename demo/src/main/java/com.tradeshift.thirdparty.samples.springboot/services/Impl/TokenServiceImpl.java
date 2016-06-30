@@ -1,22 +1,22 @@
 package com.tradeshift.thirdparty.samples.springboot.services.Impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tradeshift.thirdparty.samples.springboot.domain.pojo.Oauth2TokenResponse;
-import com.tradeshift.thirdparty.samples.springboot.services.AuthenticationService;
+import com.tradeshift.thirdparty.samples.springboot.services.TokenService;
 import org.apache.commons.codec.binary.Base64;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Verb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service
-public class AuthenticationServiceImpl implements AuthenticationService {
+public class TokenServiceImpl implements TokenService {
 
-    static Logger LOGGER = LoggerFactory.getLogger(AuthenticationService.class);
+    static Logger LOGGER = LoggerFactory.getLogger(TokenService.class);
 
     private final String CONTENT_TYPE = "application/x-www-form-urlencoded";
     private final String AUTHORIZATION = "Basic ";
@@ -46,7 +46,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public String getAuthorizationToken(String authorizationCode) throws IOException {
+    public OAuth2AccessToken getAuthorizationToken(String authorizationCode) throws IOException {
         OAuthRequest oAuthRequest = new OAuthRequest(Verb.POST, accessTokenUri);
         oAuthRequest.addHeader("Content-Type", CONTENT_TYPE);
         oAuthRequest.addHeader("Authorization", AUTHORIZATION + Base64.encodeBase64String(new String(clientID + ":" + clientSecret).getBytes()));
@@ -55,19 +55,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         oAuthRequest.addBodyParameter("code", authorizationCode);
 
         LOGGER.info("send request for access token");
-        String tokenResponse = oAuthRequest.send().getBody();
+        DefaultOAuth2AccessToken accessToken = new DefaultOAuth2AccessToken(oAuthRequest.send().getBody());
 
-        if (tokenResponse != null && !tokenResponse.isEmpty()) {
-            ObjectMapper mapper = new ObjectMapper();
-            Oauth2TokenResponse oauth2TokenResponse = mapper.readValue(tokenResponse, Oauth2TokenResponse.class);
-            if (oauth2TokenResponse.getAccess_token() != null && !oauth2TokenResponse.getAccess_token().isEmpty()) {
-
-                LOGGER.info("successfully get authorization token ");
-                return "success get token";
-            }
+        if (accessToken != null) {
+            LOGGER.info("successfully get authorization token ");
+        } else {
+            LOGGER.info("failed get token");
         }
 
-        LOGGER.info("failed get token");
-        return "failed get token";
+        return accessToken;
     }
 }
