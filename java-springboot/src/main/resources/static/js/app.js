@@ -1,14 +1,12 @@
   angular.module('tradeshiftApp', [])
-    .constant('Settings', {
-      url: 'https://testappkindgeek.herokuapp.com'
-    })
-    .factory('$req', function ($http, $location, Settings) {
+    .factory('$req', function ($http, $location) {
+      var url = $location.protocol() + '://' + $location.host() + ':' + $location.port(); // to work both locally and on the server
       return {
         getData: function(){
-          return $http.get($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/demo/get_grid');
+          return $http.get(url + '/demo/get_grid');
         },
         getToken: function(){
-          return $http.get($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/oauth2/get_token');
+          return $http.get(url + '/oauth2/get_token');
         }
       }
     })
