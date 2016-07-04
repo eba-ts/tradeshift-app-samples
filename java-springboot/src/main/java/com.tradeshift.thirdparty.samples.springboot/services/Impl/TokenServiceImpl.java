@@ -40,18 +40,21 @@ public class TokenServiceImpl implements TokenService {
     private String redirectUri;
 
     /**
+     * Get authorization server url for get authorization code
+     *
      * @return URL for oauth2 authorization
      */
     @Override
     public String getAuthorizationCodeURL() {
-        LOGGER.info("get authorization url");
+        LOGGER.info("get authorization url", TokenServiceImpl.class);
+
         String authorizationCodeURL = AUTHORIZE_URL + "&client_id=" + clientID + "&redirect_uri=" + redirectUri + "&scope=openid";
 
         return authorizationCodeURL;
     }
 
     /**
-     * receive oauth2 token from authentication server
+     * Receive oauth2 token from authentication server
      *
      * @param authorizationCode from authentication server
      * @return oauth2 token
@@ -59,6 +62,8 @@ public class TokenServiceImpl implements TokenService {
      */
     @Override
     public OAuth2AccessToken getAuthorizationToken(String authorizationCode) throws IOException {
+        LOGGER.info("get oauth2 access token", TokenServiceImpl.class);
+
         OAuthRequest oAuthRequest = new OAuthRequest(Verb.POST, accessTokenUri);
         oAuthRequest.addHeader("Content-Type", CONTENT_TYPE);
         oAuthRequest.addHeader("Authorization", AUTHORIZATION + Base64.encodeBase64String(new String(clientID + ":" + clientSecret).getBytes()));

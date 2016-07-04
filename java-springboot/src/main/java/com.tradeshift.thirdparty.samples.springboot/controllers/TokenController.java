@@ -23,24 +23,28 @@ public class TokenController {
 
     /**
      * Redirecting to authorization server for get authorization code
+     *
      * @param response
      * @throws IOException
      */
     @RequestMapping(value = "/get_token", method = RequestMethod.GET)
     public void getAuthorizationCode(final HttpServletResponse response) throws IOException {
         LOGGER.info("redirect to the authorization server", TokenController.class);
+
         response.sendRedirect(authenticationService.getAuthorizationCodeURL());
     }
 
     /**
+     * Get oauth2 access token by authorization code
      *
      * @param code
-     * @return oauth2 token
+     * @return oauth2 access token
      * @throws IOException
      */
     @RequestMapping(value = "/code", method = RequestMethod.GET)
     public String codeResponse(@RequestParam(value = "code", required = true) String code) throws IOException {
         LOGGER.info("get authorization token by authorization code", TokenController.class);
+
         return authenticationService.getAuthorizationToken(code).getValue();
     }
 }

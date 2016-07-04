@@ -20,12 +20,14 @@ public class DemoController {
     static Logger LOGGER = LoggerFactory.getLogger(DemoController.class);
 
     /**
+     * Get List of Objects for show on the UI client
      *
      * @return data for grid view
      */
     @RequestMapping(value = "/get_grid" , method = RequestMethod.GET)
     public @ResponseBody List<GridDTO> getGrid() {
         LOGGER.info("get data for grid view", DemoController.class);
+
         List<GridDTO> gridDTOs = new ArrayList<GridDTO>();
         gridDTOs.add(new GridDTO(1, "Barbarian Queen", "Neutral Evil"));
         gridDTOs.add(new GridDTO(2, "Global Senior Vice President of Sales", "Chaotic Evil"));
