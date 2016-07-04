@@ -1,7 +1,6 @@
 package com.tradeshift.thirdparty.samples.springboot.controllers;
 
 import com.tradeshift.thirdparty.samples.springboot.domain.dto.GridDTO;
-import com.tradeshift.thirdparty.samples.springboot.services.Impl.TokenServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +22,10 @@ public class DemoController {
      *
      * @return data for grid view
      */
-    @RequestMapping(value = "/get_grid" , method = RequestMethod.GET)
-    public @ResponseBody List<GridDTO> getGrid() {
+    @RequestMapping(value = "/get_grid", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    List<GridDTO> getGrid() {
         LOGGER.info("get data for grid view", DemoController.class);
 
         List<GridDTO> gridDTOs = new ArrayList<GridDTO>();
