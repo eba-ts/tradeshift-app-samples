@@ -1,0 +1,15 @@
+{
+  "name": "nodejs",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "base-64": "^0.1.0",
+    "consolidate": "^0.14.1",
+    "express": "^4.13.4",
+    "mustache": "^2.2.1",
+    "request": "^2.72.0"
+  }
+}
