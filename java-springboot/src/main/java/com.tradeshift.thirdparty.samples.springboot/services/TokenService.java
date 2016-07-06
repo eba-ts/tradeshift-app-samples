@@ -10,5 +10,9 @@ public interface TokenService {
 
     String getAuthorizationCodeURL();
 
-    OAuth2AccessToken getAuthorizationToken(String authorizationCode) throws IOException;
+    OAuth2AccessToken getAccessToken(String authorizationCode) throws IOException;
+
+    OAuth2AccessToken getAccessToken();
+
+    void setAccessToken(OAuth2AccessToken accessToken);
 }

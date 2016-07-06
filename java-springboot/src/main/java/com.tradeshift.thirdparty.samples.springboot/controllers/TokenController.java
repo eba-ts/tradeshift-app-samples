@@ -45,6 +45,6 @@ public class TokenController {
     public String codeResponse(@RequestParam(value = "code", required = true) String code) throws IOException {
         LOGGER.info("get authorization token by authorization code", TokenController.class);
 
-        return authenticationService.getAuthorizationToken(code).getValue();
+        return authenticationService.getAccessToken(code).getValue();
     }
 }

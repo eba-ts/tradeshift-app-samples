@@ -7,6 +7,8 @@ import org.scribe.model.Verb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,11 @@ import java.io.IOException;
 
 
 @Service
+@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class TokenServiceImpl implements TokenService {
+
+
+    private OAuth2AccessToken accessToken = null;
 
     static Logger LOGGER = LoggerFactory.getLogger(TokenServiceImpl.class);
 
@@ -54,14 +60,14 @@ public class TokenServiceImpl implements TokenService {
     }
 
     /**
-     * Receive oauth2 token from authentication server
+     * Receive oauth2 token from authentication server and store it in the app context
      *
      * @param authorizationCode from authentication server
      * @return oauth2 token
      * @throws IOException
      */
     @Override
-    public OAuth2AccessToken getAuthorizationToken(String authorizationCode) throws IOException {
+    public OAuth2AccessToken getAccessToken(String authorizationCode) throws IOException {
         LOGGER.info("get oauth2 access token", TokenServiceImpl.class);
 
         OAuthRequest oAuthRequest = new OAuthRequest(Verb.POST, accessTokenUri);
@@ -76,10 +82,23 @@ public class TokenServiceImpl implements TokenService {
 
         if (accessToken != null) {
             LOGGER.info("successfully get authorization token ");
+            // store accessToken in app context
+            this.accessToken = accessToken;
         } else {
-            LOGGER.info("failed get token", TokenServiceImpl.class);
+            LOGGER.info("failed get authorization token", TokenServiceImpl.class);
         }
 
         return accessToken;
     }
+
+    @Override
+    public OAuth2AccessToken getAccessToken() {
+        return this.accessToken;
+    }
+
+    @Override
+    public void setAccessToken(OAuth2AccessToken accessToken) {
+        this.accessToken = accessToken;
+    }
+
 }

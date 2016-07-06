@@ -23,9 +23,7 @@ public class DemoController {
      * @return data for grid view
      */
     @RequestMapping(value = "/get_grid", method = RequestMethod.GET)
-    public
-    @ResponseBody
-    List<GridDTO> getGrid() {
+    public @ResponseBody List<GridDTO> getGrid() {
         LOGGER.info("get data for grid view", DemoController.class);
 
         List<GridDTO> gridDTOs = new ArrayList<GridDTO>();
