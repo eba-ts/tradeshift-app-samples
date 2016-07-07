@@ -20,7 +20,7 @@ public class TokenController {
     static Logger LOGGER = LoggerFactory.getLogger(TokenController.class);
 
     @Autowired
-    TokenService authenticationService;
+    TokenService tokenService;
 
     /**
      * Redirecting to authorization server for get authorization code
@@ -33,7 +33,7 @@ public class TokenController {
     public void getAuthorizationCode(final HttpServletResponse response) throws IOException {
         LOGGER.info("redirect to the authorization server", TokenController.class);
 
-        response.sendRedirect(authenticationService.getAuthorizationCodeURL());
+        response.sendRedirect(tokenService.getAuthorizationCodeURL());
     }
 
     /**
@@ -47,7 +47,7 @@ public class TokenController {
     public void codeResponse(@RequestParam(value = "code", required = true) String code, final HttpServletResponse response) throws IOException {
         LOGGER.info("get authorization token by authorization code", TokenController.class);
 
-        OAuth2AccessToken accessToken = authenticationService.getAccessToken(code);
+        OAuth2AccessToken accessToken = tokenService.getAccessToken(code);
         if (accessToken != null) {
             LOGGER.info("get authorization token by authorization code success", TokenController.class);
         } else {
