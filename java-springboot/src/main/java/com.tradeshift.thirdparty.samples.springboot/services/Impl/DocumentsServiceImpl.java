@@ -36,6 +36,7 @@ public class DocumentsServiceImpl implements DocumentsService {
     /**
      * Get List of documents by document type
      *
+     *
      * @param documentType type documents
      * @return List of documents by document type for current user
      * @throws IOException
@@ -56,6 +57,7 @@ public class DocumentsServiceImpl implements DocumentsService {
 
     /**
      * Convert list of documents from UBL format to list BaseDocumentDTO
+     *
      *
      * @param responseEntity ResponseEntity with list of documents in the UBL format
      * @return List of documents converted to List<BaseDocumentDTO>

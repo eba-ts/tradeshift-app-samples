@@ -35,13 +35,14 @@ public class DocumentsController {
     /**
      * Get documents by document type from remote server by call to rest service
      *
+     *
      * @param response
      * @return List of documents by document type from remote server
      * @throws ParserConfigurationException
      * @throws IOException
      * @throws SAXException
      */
-    @RequestMapping(value = "/get_documents", method = RequestMethod.GET)
+    @RequestMapping(value = "/documents", method = RequestMethod.GET)
     public ResponseEntity<?> getDocument(@RequestParam("documentType") final String documentType, final HttpServletResponse response)
             throws ParserConfigurationException, IOException, SAXException {
 
@@ -55,6 +56,7 @@ public class DocumentsController {
         } else {
             LOGGER.info("get list of documents by document type filed, access token doesn't exist", DemoController.class);
             response.sendRedirect(tokenService.getAuthorizationCodeURL());
+
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
     }

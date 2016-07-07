@@ -25,6 +25,7 @@ public class TokenController {
     /**
      * Redirecting to authorization server for get authorization code
      *
+     *
      * @param response
      * @throws IOException
      */
@@ -38,10 +39,11 @@ public class TokenController {
     /**
      * Get oauth2 access token by authorization code and store it into session TokenService
      *
-     * @param code
+     *
+     * @param code authorization code from authorization server
      * @throws IOException
      */
-    @RequestMapping(value = "code", method = RequestMethod.GET)
+    @RequestMapping(value = "/code", method = RequestMethod.GET)
     public void codeResponse(@RequestParam(value = "code", required = true) String code, final HttpServletResponse response) throws IOException {
         LOGGER.info("get authorization token by authorization code", TokenController.class);
 

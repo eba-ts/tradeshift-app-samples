@@ -14,7 +14,7 @@ angular.module('tradeshiftApp', ['ngRoute'])
         var url = $location.protocol() + '://' + $location.host() + ':' + $location.port(); // to work both locally and on the server
         return {
             getData: function (documentType) {
-                return $http.get(url + '/document/get_documents', {
+                return $http.get(url + '/document/documents', {
                     params: {documentType: documentType}
                 });
             }
