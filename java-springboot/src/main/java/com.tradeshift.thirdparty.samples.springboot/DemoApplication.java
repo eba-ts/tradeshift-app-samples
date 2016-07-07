@@ -23,14 +23,14 @@ public class DemoApplication {
         if (args.length > 0 && args[0] != null) {
             clientID = args[0];
         } else {
-            LOGGER.error("Client ID argument must not be empty");
+            LOGGER.error("Client ID argument must not be empty", DemoApplication.class);
             throw new NullPointerException();
         }
 
         if (args.length > 0 && args[1] != null) {
             clientSecret = args[1];
         } else {
-            LOGGER.error("Client Secret argument must not be empty");
+            LOGGER.error("Client Secret argument must not be empty", DemoApplication.class);
             throw new NullPointerException();
         }
 
