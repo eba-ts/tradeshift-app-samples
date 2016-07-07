@@ -24,27 +24,45 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
 public class DocumentsServiceImpl implements DocumentsService {
 
-    private final static String URI_LIST_DOCUMENTS = "https://api-sandbox.tradeshift.com/tradeshift/rest/external/documents?type=invoice";
-
+    private final static String URI_LIST_DOCUMENTS = "https://api-sandbox.tradeshift.com/tradeshift/rest/external/documents?type=";
 
     @Autowired
     TokenService tokenService;
 
+    /**
+     * Get List of documents by document type
+     *
+     * @param documentType type documents
+     * @return List of documents by document type for current user
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParserConfigurationException
+     */
     @Override
-    public List<BaseDocumentDTO> getDocuments() throws IOException, SAXException, ParserConfigurationException {
+    public List<BaseDocumentDTO> getDocuments(String documentType) throws IOException, SAXException, ParserConfigurationException {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.add("Authorization", "Bearer " + new JSONObject(tokenService.getAccessToken().getValue()).get("access_token"));
 
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<String> requestEntity = new HttpEntity<String>(requestHeaders);
-        ResponseEntity<?> responseEntity = restTemplate.exchange(URI_LIST_DOCUMENTS, HttpMethod.GET, requestEntity, String.class);
+        ResponseEntity<?> responseEntity = restTemplate.exchange(URI_LIST_DOCUMENTS + documentType, HttpMethod.GET, requestEntity, String.class);
 
         return parseDocuments(responseEntity);
     }
 
+    /**
+     * Convert list of documents from UBL format to list BaseDocumentDTO
+     *
+     * @param responseEntity ResponseEntity with list of documents in the UBL format
+     * @return List of documents converted to List<BaseDocumentDTO>
+     * @throws SAXException
+     * @throws ParserConfigurationException
+     * @throws IOException
+     */
     @Override
     public List<BaseDocumentDTO> parseDocuments(ResponseEntity responseEntity) throws SAXException, ParserConfigurationException, IOException {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -58,19 +76,21 @@ public class DocumentsServiceImpl implements DocumentsService {
             Element rootDocElement = (Element) nList.item(i);
             Element elementDocType = (Element) rootDocElement.getElementsByTagName("ts:DocumentType").item(0);
 
-            String docType = elementDocType.getAttribute("type");
-            String docId = "#" + rootDocElement.getElementsByTagName("ts:ID").item(0).getTextContent();
             String docCurrency = rootDocElement.getElementsByTagName("ts:ItemInfos").item(0).getChildNodes().item(5)
-                                                    .getTextContent();
+                                                .getTextContent();
             String docIssueDate = rootDocElement.getElementsByTagName("ts:ItemInfos").item(0).getChildNodes().item(7)
-                                                    .getTextContent();
+                                                .getTextContent();
             String docReceiverCompName = rootDocElement.getElementsByTagName("ts:ReceiverCompanyName").item(0)
-                                                    .getTextContent();
-            String state = rootDocElement.getElementsByTagName("ts:UnifiedState").item(0).getTextContent();
+                                                .getTextContent();
             Float docTotal = Float.valueOf(rootDocElement.getElementsByTagName("ts:ItemInfos").item(0).getChildNodes().item(3)
-                                                    .getTextContent());
+                                                .getTextContent());
 
-            documentDTOs.add(new BaseDocumentDTO(docType, docId, docTotal, docCurrency, docIssueDate,docReceiverCompName, state));
+            String docType = elementDocType.getAttribute("type");
+            String state = rootDocElement.getElementsByTagName("ts:UnifiedState").item(0).getTextContent();
+            String docId = "#" + rootDocElement.getElementsByTagName("ts:ID").item(0).getTextContent();
+
+
+            documentDTOs.add(new BaseDocumentDTO(docType, docId, docTotal, docCurrency, docIssueDate, docReceiverCompName, state));
 
         }
 

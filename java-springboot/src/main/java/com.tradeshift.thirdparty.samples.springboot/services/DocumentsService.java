@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public interface DocumentsService {
 
-    List<BaseDocumentDTO> getDocuments() throws ParserConfigurationException, IOException, SAXException;
+    List<BaseDocumentDTO> getDocuments(String documentType) throws ParserConfigurationException, IOException, SAXException;
 
     List<BaseDocumentDTO> parseDocuments(ResponseEntity responseEntity) throws ParserConfigurationException, IOException, SAXException;
 }

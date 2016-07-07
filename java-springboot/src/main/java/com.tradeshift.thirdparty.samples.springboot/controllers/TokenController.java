@@ -4,6 +4,7 @@ import com.tradeshift.thirdparty.samples.springboot.services.TokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,16 +36,22 @@ public class TokenController {
     }
 
     /**
-     * Get oauth2 access token by authorization code
+     * Get oauth2 access token by authorization code and store it into session TokenService
      *
      * @param code
-     * @return oauth2 access token
      * @throws IOException
      */
-    @RequestMapping(value = "/code", method = RequestMethod.GET)
-    public String codeResponse(@RequestParam(value = "code", required = true) String code) throws IOException {
+    @RequestMapping(value = "code", method = RequestMethod.GET)
+    public void codeResponse(@RequestParam(value = "code", required = true) String code, final HttpServletResponse response) throws IOException {
         LOGGER.info("get authorization token by authorization code", TokenController.class);
 
-        return authenticationService.getAccessToken(code).getValue();
+        OAuth2AccessToken accessToken = authenticationService.getAccessToken(code);
+        if (accessToken != null) {
+            LOGGER.info("get authorization token by authorization code success", TokenController.class);
+        } else {
+            LOGGER.warn("get authorization token by authorization code failed", TokenController.class);
+        }
+
+        response.sendRedirect("/");
     }
 }

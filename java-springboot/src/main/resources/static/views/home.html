@@ -112,6 +112,20 @@
                 </button>
             </form>
         </div>
+        <div id="tab4" ng-show="showTab == 4">
+            <menu ts-menu style="width: 60%;">
+                <li ng-repeat="doc in documents">
+                    <button>
+                        <span>{{doc.docReceiverCompanyName}}</span>
+                        <br/>
+                        <div>
+                            <span>{{doc.state}} . {{doc.docType}} . {{doc.docId}} . ISSUE DATE {{doc.docIssueDate}}</span>
+                            <span style="float:right">{{doc.docTotal}}  {{doc.docCurrency}}</span>
+                        </div>
+                    </button>
+                </li>
+            </menu>
+        </div>
     </div>
 </main>
 <aside ts-aside id="home-aside">

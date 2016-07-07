@@ -13,18 +13,25 @@ angular.module('tradeshiftApp', ['ngRoute'])
     .factory('$docs', function ($http, $location) {
         var url = $location.protocol() + '://' + $location.host() + ':' + $location.port(); // to work both locally and on the server
         return {
-            getData: function () {
-                return $http.get(url + '/document/get_documents');
+            getData: function (documentType) {
+                return $http.get(url + '/document/get_documents', {
+                    params: {documentType: documentType}
+                });
             }
         }
     })
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {templateUrl: 'views/home.html', controller: 'HomeCtrl'})
-            .when('/documents', {templateUrl: 'views/documentsMenu.html', controller: 'DocumentCtrl'})
             .otherwise('/');
     })
-    .controller('HomeCtrl', function ($scope, $req) {
+    .controller('HomeCtrl', function ($scope, $req, $docs, $window, $location) {
+
+        if ($window.sessionStorage.getItem("isAuthorized") === null) {
+            $window.location.href = $location.protocol() + '://' + $location.host() + ':' + $location.port() + "/oauth2/get_token";
+            $window.sessionStorage.setItem("isAuthorized", true);
+        }
+
         $scope.ui = ts.ui; // So that we can access UIC from HTML
         $scope.aside = ts.ui.get('#home-aside');
         $scope.table = ts.ui.get('#home-table');
@@ -58,9 +65,6 @@ angular.module('tradeshiftApp', ['ngRoute'])
                 })
                 .sort(0, true);
         });
-        $req.getToken().then(function (response) {
-            console.log(response);
-        });
         /* Topbar */
         $scope.topbar
             .tabs([
@@ -93,7 +97,19 @@ angular.module('tradeshiftApp', ['ngRoute'])
                         $scope.$apply();
                         scrollTo(0, 0);
                     }
-                }
+                },
+                {
+                    label: 'DOCUMENTS',
+                    icon: 'ts-icon-activity',
+                    id: 'tab4',
+                    onselect: function () {
+                        $scope.showTab = 4;
+                        $scope.$apply();
+                        $docs.getData('invoice').then(function (response) {
+                            $scope.documents = response.data;
+                        })
+                    }
+                },
             ])
             .green();
 
@@ -124,8 +140,3 @@ angular.module('tradeshiftApp', ['ngRoute'])
         }
     })
 
-    .controller('DocumentCtrl', function ($scope, $docs) {
-        $docs.getData().then(function (response) {
-            $scope.documents = response.data;
-        })
-    })

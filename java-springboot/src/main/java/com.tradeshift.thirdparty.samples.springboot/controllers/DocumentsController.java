@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.xml.sax.SAXException;
 
@@ -32,27 +33,28 @@ public class DocumentsController {
     DocumentsService documentsService;
 
     /**
-     * Get Invoices from remote server by call to rest service
+     * Get documents by document type from remote server by call to rest service
      *
      * @param response
-     * @return List of documents with type invoice from remote server
+     * @return List of documents by document type from remote server
      * @throws ParserConfigurationException
      * @throws IOException
      * @throws SAXException
      */
-    @RequestMapping(value = "/get_invoices", method = RequestMethod.GET)
-    public ResponseEntity<?> getDocument(final HttpServletResponse response) throws ParserConfigurationException, IOException, SAXException {
+    @RequestMapping(value = "/get_documents", method = RequestMethod.GET)
+    public ResponseEntity<?> getDocument(@RequestParam("documentType") final String documentType, final HttpServletResponse response)
+            throws ParserConfigurationException, IOException, SAXException {
 
-        LOGGER.info("get list invoices", DemoController.class);
+        LOGGER.info("get list of documents by document type", DemoController.class);
 
         if (tokenService.getAccessToken() != null) {
-            LOGGER.info("get list invoices success", DemoController.class);
-            List<BaseDocumentDTO> result = documentsService.getDocuments();
+            LOGGER.info("get list of documents by document type success", DemoController.class);
+            List<BaseDocumentDTO> result = documentsService.getDocuments(documentType);
 
             return new ResponseEntity(result, HttpStatus.OK);
         } else {
-            LOGGER.info("get list invoices  filed, access token doesn't exist", DemoController.class);
-
+            LOGGER.info("get list of documents by document type filed, access token doesn't exist", DemoController.class);
+            response.sendRedirect(tokenService.getAuthorizationCodeURL());
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
     }
