@@ -1,6 +1,5 @@
 package com.tradeshift.thirdparty.samples.springboot.services.Impl;
 
-import com.tradeshift.thirdparty.samples.springboot.DemoApplication;
 import com.tradeshift.thirdparty.samples.springboot.services.TokenService;
 import org.apache.commons.codec.binary.Base64;
 import org.scribe.model.OAuthRequest;
@@ -37,6 +36,12 @@ public class TokenServiceImpl implements TokenService {
     @Value("${accessTokenUri}")
     private String accessTokenUri;
 
+    @Value("#{systemEnvironment['clientID']}")
+    private String clientID;
+
+    @Value("#{systemEnvironment['clientSecret']}")
+    private String clientSecret;
+
     @Value("${redirectUri}")
     private String redirectUri;
 
@@ -48,8 +53,10 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public String getAuthorizationCodeURL() {
         LOGGER.info("get authorization url", TokenServiceImpl.class);
+        LOGGER.info("clientID is " + clientID);
+        LOGGER.info("clientSecret is " + clientID);
 
-        String authorizationCodeURL = AUTHORIZE_URL + "&client_id=" + DemoApplication.clientID + "&redirect_uri=" +
+        String authorizationCodeURL = AUTHORIZE_URL + "&client_id=" + clientID + "&redirect_uri=" +
                                         redirectUri + "&scope=openid";
 
         return authorizationCodeURL;
@@ -68,8 +75,8 @@ public class TokenServiceImpl implements TokenService {
 
         OAuthRequest oAuthRequest = new OAuthRequest(Verb.POST, accessTokenUri);
         oAuthRequest.addHeader("Content-Type", CONTENT_TYPE);
-        oAuthRequest.addHeader("Authorization", AUTHORIZATION + Base64.encodeBase64String(
-                                    new String(DemoApplication.clientID + ":" + DemoApplication.clientSecret).getBytes()));
+        oAuthRequest.addHeader("Authorization", AUTHORIZATION + Base64.encodeBase64String(new String(clientID + ":" +
+                                    clientSecret).getBytes()));
         oAuthRequest.setCharset(CHAR_SET);
         oAuthRequest.addBodyParameter("grant_type", AUTHORIZATION_CODE_GRANT_TYPE);
         oAuthRequest.addBodyParameter("code", authorizationCode);
