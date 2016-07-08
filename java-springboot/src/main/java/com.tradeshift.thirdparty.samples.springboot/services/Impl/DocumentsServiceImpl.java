@@ -96,7 +96,7 @@ public class DocumentsServiceImpl implements DocumentsService {
                                                 .getTextContent();
             String docIssueDate = rootDocElement.getElementsByTagName("ts:ItemInfos").item(0).getChildNodes().item(7)
                                                 .getTextContent();
-            String docReceiverCompName = rootDocElement.getElementsByTagName("ts:ReceiverCompanyName").item(0)
+            String docReceiverCompName = rootDocElement.getElementsByTagName("ts:SenderCompanyName").item(0)
                                                 .getTextContent();
             Float docTotal = Float.valueOf(rootDocElement.getElementsByTagName("ts:ItemInfos").item(0).getChildNodes().item(3)
                                                 .getTextContent());
