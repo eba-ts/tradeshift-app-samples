@@ -20,6 +20,7 @@ public class DemoController {
     /**
      * Get List of Objects for show on the UI client
      *
+     *
      * @return data for grid view
      */
     @RequestMapping(value = "/get_grid", method = RequestMethod.GET)
