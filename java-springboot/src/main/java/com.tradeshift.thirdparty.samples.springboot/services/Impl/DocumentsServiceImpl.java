@@ -31,14 +31,14 @@ import java.util.Map;
 @Service
 public class DocumentsServiceImpl implements DocumentsService {
 
-    private final static String URI_LIST_DOCUMENTS = "tradeshift/rest/external/documents";
+    private final static String URI_LIST_DOCUMENTS = "/tradeshift/rest/external/documents";
 
 
     @Autowired
     TokenService tokenService;
 
-    @Value("${restServiceUri}")
-    private String URI_REST_SERVICE;
+    @Value("${restServiceDomainName}")
+    private String REST_API_DOMAIN;
 
 
     /**
@@ -59,7 +59,7 @@ public class DocumentsServiceImpl implements DocumentsService {
         Map<String, String> uriParams = new HashMap<String, String>();
         uriParams.put("type", documentType);
 
-        String documentsUri = URI_REST_SERVICE + URI_LIST_DOCUMENTS;
+        String documentsUri = REST_API_DOMAIN + URI_LIST_DOCUMENTS;
 
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<String> requestEntity = new HttpEntity<String>(requestHeaders);
