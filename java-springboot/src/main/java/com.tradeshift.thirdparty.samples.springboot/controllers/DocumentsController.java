@@ -1,9 +1,9 @@
 package com.tradeshift.thirdparty.samples.springboot.controllers;
 
 
-import com.tradeshift.thirdparty.samples.springboot.domain.dto.BaseDocumentDTO;
-import com.tradeshift.thirdparty.samples.springboot.services.DocumentsService;
+import com.tradeshift.thirdparty.samples.springboot.domain.dto.BaseTradeshiftDocumentDTO;
 import com.tradeshift.thirdparty.samples.springboot.services.TokenService;
+import com.tradeshift.thirdparty.samples.springboot.services.TradeshiftDocumentRetrievalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class DocumentsController {
     TokenService tokenService;
 
     @Autowired
-    DocumentsService documentsService;
+    TradeshiftDocumentRetrievalService tradeshiftDocumentRetrievalService;
 
     /**
      * Get documents by document type from remote server by call to rest service
@@ -48,9 +48,9 @@ public class DocumentsController {
 
         LOGGER.info("get list of documents by document type", DemoController.class);
 
-        if (tokenService.getAccessToken() != null) {
+        if (tokenService.getAccessTokenFromContext() != null) {
             LOGGER.info("get list of documents by document type success", DemoController.class);
-            List<BaseDocumentDTO> result = documentsService.getDocuments(documentType);
+            List<BaseTradeshiftDocumentDTO> result = tradeshiftDocumentRetrievalService.getDocuments(documentType);
 
             return new ResponseEntity(result, HttpStatus.OK);
         } else {

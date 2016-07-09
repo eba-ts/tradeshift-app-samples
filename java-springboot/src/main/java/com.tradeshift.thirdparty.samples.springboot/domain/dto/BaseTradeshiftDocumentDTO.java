@@ -1,7 +1,7 @@
 package com.tradeshift.thirdparty.samples.springboot.domain.dto;
 
 
-public class BaseDocumentDTO {
+public class BaseTradeshiftDocumentDTO {
 
     private String docType;
     private String docId;
@@ -11,11 +11,11 @@ public class BaseDocumentDTO {
     private String docReceiverCompanyName;
     private String state;
 
-    public BaseDocumentDTO() {
+    public BaseTradeshiftDocumentDTO() {
         super();
     }
 
-    public BaseDocumentDTO(String docType, String docId, Float docTotal, String docCurrency, String docIssueDate, String docReceiverCompanyName, String state) {
+    public BaseTradeshiftDocumentDTO(String docType, String docId, Float docTotal, String docCurrency, String docIssueDate, String docReceiverCompanyName, String state) {
         this.docType = docType;
         this.docId = docId;
         this.docTotal = docTotal;

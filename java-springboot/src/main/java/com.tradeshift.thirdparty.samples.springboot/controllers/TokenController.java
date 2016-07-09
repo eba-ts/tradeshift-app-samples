@@ -23,13 +23,13 @@ public class TokenController {
     TokenService tokenService;
 
     /**
-     * Redirecting to authorization server for get authorization code
+     * Redirecting to authorization server to get authorization code for Access Token
      *
      *
      * @param response
      * @throws IOException
      */
-    @RequestMapping(value = "/get_token", method = RequestMethod.GET)
+    @RequestMapping(value = "/token", method = RequestMethod.GET)
     public void getAuthorizationCode(final HttpServletResponse response) throws IOException {
         LOGGER.info("redirect to the authorization server", TokenController.class);
 
@@ -37,7 +37,7 @@ public class TokenController {
     }
 
     /**
-     * Get oauth2 access token by authorization code and store it into session TokenService
+     * Receive authorization code from authorization server for Access Token
      *
      *
      * @param code authorization code from authorization server
@@ -47,7 +47,7 @@ public class TokenController {
     public void codeResponse(@RequestParam(value = "code", required = true) String code, final HttpServletResponse response) throws IOException {
         LOGGER.info("get authorization token by authorization code", TokenController.class);
 
-        OAuth2AccessToken accessToken = tokenService.getAccessToken(code);
+        OAuth2AccessToken accessToken = tokenService.getAccessTokenByAuthCode(code);
         if (accessToken != null) {
             LOGGER.info("get authorization token by authorization code success", TokenController.class);
         } else {

@@ -26,8 +26,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         http
-                .httpBasic().disable().headers().frameOptions().disable().addHeaderWriter(new StaticHeadersWriter
-                ("X-FRAME-OPTIONS", HEADER_FRAME_OPTIONS_ALLOW_FROM));
+                .httpBasic()
+                    .disable()
+                    .headers().frameOptions().disable()
+                    .addHeaderWriter(new StaticHeadersWriter("X-FRAME-OPTIONS", HEADER_FRAME_OPTIONS_ALLOW_FROM));
 
 
     }

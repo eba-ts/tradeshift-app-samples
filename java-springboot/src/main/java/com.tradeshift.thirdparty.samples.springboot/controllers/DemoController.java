@@ -1,6 +1,6 @@
 package com.tradeshift.thirdparty.samples.springboot.controllers;
 
-import com.tradeshift.thirdparty.samples.springboot.domain.dto.GridDTO;
+import com.tradeshift.thirdparty.samples.springboot.domain.dto.GridRowDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,18 +23,18 @@ public class DemoController {
      *
      * @return data for grid view
      */
-    @RequestMapping(value = "/get_grid", method = RequestMethod.GET)
-    public @ResponseBody List<GridDTO> getGrid() {
+    @RequestMapping(value = "/grid-data", method = RequestMethod.GET)
+    public @ResponseBody List<GridRowDTO> getGrid() {
         LOGGER.info("get data for grid view", DemoController.class);
 
-        List<GridDTO> gridDTOs = new ArrayList<GridDTO>();
-        gridDTOs.add(new GridDTO(1, "Barbarian Queen", "Neutral Evil"));
-        gridDTOs.add(new GridDTO(2, "Global Senior Vice President of Sales", "Chaotic Evil"));
-        gridDTOs.add(new GridDTO(3, "Jonathan the Piggy", "Glorious Good"));
-        gridDTOs.add(new GridDTO(4, "Paladin Knight", "Lawful Good"));
-        gridDTOs.add(new GridDTO(5, "Potato Chip", "Radiant Good"));
+        List<GridRowDTO> gridRowDTOs = new ArrayList<GridRowDTO>();
+        gridRowDTOs.add(new GridRowDTO(1, "Barbarian Queen", "Neutral Evil"));
+        gridRowDTOs.add(new GridRowDTO(2, "Global Senior Vice President of Sales", "Chaotic Evil"));
+        gridRowDTOs.add(new GridRowDTO(3, "Jonathan the Piggy", "Glorious Good"));
+        gridRowDTOs.add(new GridRowDTO(4, "Paladin Knight", "Lawful Good"));
+        gridRowDTOs.add(new GridRowDTO(5, "Potato Chip", "Radiant Good"));
 
-        return gridDTOs;
+        return gridRowDTOs;
     }
 
 }

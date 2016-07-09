@@ -1,13 +1,11 @@
 package com.tradeshift.thirdparty.samples.springboot.services.Impl;
 
-import com.tradeshift.thirdparty.samples.springboot.domain.dto.BaseDocumentDTO;
-import com.tradeshift.thirdparty.samples.springboot.services.DocumentsService;
+import com.tradeshift.thirdparty.samples.springboot.domain.dto.BaseTradeshiftDocumentDTO;
 import com.tradeshift.thirdparty.samples.springboot.services.TokenService;
-import org.json.JSONObject;
+import com.tradeshift.thirdparty.samples.springboot.services.TradeshiftDocumentRetrievalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,7 +27,7 @@ import java.util.Map;
 
 
 @Service
-public class DocumentsServiceImpl implements DocumentsService {
+public class TradeshiftDocumentRetrievalServiceImpl implements TradeshiftDocumentRetrievalService {
 
     private final static String URI_LIST_DOCUMENTS = "/tradeshift/rest/external/documents";
 
@@ -51,10 +49,8 @@ public class DocumentsServiceImpl implements DocumentsService {
      * @throws SAXException
      * @throws ParserConfigurationException
      */
-    @Override
-    public List<BaseDocumentDTO> getDocuments(String documentType) throws IOException, SAXException, ParserConfigurationException {
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("Authorization", "Bearer " + new JSONObject(tokenService.getAccessToken().getValue()).get("access_token"));
+    public List<BaseTradeshiftDocumentDTO> getDocuments(String documentType) throws IOException, SAXException,
+            ParserConfigurationException {
 
         Map<String, String> uriParams = new HashMap<String, String>();
         uriParams.put("type", documentType);
@@ -62,51 +58,60 @@ public class DocumentsServiceImpl implements DocumentsService {
         String documentsUri = REST_API_DOMAIN + URI_LIST_DOCUMENTS;
 
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<String> requestEntity = new HttpEntity<String>(requestHeaders);
+        HttpEntity<String> requestEntity = tokenService.getRequestHttpEntityWithAccessToken();
         ResponseEntity<?> responseEntity = restTemplate.exchange(documentsUri, HttpMethod.GET,
-                                                        requestEntity, String.class, uriParams);
+                                                requestEntity, String.class, uriParams);
 
         return parseDocuments(responseEntity);
     }
 
     /**
-     * Convert list of documents from UBL format to list BaseDocumentDTO
+     * Convert list of documents from UBL format to list
      *
      *
      * @param responseEntity ResponseEntity with list of documents in the UBL format
-     * @return List of documents converted to List<BaseDocumentDTO>
+     * @return List of documents converted to List<BaseTradeshiftDocumentDTO>
      * @throws SAXException
      * @throws ParserConfigurationException
      * @throws IOException
      */
-    @Override
-    public List<BaseDocumentDTO> parseDocuments(ResponseEntity responseEntity) throws SAXException, ParserConfigurationException, IOException {
+    protected List<BaseTradeshiftDocumentDTO> parseDocuments(ResponseEntity responseEntity) throws SAXException,
+            ParserConfigurationException, IOException {
+
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(new ByteArrayInputStream(responseEntity.getBody().toString().getBytes()));
 
         NodeList nList = doc.getElementsByTagName("ts:Document");
 
-        List<BaseDocumentDTO> documentDTOs = new ArrayList<BaseDocumentDTO>();
+        List<BaseTradeshiftDocumentDTO> documentDTOs = new ArrayList<BaseTradeshiftDocumentDTO>();
         for (int i = 0; i < nList.getLength(); i++) {
+            String companyName = null;
             Element rootDocElement = (Element) nList.item(i);
             Element elementDocType = (Element) rootDocElement.getElementsByTagName("ts:DocumentType").item(0);
 
             String docCurrency = rootDocElement.getElementsByTagName("ts:ItemInfos").item(0).getChildNodes().item(5)
-                                                .getTextContent();
+                                                    .getTextContent();
             String docIssueDate = rootDocElement.getElementsByTagName("ts:ItemInfos").item(0).getChildNodes().item(7)
-                                                .getTextContent();
-            String docReceiverCompName = rootDocElement.getElementsByTagName("ts:SenderCompanyName").item(0)
-                                                .getTextContent();
+                                                    .getTextContent();
+
+            NodeList nodeListSenderCompany = rootDocElement.getElementsByTagName("ts:SenderCompanyName");
+            if (nodeListSenderCompany != null && nodeListSenderCompany.getLength() > 0) {
+                companyName = nodeListSenderCompany.item(0).getTextContent();
+            } else {
+                NodeList nodeListReceiverCompany = rootDocElement.getElementsByTagName("ts:ReceiverCompanyName");
+                companyName = nodeListReceiverCompany.item(0).getTextContent();
+            }
+
             Float docTotal = Float.valueOf(rootDocElement.getElementsByTagName("ts:ItemInfos").item(0).getChildNodes().item(3)
-                                                .getTextContent());
+                                    .getTextContent());
 
             String docType = elementDocType.getAttribute("type");
             String state = rootDocElement.getElementsByTagName("ts:UnifiedState").item(0).getTextContent();
             String docId = "#" + rootDocElement.getElementsByTagName("ts:ID").item(0).getTextContent();
 
 
-            documentDTOs.add(new BaseDocumentDTO(docType, docId, docTotal, docCurrency, docIssueDate, docReceiverCompName, state));
+            documentDTOs.add(new BaseTradeshiftDocumentDTO(docType, docId, docTotal, docCurrency, docIssueDate, companyName, state));
 
         }
 

@@ -3,10 +3,10 @@ angular.module('tradeshiftApp', ['ngRoute'])
         var url = $location.protocol() + '://' + $location.host() + ':' + $location.port(); // to work both locally and on the server
         return {
             getData: function () {
-                return $http.get(url + '/demo/get_grid');
+                return $http.get(url + '/demo/grid-data');
             },
             getToken: function () {
-                return $http.get(url + '/oauth2/get_token');
+                return $http.get(url + '/oauth2/token');
             }
         }
     })
@@ -28,7 +28,7 @@ angular.module('tradeshiftApp', ['ngRoute'])
     .controller('HomeCtrl', function ($scope, $req, $docs, $window, $location) {
 
         if ($window.sessionStorage.getItem("isAuthorized") === null) {
-            $window.location.href = $location.protocol() + '://' + $location.host() + ':' + $location.port() + "/oauth2/get_token";
+            $window.location.href = $location.protocol() + '://' + $location.host() + ':' + $location.port() + "/oauth2/token";
             $window.sessionStorage.setItem("isAuthorized", true);
         }
 

@@ -1,19 +1,19 @@
 package com.tradeshift.thirdparty.samples.springboot.domain.dto;
 
 
-public class GridDTO {
+public class GridRowDTO {
 
     private Integer id;
     private String character;
     private String alignment;
 
-    public GridDTO(Integer id, String character, String alignment) {
+    public GridRowDTO(Integer id, String character, String alignment) {
         this.id = id;
         this.character = character;
         this.alignment = alignment;
     }
 
-    public GridDTO() {
+    public GridRowDTO() {
         super();
     }
 
