@@ -1,5 +1,6 @@
 package com.tradeshift.thirdparty.samples.springboot.services.Impl;
 
+import com.tradeshift.thirdparty.samples.springboot.config.PropertySources;
 import com.tradeshift.thirdparty.samples.springboot.services.TokenService;
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
@@ -7,7 +8,8 @@ import org.scribe.model.OAuthRequest;
 import org.scribe.model.Verb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.http.HttpEntity;
@@ -23,30 +25,31 @@ import java.io.IOException;
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class TokenServiceImpl implements TokenService {
 
-
-    private OAuth2AccessToken accessToken = null;
-
     static Logger LOGGER = LoggerFactory.getLogger(TokenServiceImpl.class);
 
     private final String HEADER_CONTENT_TYPE = "application/x-www-form-urlencoded";
     private final String HEADER_AUTHORIZATION_TYPE = "Basic ";
     private final String HEADER_CHAR_SET_TYPE = "utf-8";
     private final String AUTHORIZATION_CODE_GRANT_TYPE = "authorization_code";
+    private final String AUTHORIZE_URL;
+    private final String ACCESS_TOKEN_URI;
 
-    @Value("${userAuthorizationUri}")
-    private String AUTHORIZE_URL;
+    private OAuth2AccessToken accessToken;
+    private PropertySources propertySources;
 
-    @Value("${accessTokenUri}")
-    private String accessTokenUri;
-
-    @Value("#{systemEnvironment['clientID']}")
-    private String clientID;
-
-    @Value("#{systemEnvironment['clientSecret']}")
-    private String clientSecret;
-
-    @Value("${redirectUri}")
-    private String redirectUri;
+    /**
+     * Inject PropertySources bean by constructor, init AUTHORIZE_URL, ACCESS_TOKEN_URI
+     *
+     *
+     * @param propertySources
+     */
+    @Autowired
+    public TokenServiceImpl(@Qualifier("propertySources") PropertySources propertySources) {
+        super();
+        this.propertySources = propertySources;
+        AUTHORIZE_URL = propertySources.getTradeShiftAPIDomainName() + "/tradeshift/auth/login?response_type=code";
+        ACCESS_TOKEN_URI = propertySources.getTradeShiftAPIDomainName() + "/tradeshift/auth/token";
+    }
 
     /**
      * Get authorization server url for get authorization code
@@ -58,8 +61,8 @@ public class TokenServiceImpl implements TokenService {
     public String getAuthorizationCodeURL() {
         LOGGER.info("get authorization url", TokenServiceImpl.class);
 
-        String authorizationCodeURL = AUTHORIZE_URL + "&client_id=" + clientID + "&redirect_uri=" + redirectUri +
-                                        "&scope=openid";
+        String authorizationCodeURL = AUTHORIZE_URL + "&client_id=" + propertySources.getClientID() + "&redirect_uri=" +
+                                        propertySources.getRedirectUri() + "&scope=openid";
 
         return authorizationCodeURL;
     }
@@ -76,10 +79,10 @@ public class TokenServiceImpl implements TokenService {
     public OAuth2AccessToken getAccessTokenByAuthCode(String authorizationCode) throws IOException {
         LOGGER.info("get oauth2 access token", TokenServiceImpl.class);
 
-        OAuthRequest oAuthRequest = new OAuthRequest(Verb.POST, accessTokenUri);
+        OAuthRequest oAuthRequest = new OAuthRequest(Verb.POST, ACCESS_TOKEN_URI);
         oAuthRequest.addHeader("Content-Type", HEADER_CONTENT_TYPE);
-        oAuthRequest.addHeader("Authorization", HEADER_AUTHORIZATION_TYPE + Base64.encodeBase64String(new String(clientID + ":" +
-                                    clientSecret).getBytes()));
+        oAuthRequest.addHeader("Authorization", HEADER_AUTHORIZATION_TYPE + Base64.encodeBase64String(new String
+                                    (propertySources.getClientID() + ":" + propertySources.getClientSecret()).getBytes()));
         oAuthRequest.setCharset(HEADER_CHAR_SET_TYPE);
         oAuthRequest.addBodyParameter("grant_type", AUTHORIZATION_CODE_GRANT_TYPE);
         oAuthRequest.addBodyParameter("code", authorizationCode);
@@ -89,7 +92,7 @@ public class TokenServiceImpl implements TokenService {
 
         if (accessToken != null) {
             LOGGER.info("successfully received authorization token ");
-            // store accessToken in app context
+            // store accessToken in session context
             this.accessToken = accessToken;
         } else {
             LOGGER.info("failed to get authorization token", TokenServiceImpl.class);
@@ -98,8 +101,16 @@ public class TokenServiceImpl implements TokenService {
         return accessToken;
     }
 
+    /**
+     * Get Access Token from session context
+     *
+     *
+     * @return OAuth2AccessToken
+     */
     @Override
     public OAuth2AccessToken getAccessTokenFromContext() {
+        LOGGER.info("Get oauth2 access token from session context", TokenServiceImpl.class);
+
         return this.accessToken;
     }
 
@@ -111,6 +122,8 @@ public class TokenServiceImpl implements TokenService {
      */
     @Override
     public HttpEntity getRequestHttpEntityWithAccessToken() {
+        LOGGER.info("Get HttpEntity with Access Token", TokenServiceImpl.class);
+
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.add("Authorization", "Bearer " + new JSONObject(getAccessTokenFromContext().getValue()).get("access_token"));
         HttpEntity<String> requestEntity = new HttpEntity<String>(requestHeaders);

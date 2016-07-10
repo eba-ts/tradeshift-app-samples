@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.xml.sax.SAXException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +20,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/document")
 public class DocumentsController {
 
@@ -54,7 +54,8 @@ public class DocumentsController {
 
             return new ResponseEntity(result, HttpStatus.OK);
         } else {
-            LOGGER.info("get list of documents by document type filed, access token doesn't exist", DemoController.class);
+            LOGGER.info("get list of documents by document type failed, access token doesn't exist", DemoController
+                    .class);
             response.sendRedirect(tokenService.getAuthorizationCodeURL());
 
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);

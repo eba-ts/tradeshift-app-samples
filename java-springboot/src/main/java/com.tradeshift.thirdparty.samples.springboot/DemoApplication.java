@@ -11,8 +11,10 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("com.tradeshift.thirdparty.samples.springboot")
 public class DemoApplication {
 
+
     public static void main(String[] args) {
 
         SpringApplication.run(DemoApplication.class, args);
     }
+
 }

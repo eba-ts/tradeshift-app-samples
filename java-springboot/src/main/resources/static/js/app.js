@@ -4,9 +4,7 @@ angular.module('tradeshiftApp', ['ngRoute'])
         return {
             getData: function () {
                 return $http.get(url + '/demo/grid-data');
-            },
-            getToken: function () {
-                return $http.get(url + '/oauth2/token');
+
             }
         }
     })
@@ -26,12 +24,6 @@ angular.module('tradeshiftApp', ['ngRoute'])
             .otherwise('/');
     })
     .controller('HomeCtrl', function ($scope, $req, $docs, $window, $location) {
-
-        if ($window.sessionStorage.getItem("isAuthorized") === null) {
-            $window.location.href = $location.protocol() + '://' + $location.host() + ':' + $location.port() + "/oauth2/token";
-            $window.sessionStorage.setItem("isAuthorized", true);
-        }
-
         $scope.ui = ts.ui; // So that we can access UIC from HTML
         $scope.aside = ts.ui.get('#home-aside');
         $scope.table = ts.ui.get('#home-table');

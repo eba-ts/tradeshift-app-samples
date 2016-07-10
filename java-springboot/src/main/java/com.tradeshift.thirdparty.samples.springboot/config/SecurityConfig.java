@@ -12,11 +12,12 @@ import org.springframework.security.web.header.writers.StaticHeadersWriter;
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final String HEADER_FRAME_OPTIONS_ALLOW_FROM = "ALLOW-FROM  https://shop.sandbox.tradeshift.com";
+    private final String HEADER_FRAME_OPTIONS_ALLOW_FROM = "ALLOW-FROM  https://sandbox.tradeshift.com";
 
     /**
      * Allow to change security configuration
      * Disable default security configuration, disable default header frame options, add to response header frame option
+     *
      *
      * @param http
      * @throws Exception
@@ -26,11 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         http
-                .httpBasic()
-                    .disable()
-                    .headers().frameOptions().disable()
-                    .addHeaderWriter(new StaticHeadersWriter("X-FRAME-OPTIONS", HEADER_FRAME_OPTIONS_ALLOW_FROM));
-
+                .httpBasic().disable()
+                .headers().frameOptions().disable()
+                .addHeaderWriter(new StaticHeadersWriter("X-FRAME-OPTIONS", HEADER_FRAME_OPTIONS_ALLOW_FROM));
 
     }
 
