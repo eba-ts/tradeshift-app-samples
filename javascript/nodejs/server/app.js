@@ -9,7 +9,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('html', engine.mustache);
 app.set('view engine', 'html');
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../browser')));
 app.use('/', routes);
 
 module.exports = app;
