@@ -52,7 +52,7 @@ public class TradeshiftDocumentRetrievalServiceImpl implements TradeshiftDocumen
     public TradeshiftDocumentRetrievalServiceImpl(@Qualifier("propertySources") PropertySources propertySources) {
         super();
         this.propertySources = propertySources;
-        URI_LIST_DOCUMENTS = propertySources.getTradeShiftAPIDomainName() + "/tradeshift/rest/external/documents";
+        URI_LIST_DOCUMENTS = propertySources.getTradeshiftAPIDomainName() + "/tradeshift/rest/external/documents";
     }
 
 

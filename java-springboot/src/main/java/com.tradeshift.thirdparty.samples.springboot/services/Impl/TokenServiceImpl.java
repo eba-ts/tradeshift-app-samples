@@ -53,8 +53,8 @@ public class TokenServiceImpl implements TokenService {
         super();
         this.propertySources = propertySources;
 
-        this.AUTHORIZE_URL = propertySources.getTradeShiftAPIDomainName() + "/tradeshift/auth/login?response_type=code";
-        this.ACCESS_TOKEN_URI = propertySources.getTradeShiftAPIDomainName() + "/tradeshift/auth/token";
+        this.AUTHORIZE_URL = propertySources.getTradeshiftAPIDomainName() + "/tradeshift/auth/login?response_type=code";
+        this.ACCESS_TOKEN_URI = propertySources.getTradeshiftAPIDomainName() + "/tradeshift/auth/token";
         this.CLIENT_ID = propertySources.getClientID();
         this.REDIRECT_URI = propertySources.getRedirectUri();
         this.CLIENT_SECRET = propertySources.getClientSecret();

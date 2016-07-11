@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 @Component(value = "propertySources")
 public class PropertySources {
 
-    @Value("#{systemEnvironment['tradeShiftAPIDomainName']}")
-    private String tradeShiftAPIDomainName;
+    @Value("#{systemEnvironment['tradeshiftAPIDomainName']}")
+    private String tradeshiftAPIDomainName;
 
     @Value("#{systemEnvironment['clientID']}")
     private String clientID;
@@ -18,8 +18,8 @@ public class PropertySources {
     @Value("#{systemEnvironment['redirectUri']}")
     private String redirectUri;
 
-    public String getTradeShiftAPIDomainName() {
-        return tradeShiftAPIDomainName;
+    public String getTradeshiftAPIDomainName() {
+        return tradeshiftAPIDomainName;
     }
 
     public String getClientID() {

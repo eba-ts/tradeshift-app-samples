@@ -5,22 +5,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 
 @Configuration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final String HEADER_FRAME_OPTIONS_ALLOW_FROM = "ALLOW-FROM  https://sandbox.tradeshift.com";
 
     /**
      * Allow to change security configuration
      *
      * Disable default security configuration
      * Disable default header frame options
-     * Add Content Security Policy frame option to header that allow load resources from current domain
-     *
      *
      * @param http
      * @throws Exception
@@ -31,8 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .httpBasic().disable()
-                .headers().frameOptions().disable()
-                .addHeaderWriter(new StaticHeadersWriter("X-Content-Security-Policy", "frame-ancestors 'self'"));
+                .headers().frameOptions().disable();
 
     }
 
