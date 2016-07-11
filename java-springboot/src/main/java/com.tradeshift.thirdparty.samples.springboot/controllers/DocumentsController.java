@@ -49,12 +49,13 @@ public class DocumentsController {
         LOGGER.info("get list of documents by document type", DemoController.class);
 
         if (tokenService.getAccessTokenFromContext() != null) {
-            LOGGER.info("get list of documents by document type success", DemoController.class);
+            LOGGER.info("succeed in to get list of documents by document type", DemoController.class);
             List<BaseTradeshiftDocumentDTO> result = tradeshiftDocumentRetrievalService.getDocuments(documentType);
 
             return new ResponseEntity(result, HttpStatus.OK);
         } else {
-            LOGGER.info("get list of documents by document type failed, access token doesn't exist", DemoController.class);
+            LOGGER.info("failed to get list of documents by document type, access token doesn't exist", DemoController
+                    .class);
             response.sendRedirect(tokenService.getAuthorizationCodeURL());
 
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);

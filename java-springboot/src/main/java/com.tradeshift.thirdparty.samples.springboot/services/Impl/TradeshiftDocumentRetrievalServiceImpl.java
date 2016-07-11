@@ -69,8 +69,7 @@ public class TradeshiftDocumentRetrievalServiceImpl implements TradeshiftDocumen
     public List<BaseTradeshiftDocumentDTO> getDocuments(String documentType) throws IOException, SAXException,
             ParserConfigurationException {
 
-        LOGGER.info("get List of documents by document type " + documentType, TradeshiftDocumentRetrievalServiceImpl
-                .class);
+        LOGGER.info("get List of documents by document type " + documentType, TradeshiftDocumentRetrievalServiceImpl.class);
 
         Map<String, String> uriParams = new HashMap<String, String>();
         uriParams.put("type", documentType);

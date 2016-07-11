@@ -61,7 +61,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     /**
-     * Get authorization server url for get authorization code
+     * Get authorization server url for to get authorization code
      *
      * @return URL for oauth2 authorization
      */
@@ -75,7 +75,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     /**
-     * Receive oauth2 token from authentication server and store it in the app context
+     * Receive oauth2 token from authentication server and store it in the session context
      *
      * @param authorizationCode from authentication server
      * @return oauth2 token

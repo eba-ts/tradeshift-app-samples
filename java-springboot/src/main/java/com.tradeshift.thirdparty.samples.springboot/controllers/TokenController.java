@@ -53,9 +53,9 @@ public class TokenController {
 
         OAuth2AccessToken accessToken = tokenService.getAccessTokenByAuthCode(code);
         if (accessToken != null) {
-            LOGGER.info("get authorization token by authorization code success", TokenController.class);
+            LOGGER.info("succeed in to get authorization token by authorization code", TokenController.class);
         } else {
-            LOGGER.warn("get authorization token by authorization code failed", TokenController.class);
+            LOGGER.warn("failed to get authorization token by authorization code", TokenController.class);
         }
 
         return "redirect:/";
