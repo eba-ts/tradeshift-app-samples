@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
@@ -23,19 +22,18 @@ public class TokenController {
 
 
     /**
-     * Redirecting to authorization server to get authorization code for Access Token if Access Token dos't exist
+     * If Access Token dos't exist in session context,
+     * redirecting to authorization server to get authorization code for Access Token
      *
-     *
-     * @param response
-     * @return String view name
+     * @return Return to home page
      * @throws IOException
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getAuthorizationCode(final HttpServletResponse response) throws IOException {
+    public String getAuthorizationCode() throws IOException {
         if (tokenService.getAccessTokenFromContext() == null) {
             LOGGER.info("redirect to the authorization server", TokenController.class);
 
-            response.sendRedirect(tokenService.getAuthorizationCodeURL());
+            return "redirect:" + tokenService.getAuthorizationCodeURL();
         }
         LOGGER.info("return to index.html", TokenController.class);
 
@@ -45,12 +43,12 @@ public class TokenController {
     /**
      * Receive authorization code from authorization server for Access Token
      *
-     *
      * @param code authorization code from authorization server
+     * @return Return to home page
      * @throws IOException
      */
     @RequestMapping(value = "/oauth2/code", method = RequestMethod.GET)
-    public String codeResponse(@RequestParam(value = "code", required = true) String code, final HttpServletResponse response) throws IOException {
+    public String codeResponse(@RequestParam(value = "code", required = true) String code) throws IOException {
         LOGGER.info("get authorization token by authorization code", TokenController.class);
 
         OAuth2AccessToken accessToken = tokenService.getAccessTokenByAuthCode(code);

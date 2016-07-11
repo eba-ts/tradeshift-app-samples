@@ -33,12 +33,17 @@ public class TokenServiceImpl implements TokenService {
     private final String AUTHORIZATION_CODE_GRANT_TYPE = "authorization_code";
     private final String AUTHORIZE_URL;
     private final String ACCESS_TOKEN_URI;
+    private final String REDIRECT_URI;
+    private final String CLIENT_ID;
+    private final String CLIENT_SECRET;
 
     private OAuth2AccessToken accessToken;
     private PropertySources propertySources;
 
+
     /**
-     * Inject PropertySources bean by constructor, init AUTHORIZE_URL, ACCESS_TOKEN_URI
+     * Inject PropertySources bean by constructor,
+     * Init AUTHORIZE_URL, ACCESS_TOKEN_URI, CLIENT_ID, REDIRECT_URI, CLIENT_SECRET
      *
      *
      * @param propertySources
@@ -47,13 +52,16 @@ public class TokenServiceImpl implements TokenService {
     public TokenServiceImpl(@Qualifier("propertySources") PropertySources propertySources) {
         super();
         this.propertySources = propertySources;
-        AUTHORIZE_URL = propertySources.getTradeShiftAPIDomainName() + "/tradeshift/auth/login?response_type=code";
-        ACCESS_TOKEN_URI = propertySources.getTradeShiftAPIDomainName() + "/tradeshift/auth/token";
+
+        this.AUTHORIZE_URL = propertySources.getTradeShiftAPIDomainName() + "/tradeshift/auth/login?response_type=code";
+        this.ACCESS_TOKEN_URI = propertySources.getTradeShiftAPIDomainName() + "/tradeshift/auth/token";
+        this.CLIENT_ID = propertySources.getClientID();
+        this.REDIRECT_URI = propertySources.getRedirectUri();
+        this.CLIENT_SECRET = propertySources.getClientSecret();
     }
 
     /**
      * Get authorization server url for get authorization code
-     *
      *
      * @return URL for oauth2 authorization
      */
@@ -61,15 +69,13 @@ public class TokenServiceImpl implements TokenService {
     public String getAuthorizationCodeURL() {
         LOGGER.info("get authorization url", TokenServiceImpl.class);
 
-        String authorizationCodeURL = AUTHORIZE_URL + "&client_id=" + propertySources.getClientID() + "&redirect_uri=" +
-                                        propertySources.getRedirectUri() + "&scope=openid";
+        String authorizationCodeURL = AUTHORIZE_URL + "&client_id=" + CLIENT_ID + "&redirect_uri=" + REDIRECT_URI + "&scope=openid";
 
         return authorizationCodeURL;
     }
 
     /**
      * Receive oauth2 token from authentication server and store it in the app context
-     *
      *
      * @param authorizationCode from authentication server
      * @return oauth2 token
@@ -81,8 +87,8 @@ public class TokenServiceImpl implements TokenService {
 
         OAuthRequest oAuthRequest = new OAuthRequest(Verb.POST, ACCESS_TOKEN_URI);
         oAuthRequest.addHeader("Content-Type", HEADER_CONTENT_TYPE);
-        oAuthRequest.addHeader("Authorization", HEADER_AUTHORIZATION_TYPE + Base64.encodeBase64String(new String
-                                    (propertySources.getClientID() + ":" + propertySources.getClientSecret()).getBytes()));
+        oAuthRequest.addHeader("Authorization", HEADER_AUTHORIZATION_TYPE + Base64.encodeBase64String(
+                                                new String(CLIENT_ID + ":" + CLIENT_SECRET).getBytes()));
         oAuthRequest.setCharset(HEADER_CHAR_SET_TYPE);
         oAuthRequest.addBodyParameter("grant_type", AUTHORIZATION_CODE_GRANT_TYPE);
         oAuthRequest.addBodyParameter("code", authorizationCode);
@@ -104,12 +110,11 @@ public class TokenServiceImpl implements TokenService {
     /**
      * Get Access Token from session context
      *
-     *
      * @return OAuth2AccessToken
      */
     @Override
     public OAuth2AccessToken getAccessTokenFromContext() {
-        LOGGER.info("Get oauth2 access token from session context", TokenServiceImpl.class);
+        LOGGER.info("get oauth2 access token from session context", TokenServiceImpl.class);
 
         return this.accessToken;
     }
@@ -117,12 +122,11 @@ public class TokenServiceImpl implements TokenService {
     /**
      * Get HttpEntity that contains HttpHeader with Access Token
      *
-     *
      * @return request HttpEntity with Access Token
      */
     @Override
     public HttpEntity getRequestHttpEntityWithAccessToken() {
-        LOGGER.info("Get HttpEntity with Access Token", TokenServiceImpl.class);
+        LOGGER.info("get HttpEntity with Access Token", TokenServiceImpl.class);
 
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.add("Authorization", "Bearer " + new JSONObject(getAccessTokenFromContext().getValue()).get("access_token"));

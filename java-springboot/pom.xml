@@ -9,8 +9,8 @@
     <packaging>jar</packaging>
 
     <name>Tradeshift Embedded App Sample</name>
-    <description>Sample app for third-party applications.Demonstrate Tradeshift UI components and collaboration with
-        remote REST services for get access token and list of documents
+    <description>Sample app for third-party applications.
+        Demonstrate Tradeshift UI components and Calling Tradeshift API methods to get a list of invoices.
     </description>
 
     <parent>

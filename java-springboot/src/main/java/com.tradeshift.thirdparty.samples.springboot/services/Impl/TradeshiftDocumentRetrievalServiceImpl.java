@@ -42,7 +42,8 @@ public class TradeshiftDocumentRetrievalServiceImpl implements TradeshiftDocumen
     private PropertySources propertySources;
 
     /**
-     * Inject PropertySources bean by constructor, init URI_LIST_DOCUMENTS
+     * Inject PropertySources bean by constructor,
+     * init URI_LIST_DOCUMENTS
      *
      *
      * @param propertySources
@@ -68,7 +69,8 @@ public class TradeshiftDocumentRetrievalServiceImpl implements TradeshiftDocumen
     public List<BaseTradeshiftDocumentDTO> getDocuments(String documentType) throws IOException, SAXException,
             ParserConfigurationException {
 
-        LOGGER.info("Get List of documents by document type " + documentType, TradeshiftDocumentRetrievalServiceImpl.class);
+        LOGGER.info("get List of documents by document type " + documentType, TradeshiftDocumentRetrievalServiceImpl
+                .class);
 
         Map<String, String> uriParams = new HashMap<String, String>();
         uriParams.put("type", documentType);
@@ -78,7 +80,7 @@ public class TradeshiftDocumentRetrievalServiceImpl implements TradeshiftDocumen
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<String> requestEntity = tokenService.getRequestHttpEntityWithAccessToken();
         ResponseEntity<?> responseEntity = restTemplate.exchange(documentsUri, HttpMethod.GET,
-                requestEntity, String.class, uriParams);
+                                                        requestEntity, String.class, uriParams);
 
         return parseDocuments(responseEntity);
     }
@@ -96,7 +98,7 @@ public class TradeshiftDocumentRetrievalServiceImpl implements TradeshiftDocumen
     protected List<BaseTradeshiftDocumentDTO> parseDocuments(ResponseEntity responseEntity) throws SAXException,
             ParserConfigurationException, IOException {
 
-        LOGGER.info("Parse Tradeshift Document", TradeshiftDocumentRetrievalServiceImpl.class);
+        LOGGER.info("parse Tradeshift Document", TradeshiftDocumentRetrievalServiceImpl.class);
 
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();

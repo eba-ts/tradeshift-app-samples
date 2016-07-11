@@ -16,7 +16,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * Allow to change security configuration
-     * Disable default security configuration, disable default header frame options, add to response header frame option
+     *
+     * Disable default security configuration
+     * Disable default header frame options
+     * Add to response header frame option 'ALLOW-FROM' for permits the specified 'uri' to frame
      *
      *
      * @param http
