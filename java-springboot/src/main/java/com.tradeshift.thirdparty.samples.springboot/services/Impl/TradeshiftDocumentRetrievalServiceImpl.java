@@ -113,9 +113,9 @@ public class TradeshiftDocumentRetrievalServiceImpl implements TradeshiftDocumen
             Element elementDocType = (Element) rootDocElement.getElementsByTagName("ts:DocumentType").item(0);
 
             String docCurrency = rootDocElement.getElementsByTagName("ts:ItemInfos").item(0).getChildNodes().item(5)
-                    .getTextContent();
+                                                    .getTextContent();
             String docIssueDate = rootDocElement.getElementsByTagName("ts:ItemInfos").item(0).getChildNodes().item(7)
-                    .getTextContent();
+                                                    .getTextContent();
 
             NodeList nodeListSenderCompany = rootDocElement.getElementsByTagName("ts:SenderCompanyName");
             if (nodeListSenderCompany != null && nodeListSenderCompany.getLength() > 0) {
@@ -126,7 +126,7 @@ public class TradeshiftDocumentRetrievalServiceImpl implements TradeshiftDocumen
             }
 
             Float docTotal = Float.valueOf(rootDocElement.getElementsByTagName("ts:ItemInfos").item(0).getChildNodes().item(3)
-                    .getTextContent());
+                                                            .getTextContent());
 
             String docType = elementDocType.getAttribute("type");
             String state = rootDocElement.getElementsByTagName("ts:UnifiedState").item(0).getTextContent();

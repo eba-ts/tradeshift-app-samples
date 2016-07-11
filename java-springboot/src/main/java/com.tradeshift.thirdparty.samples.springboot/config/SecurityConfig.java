@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      *
      * Disable default security configuration
      * Disable default header frame options
-     * Add to response header frame option 'ALLOW-FROM' for permits the specified 'uri' to frame
+     * Add Content Security Policy frame option to header that allow load resources from current domain
      *
      *
      * @param http
@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic().disable()
                 .headers().frameOptions().disable()
-                .addHeaderWriter(new StaticHeadersWriter("X-FRAME-OPTIONS", HEADER_FRAME_OPTIONS_ALLOW_FROM));
+                .addHeaderWriter(new StaticHeadersWriter("X-Content-Security-Policy", "frame-ancestors 'self'"));
 
     }
 
