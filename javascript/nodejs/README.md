@@ -1,8 +1,9 @@
-# Node.js + Angular + UI Components
+# Tradeshift Third Party Embedded App Sample - Node.js + Angular + Tradeshift UI Components
 
 ## Description
-This is a sample project which shows how to create app on Tradeshift using Node.js backend, with Angular.js on frontend, utilizing Tradeshift's [UI Components](http://ui.tradeshift.com).
-The app authenticated with Tradeshift server using OAUTH2 authorization workflow, and retrieves current company data as an example of calling Tradeshift API. Additionally app has multiple language supportusing English and Russian languages.  To add languages, add files to browser/locales directory. 
+This is a sample project which shows how to create an embedded app on Tradeshift using Node.js backend, with Angular.js on frontend, utilizing Tradeshift's [UI Components](http://ui.tradeshift.com).
+
+The app authenticates with Tradeshift server using OAUTH2, and retrieves current company data as an example of calling Tradeshift API.  The app needs to be run inside Tradeshift platform to fully work - see documentation [here](http://apps.tradeshift.com/documentation). This sample app has multiple language supportusing English and Russian languages.  To add languages, add files to browser/locales directory. 
 
 ## Requirements
 - [NodeJS](https://nodejs.org/en/) version 4 and higher
