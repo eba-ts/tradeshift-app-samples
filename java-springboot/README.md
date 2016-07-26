@@ -31,11 +31,14 @@ This is a sample app for third-party applications. Some of the things it demonst
        
      ** About 'tradeshiftAPIDomainName' uri you can read in <a href="http://apps.tradeshift.com/developers/documentation/">Tradeshift development documentation.</a>
 
-3. Run from project root directory maven command : ' **mvn clean install** '.
+2. Run from project root directory maven command : ' **mvn clean install** '.
 
-4. Go to the target directory and run next command : ' **java -jar java-springboot-0.0.1.jar** '
+3. Go to the target directory and run next command : ' **java -jar java-springboot-0.0.1.jar** '
 
-5. Update Tradeshift app Main URL.
+4. Update Tradeshift app Main URL.
+
+5. Check that app runs correctly,  go to the  `https://your_app_uri.com/health` , you can see the next message `{"status":"UP"}`  that means that app successfully started.
+
 
 
 
@@ -46,9 +49,11 @@ You can easy run and deploy this project on the <a href="https://heroku.com">Her
 2. Configure Heroku environment variables **clientID**, **clientSecret**, **redirectUri**, **tradeshiftAPIDomainName** with data you setup or receive from your Tradeshift.Developer app.
     For more information on adding Heroku env vars see <a href="https://github.com/lorenwest/node-config/wiki/Environment-Variables">here</a> .
 
-4. Deploy on Heroku (see   <a href="https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku">Heroku deploy app documentation</a>).
+3. Deploy on Heroku (see   <a href="https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku">Heroku deploy app documentation</a>).
 
-5. Update on the Tradeshift app Main URL.
+4. Update on the Tradeshift app Main URL.
+
+5. Check that app runs correctly,  go to the  `https://your_app_uri.com/health` , you can see the next message `{"status":"UP"}`  that means that app successfully started.
 
 # Notes 
 
