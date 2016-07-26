@@ -44,7 +44,7 @@ public class DocumentsController {
      */
     @RequestMapping(value = "/documents", method = RequestMethod.GET)
     public ResponseEntity<?> getDocument(@RequestParam("documentType") final String documentType, final HttpServletResponse response)
-            throws ParserConfigurationException, IOException, SAXException {
+                                                                        throws ParserConfigurationException, IOException, SAXException {
 
         LOGGER.info("get list of documents by document type", DocumentsController.class);
 
