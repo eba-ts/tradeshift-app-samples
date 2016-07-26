@@ -1,0 +1,26 @@
+{
+  "Topbar": {
+    "Table": "Таблица",
+    "Buttons": "Кнопки",
+    "Form": "Форма",
+    "Documents": "Документы"
+  },
+  "Table": {
+    "ID": "Идентификатор",
+    "Character": "Личность",
+    "Alignment": "Группа"
+  },
+  "Buttons": {
+    "Success": "Успешно",
+    "Alert": "Тревога",
+    "Submit": "Отправить",
+    "Open Aside": "Открыть боковую панель",
+    "Double Icon": "Двойная иконка",
+    "Check server health": "Проверить работу сервера"
+  },
+  "Message": {
+    "Oopsie daisy!": "Ой-ой-ой!",
+    "Good job!": "Хорошая работа",
+    "Server is running!": "Сервер работает!"
+  }
+}

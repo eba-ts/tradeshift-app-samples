@@ -5,6 +5,7 @@ var request = require('request');
 var base64 = require('base-64');
 var xml2js = require('xml2js');
 var session = require('express-session');
+var i18n = require("i18n");
 
 router.use(session({ // Initialize session middleware so we can store there our token
   secret: config.clientSecret,
@@ -36,6 +37,9 @@ router.get('/oauth2/code', function(req, res){ // if no token, redirecting here
       if (!error){
         body = JSON.parse(body);
         req.session.access_token = body.access_token; // setting to session received access_token
+        request = request.defaults({ // setting default auth header with provided token
+          headers: { Authorization: 'Bearer ' + req.session.access_token }
+        });
         res.redirect('/');
       } else {
         res.send(error);
@@ -45,13 +49,10 @@ router.get('/oauth2/code', function(req, res){ // if no token, redirecting here
 });
 
 /* Get current account information */
-router.get('/info', function(req, res){
+router.get('/account/info', function(req, res){
   request({
     url: config.tradeshiftAPIServerURL + 'rest/external/account/info',
-    method: 'GET',
-    headers: {
-      Authorization: 'Bearer ' + req.session.access_token
-    }
+    method: 'GET'
   }, function(error, response, body){
        if (!error) {
          xml2js.parseString(body, function(err, result) { // Parse XML
@@ -60,7 +61,6 @@ router.get('/info', function(req, res){
        }  else {
          res.json(error);
        }
-
   })
 });
 
@@ -72,6 +72,16 @@ router.get('/demo/get_grid', function(req, res){
     {"id":4,"character":"Paladin Knight","alignment":"Lawful Good"},
     {"id":5,"character":"Potato Chip","alignment":"Radiant Good"}
   ])
+});
+
+/* API for requesting server-side locale */
+router.get('/locale', function(req, res){
+  res.send(i18n.getCatalog(req));
+});
+
+/* Check if server is up */
+router.get('/health', function(req, res){
+  res.send('Server is up and running!').status(200);
 });
 
 module.exports = router;
