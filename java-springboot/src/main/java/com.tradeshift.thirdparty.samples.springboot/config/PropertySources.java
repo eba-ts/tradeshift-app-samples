@@ -1,22 +1,24 @@
 package com.tradeshift.thirdparty.samples.springboot.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
-@Component(value = "propertySources")
+import javax.annotation.PostConstruct;
+
+@Configuration(value = "propertySources")
 public class PropertySources {
 
-    @Value("#{systemEnvironment['tradeshiftAPIDomainName']}")
     private String tradeshiftAPIDomainName;
-
-    @Value("#{systemEnvironment['clientID']}")
     private String clientID;
-
-    @Value("#{systemEnvironment['clientSecret']}")
     private String clientSecret;
-
-    @Value("#{systemEnvironment['redirectUri']}")
     private String redirectUri;
+
+    @PostConstruct
+    public void PropertySourcesInit() {
+        this.tradeshiftAPIDomainName = System.getenv("tradeshiftAPIDomainName");
+        this.clientID = System.getenv("clientID");
+        this.clientSecret = System.getenv("clientSecret");
+        this.redirectUri = System.getenv("redirectUri");
+    }
 
     public String getTradeshiftAPIDomainName() {
         return tradeshiftAPIDomainName;
