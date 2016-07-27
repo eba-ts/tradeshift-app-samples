@@ -1,10 +1,10 @@
-# Spring Boot - Angular/UI
+# Tradeshift Third Party Embedded App Sample - Java / Spring.boot + Angular + Tradeshift UI Components
 
 # Description
 
-This is a sample app for third-party applications. Some of the things it demonstrates are:
+This is a sample starter app for third-party applications. Some of the things it demonstrates are:
 
--  Show how to use <a href="ui.tradeshift.com"> Tradeshift's UI components </a>.
+-  Show how to use  [Tradeshift's UI components](http://ui.tradeshift.com)  </a>.
 -  OAUTH2 authorization.
 -  Calling Tradeshift API methods to get a list of invoices.
 
@@ -16,9 +16,7 @@ This is a sample app for third-party applications. Some of the things it demonst
 
 # Build
 
-
-    Application is working by HTTPS protocol.
-    Be sure, that you have correctly configured necessary data for that purpose, ssl certificates etc.
+    Application must be hosted behind HTTPS so that Tradeshift server can pass credentials securely.  When deploying, you need to make sure you host the app using HTTPS. 
 
 1. Add environment variables **clientID**, **clientSecret**, **redirectUri**, **tradeshiftAPIDomainName** with data you setup or receive from your Tradeshift.Developer app.
     
@@ -29,28 +27,30 @@ This is a sample app for third-party applications. Some of the things it demonst
             redirectUri = https://your_app_uri.com/redirect_uri
             tradeshiftAPIDomainName = https://api-tradeshift.com
        
-     ** About 'tradeshiftAPIDomainName' uri you can read in <a href="http://apps.tradeshift.com/developers/documentation/">Tradeshift development documentation.</a>
+     ** About 'tradeshiftAPIDomainName' URI please read [Tradeshift developer documentation](http://apps.tradeshift.com/developers/documentation/).
 
-3. Run from project root directory maven command : ' **mvn clean install** '.
+2. Run from project root directory maven command : ' **mvn clean install** '.
 
-4. Go to the target directory and run next command : ' **java -jar java-springboot-0.0.1.jar** '
+3. Go to the target directory and run next command : ' **java -jar java-springboot-0.0.1.jar** '
 
-5. Update Tradeshift app Main URL.
+4. Update Tradeshift App Main URL in Tradeshift Developer app. 
 
+5. Health monitoring - Go to the  `https://your_app_uri.com/health`.  If you get 200 and see payload `{"status":"UP"}` that means the app is up and running.
 
-
-You can easy run and deploy this project on the <a href="https://heroku.com">Heroku</a>, for this purpose do the following steps:
+You can easy run and deploy this project on the  , for this purpose do the following steps:
 
 1. Create new app on Heroku.
 
 2. Configure Heroku environment variables **clientID**, **clientSecret**, **redirectUri**, **tradeshiftAPIDomainName** with data you setup or receive from your Tradeshift.Developer app.
-    For more information on adding Heroku env vars see <a href="https://github.com/lorenwest/node-config/wiki/Environment-Variables">here</a> .
+    For more information on adding Heroku env vars see [here](https://github.com/lorenwest/node-config/wiki/Environment-Variables).
 
-4. Deploy on Heroku (see   <a href="https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku">Heroku deploy app documentation</a>).
+3. Deploy on Heroku (see   [Heroku deploy app documentation](https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku) ).
 
-5. Update on the Tradeshift app Main URL.
+4. Update on the Tradeshift app Main URL.
+
+5. Health monitoring - Go to the  `https://your_app_uri.com/health`.  If you get 200 and see payload `{"status":"UP"}` that means the app is up and running.
 
 # Notes 
 
 - This sample has no database connected. For production level application you would likely to use database.
-- Heroku automatically configure necessary data for the HTTPS protocol.
+- Heroku apps runs under HTTPS automatically. 

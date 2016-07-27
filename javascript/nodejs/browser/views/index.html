@@ -2,12 +2,17 @@
 <html>
 <head>
   <!--Custom Styles-->
+  <meta charset="utf-8">
   <link rel="stylesheet" href="stylesheets/main.css">
   <!--UI Components-->
   <script src="https://d5wfroyti11sa.cloudfront.net/prod/client/ts-5.0.2-beta.2.min.js?internal"></script>
   <!--AngularJS-->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.8/angular-sanitize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.11.1/angular-translate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-loader-static-files/2.11.1/angular-translate-loader-static-files.min.js"></script>
   <script src="javascripts/app.js"></script>
+  <script src="javascripts/home.controller.js"></script>
 </head>
 <body ng-app="tradeshiftApp" ng-controller="HomeCtrl">
 <header ts-topbar id="home-topbar"></header>
@@ -16,29 +21,32 @@
     <div id="tab1" ng-show="showTab == 1">
       <div ts-table id="home-table"></div>
       <div ts-companycard id="home-card"></div>
+      <button ts-button class="ts-primary" ng-click="checkHealth()">
+        <span translate="Buttons.Check server health">Check server health</span>
+      </button>
     </div>
     <div id="tab2" ng-show="showTab == 2">
       <menu ts-buttons class="ts-t-t" style="margin-top:10px">
         <li>
           <button class="ts-primary" ts.busy="true">
-            <span>Spin</span>
+            <span></span>
           </button>
         </li>
         <li>
-          <button class="ts-secondary" ng-click="aside.open()">
-            <span>Open Aside</span>
+          <button ts-button class="ts-secondary" ng-click="aside.open()">
+            <span translate="Buttons.Open Aside">Open Aside</span>
           </button>
         </li>
       </menu>
       <menu ts-buttons class="ts-t-t ts-join button-success-alert">
         <li>
-          <button class="ts-primary btn-alert" ng-click="ui.Notification.success('Good job!')">
-            <span>Success</span>
+          <button class="ts-primary btn-alert" ng-click="getNotification('success')">
+            <span translate="Buttons.Success">Success</span>
           </button>
         </li>
         <li>
-          <button class="ts-danger btn-success" ng-click="ui.Notification.error('OOPSIE DAISY!');">
-            <span>Alert</span>
+          <button class="ts-danger btn-success" ng-click="getNotification('alert')">
+            <span translate="Buttons.Alert">Alert</span>
           </button>
         </li>
       </menu>
@@ -55,7 +63,7 @@
         </li>
         <li>
           <button ts-button class="ts-tertiary">
-            <span>Double-icon</span>
+            <span translate="Buttons.Double Icon">Double icon</span>
           </button>
         </li>
       </menu>

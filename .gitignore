@@ -2,3 +2,5 @@
 target
 java-springboot.iml
 .mvn
+
+node_modules

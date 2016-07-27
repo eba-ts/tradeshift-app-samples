@@ -1,8 +1,9 @@
-# Node.js + Angular + UI Components
+# Tradeshift Third Party Embedded App Sample - Node.js + Angular + Tradeshift UI Components
 
 ## Description
-This is a sample project which shows how to create app on Tradeshift using Node.js, Angular and Tradeshift's [UI Components](ui.tradeshift.com).
-App shows authorization workflow and retrieves current company data as an example of API.
+This is a sample project which shows how to create an embedded app on Tradeshift using Node.js backend, with Angular.js on frontend, utilizing Tradeshift's [UI Components](http://ui.tradeshift.com).
+
+The app authenticates with Tradeshift server using OAUTH2, and retrieves current company data as an example of calling Tradeshift API.  The app needs to be run inside Tradeshift platform to fully work - see documentation [here](http://apps.tradeshift.com/documentation). This sample app has multiple language supportusing English and Russian languages.  To add languages, add files to browser/locales directory. 
 
 ## Requirements
 - [NodeJS](https://nodejs.org/en/) version 4 and higher
@@ -11,20 +12,23 @@ App shows authorization workflow and retrieves current company data as an exampl
 ## Build
 You can build and run project on your local server(`localhost`):
 - Add environment variables shown in `config/config.js`. For more information on adding env vars see [here](https://github.com/lorenwest/node-config/wiki/Environment-Variables)
-- Configure your _OAUTH2 REDIRECT URI_ in the Tradeshift app to `http://localhost:3000/oauth2/code` 
-- Update `authUrl` in your `config/config.js` file (use _TRADESHIFT AUTHORIZATION SERVER URL_)
 - Install dependencies - `npm install`
+- To allow you to develop locally but access Tradeshift servers, use [ngrok](https://ngrok.com/docs#expose) or similar tools, which allow you to explose a local server to the internet.
+- Follow instructions in Tradeshift.Developer app to create a new App.  Documentation [here](http://apps.tradeshift.com/documentation). 
+- Configure your _OAUTH2 REDIRECT URI_ in the Tradeshift Developer app to `http://ngrocURL/oauth2/code` 
+- Update `authUrl` in your `config/config.js` file (use _TRADESHIFT AUTHORIZATION SERVER URL_)
 - Run server - `npm start` 
-- Go to `localhost:3000`
+- Go to Tradeshift account on sandbox and open the app you created in Tradeshift.Developer app. 
 
 ## Deployment
-You can easily deploy this project on [Heroku](https://www.heroku.com/), for this purpose do the following steps:
-- Create new Node.js app on [Heroku](https://www.heroku.com/)
-- Configure Heroku env variables (`CLIENT_ID`, `CLIENT_SECRET`, `AUTH_URL`) with data from your Tradeshift App in Heroku app settings.
+You can easily deploy this project on [Heroku](https://www.heroku.com/), as follows:
+- Create new Node.js app on Heroku and connect your local git repository with heroku.. 
+- Configure Heroku environment variables (`CLIENT_ID`, `CLIENT_SECRET`, `AUTH_URL`) with data from your Tradeshift App in Heroku app settings.
 - Deploy on Heroku (see deploy app documentation)
-- Update Tradeshift app Main URL
+- Update Main URL in Tradeshift.Developer app to point to the deployed App URL. . 
 
 ## Notes
-- Default environment is sandbox, if you want to change it to production - change `TOKEN_URL` and `ACCOUNT_DATA_URL` (see `config/config.js`)
-- This sample has no database connected, only small config file. For production level application you would likely to use database.
-- For local building and testing you might want to use [ngrok](https://ngrok.com/docs#expose), which allows you to explose a local server to the internet.
+- By default, the app points to Tradeshift's sandbox, if you want to change it to production - change `TOKEN_URL` and `ACCOUNT_DATA_URL` (see `config/config.js`)
+- This sample has no persistence, only small config file. For production level application you will likely need to add database of your choice. 
+- For internationalization, we implemented both on client and server-side, but by default use client-side. Working sample API is provided. For client side we've used [`angular-translate` module](https://angular-translate.github.io/)
+

@@ -41,7 +41,8 @@ public class TokenController {
     }
 
     /**
-     * Receive authorization code from authorization server for Access Token
+     * Receive authorization code from authorization server for get Access Token from authorization server
+     * and redirect to the home page after that
      *
      * @param code authorization code from authorization server
      * @return Return to home page

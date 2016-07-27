@@ -52,7 +52,9 @@ public class TradeshiftDocumentRetrievalServiceImpl implements TradeshiftDocumen
     public TradeshiftDocumentRetrievalServiceImpl(@Qualifier("propertySources") PropertySources propertySources) {
         super();
         this.propertySources = propertySources;
-        URI_LIST_DOCUMENTS = propertySources.getTradeshiftAPIDomainName() + "/tradeshift/rest/external/documents";
+        URI_LIST_DOCUMENTS = propertySources.getTradeshiftAPIDomainName() +
+                                "/tradeshift/rest/external/documents?type={DocumentType}" +
+                                "&limit={DocumentLimitPerPage}&page={PageNumber}";
     }
 
 
@@ -71,15 +73,10 @@ public class TradeshiftDocumentRetrievalServiceImpl implements TradeshiftDocumen
 
         LOGGER.info("get List of documents by document type " + documentType, TradeshiftDocumentRetrievalServiceImpl.class);
 
-        Map<String, String> uriParams = new HashMap<String, String>();
-        uriParams.put("type", documentType);
-
-        String documentsUri = URI_LIST_DOCUMENTS;
-
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<String> requestEntity = tokenService.getRequestHttpEntityWithAccessToken();
-        ResponseEntity<?> responseEntity = restTemplate.exchange(documentsUri, HttpMethod.GET,
-                                                        requestEntity, String.class, uriParams);
+        ResponseEntity<?> responseEntity = restTemplate.exchange(URI_LIST_DOCUMENTS, HttpMethod.GET,
+                                                        requestEntity, String.class, documentType, 25, 0);
 
         return parseDocuments(responseEntity);
     }
@@ -94,8 +91,8 @@ public class TradeshiftDocumentRetrievalServiceImpl implements TradeshiftDocumen
      * @throws ParserConfigurationException
      * @throws IOException
      */
-    protected List<BaseTradeshiftDocumentDTO> parseDocuments(ResponseEntity responseEntity) throws SAXException,
-            ParserConfigurationException, IOException {
+    protected List<BaseTradeshiftDocumentDTO> parseDocuments(ResponseEntity responseEntity)
+                                throws SAXException, ParserConfigurationException, IOException {
 
         LOGGER.info("parse Tradeshift Document", TradeshiftDocumentRetrievalServiceImpl.class);
 
