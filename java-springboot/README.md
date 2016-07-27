@@ -4,7 +4,7 @@
 
 This is a sample starter app for third-party applications. Some of the things it demonstrates are:
 
--  Show how to use <a href="ui.tradeshift.com"> Tradeshift's UI components </a>.
+-  Show how to use  [Tradeshift's UI components](http://ui.tradeshift.com)  </a>.
 -  OAUTH2 authorization.
 -  Calling Tradeshift API methods to get a list of invoices.
 
@@ -27,7 +27,7 @@ This is a sample starter app for third-party applications. Some of the things it
             redirectUri = https://your_app_uri.com/redirect_uri
             tradeshiftAPIDomainName = https://api-tradeshift.com
        
-     ** About 'tradeshiftAPIDomainName' URI please read [http://apps.tradeshift.com/developers/documentation/]Tradeshift developer documentation.
+     ** About 'tradeshiftAPIDomainName' URI please read [Tradeshift developer documentation](http://apps.tradeshift.com/developers/documentation/).
 
 2. Run from project root directory maven command : ' **mvn clean install** '.
 
@@ -35,16 +35,16 @@ This is a sample starter app for third-party applications. Some of the things it
 
 4. Update Tradeshift App Main URL in Tradeshift Developer app. 
 
-5. Check that app runs correctly,  go to the  `https://your_app_uri.com/health`, you can see the next message `{"status":"UP"}`  that means that app successfully started.
+5. Health monitoring - Go to the  `https://your_app_uri.com/health`.  If you get 200 and see payload `{"status":"UP"}` that means the app is up and running.
 
-You can easy run and deploy this project on the <a href="https://heroku.com">Heroku</a>, for this purpose do the following steps:
+You can easy run and deploy this project on the  , for this purpose do the following steps:
 
 1. Create new app on Heroku.
 
 2. Configure Heroku environment variables **clientID**, **clientSecret**, **redirectUri**, **tradeshiftAPIDomainName** with data you setup or receive from your Tradeshift.Developer app.
-    For more information on adding Heroku env vars see <a href="https://github.com/lorenwest/node-config/wiki/Environment-Variables">here</a> .
+    For more information on adding Heroku env vars see [here](https://github.com/lorenwest/node-config/wiki/Environment-Variables).
 
-3. Deploy on Heroku (see   <a href="https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku">Heroku deploy app documentation</a>).
+3. Deploy on Heroku (see   [Heroku deploy app documentation](https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku) ).
 
 4. Update on the Tradeshift app Main URL.
 
