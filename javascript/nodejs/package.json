@@ -26,7 +26,6 @@
     "karma": "^1.1.2",
     "karma-chrome-launcher": "^1.0.1",
     "karma-jasmine": "^1.0.2",
-    "morgan": "^1.7.0",
     "sinon": "^1.17.5",
     "supertest": "^1.2.0"
   }
