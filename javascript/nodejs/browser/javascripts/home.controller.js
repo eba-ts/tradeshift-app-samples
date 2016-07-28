@@ -1,5 +1,5 @@
 
-app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
+app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
 
     $scope.ui = ts.ui; // So that we can access UIC from our template
     $scope.aside = ts.ui.get('#home-aside');
