@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="stylesheets/main.css">
   <!--UI Components-->
-  <script src="https://d5wfroyti11sa.cloudfront.net/prod/client/ts-5.0.2-beta.2.min.js?internal"></script>
+  <script src="http://d5wfroyti11sa.cloudfront.net/prod/client/ts-6.0.0-alpha.8.min.js"></script>
   <!--AngularJS-->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.8/angular-sanitize.min.js"></script>
@@ -15,30 +15,30 @@
   <script src="javascripts/home.controller.js"></script>
 </head>
 <body ng-app="tradeshiftApp" ng-controller="HomeCtrl">
-<header ts-topbar id="home-topbar"></header>
-<main ts-main>
-  <div ts-main-content>
+<header data-ts="TopBar" id="home-topbar"></header>
+<main data-ts="Main">
+  <div data-ts="MainContent">
     <div id="tab1" ng-show="showTab == 1">
-      <div ts-table id="home-table"></div>
-      <div ts-companycard id="home-card"></div>
-      <button ts-button class="ts-primary" ng-click="checkHealth()">
+      <div data-ts="Table" id="home-table"></div>
+      <div data-ts="CompanyCard" id="home-card"></div>
+      <button data-ts="Button" class="ts-primary" ng-click="checkHealth()">
         <span translate="Buttons.Check server health">Check server health</span>
       </button>
     </div>
     <div id="tab2" ng-show="showTab == 2">
-      <menu ts-buttons class="ts-t-t" style="margin-top:10px">
+      <menu data-ts="Buttons" class="ts-t-t" style="margin-top:10px">
         <li>
-          <button class="ts-primary" ts.busy="true">
+          <button class="ts-primary" data-ts.busy="true">
             <span></span>
           </button>
         </li>
         <li>
-          <button ts-button class="ts-secondary" ng-click="aside.open()">
+          <button data-ts="Button" class="ts-secondary" ng-click="aside.open()">
             <span translate="Buttons.Open Aside">Open Aside</span>
           </button>
         </li>
       </menu>
-      <menu ts-buttons class="ts-t-t ts-join button-success-alert">
+      <menu data-ts="Buttons" class="ts-t-t ts-join button-success-alert">
         <li>
           <button class="ts-primary btn-alert" ng-click="getNotification('success')">
             <span translate="Buttons.Success">Success</span>
@@ -50,26 +50,26 @@
           </button>
         </li>
       </menu>
-      <menu ts-buttons class="ts-i-i-t ts-join">
+      <menu data-ts="Buttons" class="ts-i-i-t ts-join">
         <li>
-          <button ts-button class="ts-tertiary">
+          <button data-ts="Button" class="ts-tertiary">
             <i class="ts-icon-arrowleft"></i>
           </button>
         </li>
         <li>
-          <button ts-button class="ts-tertiary">
+          <button data-ts="Button" class="ts-tertiary">
             <i class="ts-icon-arrowright"></i>
           </button>
         </li>
         <li>
-          <button ts-button class="ts-tertiary">
+          <button data-ts="Button" class="ts-tertiary">
             <span translate="Buttons.Double Icon">Double icon</span>
           </button>
         </li>
       </menu>
     </div>
     <div id="tab3" ng-show="showTab == 3">
-      <form ts-form ng-submit="submitForm()">
+      <form data-ts="Form" ng-submit="submitForm()">
         <fieldset>
           <label>
             <span>Textarea</span>
@@ -128,15 +128,14 @@
           </label>
 
         </fieldset>
-        <button ts-button class="ts-primary btn-submit" type="submit">
+        <button data-ts="Button" class="ts-primary btn-submit" type="submit">
           <span>Submit</span>
         </button>
       </form>
     </div>
-  </div>
 </main>
-<aside ts-aside id="home-aside">
-  <div ts-panel>
+<aside data-ts="Aside" id="home-aside">
+  <div data-ts="Panel">
     <p>Aside content</p>
   </div>
 </aside>
