@@ -27,6 +27,12 @@ You can easily deploy this project on [Heroku](https://www.heroku.com/), as foll
 - Deploy on Heroku (see deploy app documentation)
 - Update Main URL in Tradeshift.Developer app to point to the deployed App URL. . 
 
+## Testing
+Project uses Karma/Jasmine for testing Angular app and Mocha/Supertest for testing server side. For running tests you need to:
+- Install dependencies via `npm install`
+- Run `npm test` for server side test run
+- Run `karma start karma.config.js` for client side test run
+
 ## Notes
 - By default, the app points to Tradeshift's sandbox, if you want to change it to production - change `TOKEN_URL` and `ACCOUNT_DATA_URL` (see `config/config.js`)
 - This sample has no persistence, only small config file. For production level application you will likely need to add database of your choice. 

@@ -1,4 +1,4 @@
-var app = angular.module('tradeshiftApp', ['ngSanitize', 'pascalprecht.translate']);
+var app = angular.module('tradeshiftApp', ['pascalprecht.translate']);
 app.config(function ($locationProvider, $translateProvider) {
   $locationProvider.html5Mode({enabled: true, requireBase: false});
   $translateProvider
