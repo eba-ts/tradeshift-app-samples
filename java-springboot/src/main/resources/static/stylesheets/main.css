@@ -1,0 +1,10 @@
+.btn-submit {
+  margin-bottom: 20px;
+  width: 20vw;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.padding-left {
+  padding-left: 10px;
+}
