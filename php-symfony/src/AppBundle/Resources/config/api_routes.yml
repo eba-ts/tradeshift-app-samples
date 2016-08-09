@@ -1,0 +1,35 @@
+api_get_locale:
+  path: /locale
+  defaults: {_controller: AppBundle:Rest:getLocale}
+  requirements:
+    _method: GET
+
+api_get_company_info:
+  path: /account/info
+  defaults: {_controller: AppBundle:Rest:getCompanyInfo}
+  requirements:
+    _method: GET
+
+api_get_demo_table:
+  path: /demo/grid-data
+  defaults: {_controller: AppBundle:Rest:getDemoTable}
+  requirements:
+    _method: GET
+
+api_get_documents_invoices:
+  path: /document/documents
+  defaults: {_controller: AppBundle:Rest:getDocumentsInvoices}
+  requirements:
+    _method: GET
+
+api_get_locale_translations:
+  path: /locale/translations
+  defaults: {_controller: AppBundle:Rest:getTranslations}
+  requirements:
+    _method: GET
+
+api_get_health:
+  path: /health
+  defaults: {_controller: AppBundle:Rest:checkHealth}
+  requirements:
+    _method: GET

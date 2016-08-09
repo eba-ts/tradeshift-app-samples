@@ -1,0 +1,146 @@
+<header data-ts="TopBar" id="home-topbar"></header>
+<main data-ts="Main">
+    <div data-ts="MainContent">
+        <div id="tab1" ng-show="showTab == 1">
+            <div data-ts="Table" id="home-table"></div>
+        </div>
+        <div id="tab2" ng-show="showTab == 2">
+            <menu data-ts="Buttons" class="ts-t-t" style="margin-top:10px">
+                <li>
+                    <button class="ts-primary" data-ts.busy="true">
+                        <span>Spin</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="ts-secondary" ng-click="aside.open()">
+                        <span translate="Buttons.Open Aside">Open Aside</span>
+                    </button>
+                </li>
+            </menu>
+            <menu data-ts="Buttons" class="ts-t-t ts-join button-success-alert">
+                <li>
+                    <button class="ts-primary btn-alert" ng-click="ui.Notification.success('Good job!')">
+                        <span translate="Buttons.Success">Success</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="ts-danger btn-success" ng-click="ui.Notification.error('OOPSIE DAISY!');">
+                        <span translate="Buttons.Alert">Alert</span>
+                    </button>
+                </li>
+            </menu>
+            <menu data.ts="Buttons" class="ts-i-i-t ts-join">
+                <li>
+                    <button data-ts="Button" class="ts-tertiary">
+                        <i class="ts-icon-arrowleft"></i>
+                    </button>
+                </li>
+                <li>
+                    <button data-ts="Button" class="ts-tertiary">
+                        <i class="ts-icon-arrowright"></i>
+                    </button>
+                </li>
+                <li>
+                    <button data-ts="Button" class="ts-tertiary">
+                        <span translate="Buttons.Double Icon">Double icon</span>
+                    </button>
+                </li>
+                <li>
+                    <button data-ts="Button" class="ts-primary" ng-click="checkHealth()">
+                        <span translate="Buttons.Check server health">Check server health</span>
+                    </button>
+                </li>
+            </menu>
+        </div>
+        <div id="tab3" ng-show="showTab == 3">
+            <form data-ts="Form" ng-submit="submitForm()">
+                <fieldset>
+                    <label>
+                        <span>Textarea</span>
+                        <textarea disabled></textarea>
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <label ng-class="text.length ? '' : 'ts-error'">
+                        <span>Text</span>
+                        <input type="text" ng-model="text" required/>
+                    </label>
+                    <dl class="ts-errors" ng-hide="text.length">
+                        <dt>Can not be empty</dt>
+                    </dl>
+                </fieldset>
+                <fieldset>
+                    <label>
+                        <span>Date</span>
+                        <input type="date"/>
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <label>
+                        <span>Select</span>
+                        <select>
+                            <option value="1" selected>One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </label>
+                    <dl class="ts-info">
+                        <dt>Only one option available</dt>
+                </fieldset>
+                <fieldset>
+                    <span>Which option?</span>
+                    <label>
+                        <input type="radio" name="radio"/>
+                        <span>Option Uno</span>
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <label>
+                        <input type="radio" name="radio" checked/>
+                        <span>Option Deux</span>
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <span>checkboxes</span>
+                    <label>
+                        <span>Check me</span>
+                        <input type="checkbox"/>
+                    </label>
+                    <label>
+                        <span>No, check me</span>
+                        <input type="checkbox" checked/>
+                    </label>
+
+                </fieldset>
+                <button data.ts="Button" class="ts-primary btn-submit" type="submit">
+                    <span>Submit</span>
+                </button>
+            </form>
+        </div>
+        <div id="tab4" ng-show="showTab == 4">
+            <menu data-ts="Menu" style="width: 60%;">
+                <div data-ts="CompanyCard" id="home-companycard">
+                </div>
+            </menu>
+        </div>
+        <div id="tab5" ng-show="showTab == 5">
+            <menu data-ts="Menu" style="width: 60%;">
+                <li ng-repeat="doc in documents">
+                    <button>
+                        <span>{{doc.companyName}}</span>
+                        <br/>
+                        <div>
+                            <span>{{doc.state}} . {{doc.type}} . {{doc.id}} . ISSUE DATE {{doc.date}}</span>
+                            <span style="float:right">{{doc.total}}  {{doc.currency}}</span>
+                        </div>
+                    </button>
+                </li>
+            </menu>
+        </div>
+    </div>
+</main>
+<aside data-ts="Aside" id="home-aside">
+    <div data-ts="Panel">
+        <p>Aside content</p>
+    </div>
+</aside>
