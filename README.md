@@ -7,16 +7,25 @@ Currently, there are three sample apps available:
 * [JavaScript - Node.JS](javascript/nodejs)
 * [PHP - Symphony Apps](php-symfony)
 
-The sample apps all aim to show same things, and the front end code talking to different front ends is almost identical: 
-* App Authorization against Tradeshift servers using OAUTH2 three-legged approach. 
-* Calling Tradeshift APIs, such as getting documents and user information. 
-* Displaying CompanyCard and Locale
-* REST server and Angular js frontend
-* [Tradeshift's UI Components](http://ui.tradeshift.com), including table and tabs
-* i18n support on the client side (and 
-* Check health function for monitoring
-* Unit test framework integration to get you started (some projects)
 
+| Feature   | Java Spring.boot | Node.js | PHP
+| -------  |  -------   | -----------   | -----------
+|OAUTH2 Connection | X | X | X 
+|Authorization with Tradeshift Servers using OAUTH2 three-legged approach  | X | X | X 
+| Tradeshift APIs - getting documents and user information.  | X | X | X 
+| Tradeshift APIs - user information.  | X | X | X 
+| Displaying CompanyCard and Locale  | X | X | X
+| REST server and Angular js frontend  | X | X | X 
+| [Tradeshift's UI Components](http://ui.tradeshift.com), including table and tabs  | X | X | X 
+| i18n support on the client side  | X | X | X 
+| i18n support on the server side  | X | X | X 
+| Check health function for monitoring  | X | X | X 
+| Unit test framework integration to get you started  | X | X | X 
+| Tasks Service Example  | X |  |  
+| Webhooks Example  | X |  |  
+
+
+The sample apps all aim to show same things, and the front end code talking to different front ends is almost identical: 
 
 ![Screnshot1](php-symfony/screenshots/Sample_App_Table_Documents_Form.png)
 
