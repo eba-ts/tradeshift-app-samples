@@ -3,7 +3,8 @@
     "Table": "Table",
     "Buttons": "Buttons",
     "Form": "Form",
-    "Documents": "Documents"
+    "Documents": "Documents",
+    "CompanyCard": "Company Card"
   },
   "Table": {
       "ID": "ID",

@@ -19,7 +19,6 @@
   <div data-ts="MainContent">
     <div id="tab1" ng-show="showTab == 1">
       <div data-ts="Table" id="home-table"></div>
-      <div data-ts="CompanyCard" id="home-card"></div>
       <button data-ts="Button" class="ts-primary" ng-click="checkHealth()">
         <span translate="Buttons.Check server health">Check server health</span>
       </button>
@@ -132,6 +131,10 @@
         </button>
       </form>
     </div>
+    <div id="tab4" ng-show="showTab == 4">
+      <div data-ts="CompanyCard" id="home-card"></div>
+    </div>
+  </div>
 </main>
 <aside data-ts="Aside" id="home-aside">
   <div data-ts="Panel">
