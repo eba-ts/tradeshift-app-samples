@@ -35,7 +35,7 @@ This is a sample starter app for third-party applications. Some of the things it
             clientID = YourTradeshiftClientId
             clientSecret = b3658f61-d436-445e-949c-3086ccda00e1
             redirectUri = https://your_app_uri.com/oauth2/code
-            tradeshiftAPIDomainName = https://api-tradeshift.com
+            tradeshiftAPIDomainName = https://api-sandbox.tradeshift.com
 
      ** About 'tradeshiftAPIDomainName' URI please read [Tradeshift developer documentation](http://apps.tradeshift.com/developers/documentation/).
 
