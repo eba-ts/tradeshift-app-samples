@@ -10,7 +10,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
 
     $q.all([
       $translate(['Table.ID', 'Table.Character', 'Table.Alignment', // getting our i18n data
-                  'Topbar.Table', 'Topbar.Form', 'Topbar.Buttons',
+                  'Topbar.Table', 'Topbar.Form', 'Topbar.Buttons', 'Topbar.CompanyCard',
                   'Message.Oopsie daisy!', 'Message.Good job!', 'Message.Server is running!']),
       $req.getAccountData(),
       $req.getGridData()
@@ -87,6 +87,16 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
             id: 'tab3',
             onselect: function() {
               $scope.showTab = 3;
+              $scope.$apply();
+              scrollTo(0,0);
+            }
+          },
+          {
+            label: locale['Topbar.CompanyCard'],
+            icon: 'ts-icon-favorites',
+            id: 'tab4',
+            onselect: function() {
+              $scope.showTab = 4;
               $scope.$apply();
               scrollTo(0,0);
             }
