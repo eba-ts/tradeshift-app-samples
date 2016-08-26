@@ -1,6 +1,7 @@
 package com.tradeshift.thirdparty.samples.springboot.controllers;
 
-import com.tradeshift.thirdparty.samples.springboot.DemoApplication;
+
+import com.tradeshift.thirdparty.samples.springboot.Application;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = DemoApplication.class)
+@SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 public class DemoControllerTest {
 

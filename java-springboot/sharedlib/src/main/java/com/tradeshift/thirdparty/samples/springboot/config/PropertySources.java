@@ -11,13 +11,19 @@ public class PropertySources {
     private String clientID;
     private String clientSecret;
     private String redirectUri;
+    private String tradeshiftAppVersion;
 
     @PostConstruct
     public void PropertySourcesInit() {
+        this.tradeshiftAppVersion = System.getenv("TRADESHIFT_APP_VERSION");
         this.tradeshiftAPIDomainName = System.getenv("tradeshiftAPIDomainName");
         this.clientID = System.getenv("clientID");
         this.clientSecret = System.getenv("clientSecret");
         this.redirectUri = System.getenv("redirectUri");
+    }
+
+    public String getTradeshiftAppVersion() {
+        return tradeshiftAppVersion;
     }
 
     public String getTradeshiftAPIDomainName() {

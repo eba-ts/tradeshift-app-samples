@@ -2,58 +2,44 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 
 	<groupId>com.tradeshift.thirdparty.samples.springboot</groupId>
-	<artifactId>Java-SpringBoot-Sample</artifactId>
-	<version>0.0.1-RELEASE</version>
+	<artifactId>java-springboot</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>Java Springboot TS authorization App</name>
-	<description>This pom is a maven aggregator that contains all application modules.
-		Also, include all common dependencies needed by more than one module.
-        Dependencies are defined without version because this project has defined Spring Platform as parent.
-		Demo application includes module for Tradeshift authorization sequence.
-    </description>
-
-    <!-- Spring Platform is the parent of the generated application to
-        be able to use Spring Boot and all its default configuration -->
+	<name>Tradeshift Embedded App Sample</name>
+	<description>Sample app for third-party applications.</description>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.0.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>io.spring.platform</groupId>
+		<artifactId>platform-bom</artifactId>
+		<version>2.0.7.RELEASE</version>
 	</parent>
-
+	<modules>
+        <module>sharedlib</module>
+		<module>application</module>
+    </modules>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 	</properties>
 
-	<modules>
-		<module>sharedlib</module>
-		<module>application</module>
-	</modules>
 	<dependencies>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-        </dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.7.21</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jetty</artifactId>
-		</dependency>
-    </dependencies>
+	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
