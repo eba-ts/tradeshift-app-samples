@@ -24,9 +24,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Service
@@ -45,7 +43,6 @@ public class TradeshiftDocumentRetrievalServiceImpl implements TradeshiftDocumen
      * Inject PropertySources bean by constructor,
      * init URI_LIST_DOCUMENTS
      *
-     *
      * @param propertySources
      */
     @Autowired
@@ -60,7 +57,6 @@ public class TradeshiftDocumentRetrievalServiceImpl implements TradeshiftDocumen
 
     /**
      * Get List of documents by document type
-     *
      *
      * @param documentType documents type
      * @return List of documents by document type for current user
@@ -83,7 +79,6 @@ public class TradeshiftDocumentRetrievalServiceImpl implements TradeshiftDocumen
 
     /**
      * Convert list of documents from UBL format to list
-     *
      *
      * @param responseEntity ResponseEntity with list of documents in the UBL format
      * @return List of documents converted to List<BaseTradeshiftDocumentDTO>

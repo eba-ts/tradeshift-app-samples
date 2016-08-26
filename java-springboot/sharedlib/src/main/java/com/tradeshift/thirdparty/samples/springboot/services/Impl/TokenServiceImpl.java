@@ -1,5 +1,6 @@
 package com.tradeshift.thirdparty.samples.springboot.services.Impl;
 
+import com.nimbusds.jwt.PlainJWT;
 import com.tradeshift.thirdparty.samples.springboot.config.PropertySources;
 import com.tradeshift.thirdparty.samples.springboot.services.TokenService;
 import org.apache.commons.codec.binary.Base64;
@@ -15,10 +16,13 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
+import org.springframework.security.oauth2.common.DefaultOAuth2RefreshToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Date;
 
 
 @Service
@@ -31,6 +35,7 @@ public class TokenServiceImpl implements TokenService {
     private final String HEADER_AUTHORIZATION_TYPE = "Basic ";
     private final String HEADER_CHAR_SET_TYPE = "utf-8";
     private final String AUTHORIZATION_CODE_GRANT_TYPE = "authorization_code";
+    private final String REFRESH_TOKEN_GRANT_TYPE = "refresh_token";
     private final String AUTHORIZE_URL;
     private final String ACCESS_TOKEN_URI;
     private final String REDIRECT_URI;
@@ -39,12 +44,12 @@ public class TokenServiceImpl implements TokenService {
 
     private OAuth2AccessToken accessToken;
     private PropertySources propertySources;
+    private String userId;
 
 
     /**
      * Inject PropertySources bean by constructor,
      * Init AUTHORIZE_URL, ACCESS_TOKEN_URI, CLIENT_ID, REDIRECT_URI, CLIENT_SECRET
-     *
      *
      * @param propertySources
      */
@@ -69,7 +74,7 @@ public class TokenServiceImpl implements TokenService {
     public String getAuthorizationCodeURL() {
         LOGGER.info("get authorization url", TokenServiceImpl.class);
 
-        String authorizationCodeURL = AUTHORIZE_URL + "&client_id=" + CLIENT_ID + "&redirect_uri=" + REDIRECT_URI + "&scope=openid";
+        String authorizationCodeURL = AUTHORIZE_URL + "&client_id=" + CLIENT_ID + "&redirect_uri=" + REDIRECT_URI + "&scope=offline";
 
         return authorizationCodeURL;
     }
@@ -82,29 +87,67 @@ public class TokenServiceImpl implements TokenService {
      * @throws IOException
      */
     @Override
-    public OAuth2AccessToken getAccessTokenByAuthCode(String authorizationCode) throws IOException {
+    public OAuth2AccessToken getAccessTokenByAuthCode(String authorizationCode) throws ParseException {
         LOGGER.info("get oauth2 access token", TokenServiceImpl.class);
 
         OAuthRequest oAuthRequest = new OAuthRequest(Verb.POST, ACCESS_TOKEN_URI);
         oAuthRequest.addHeader("Content-Type", HEADER_CONTENT_TYPE);
-        oAuthRequest.addHeader("Authorization", HEADER_AUTHORIZATION_TYPE + Base64.encodeBase64String(
-                                                new String(CLIENT_ID + ":" + CLIENT_SECRET).getBytes()));
+        oAuthRequest.addHeader("Authorization", HEADER_AUTHORIZATION_TYPE + Base64.encodeBase64String(new String(CLIENT_ID + ":" + CLIENT_SECRET).getBytes()));
         oAuthRequest.setCharset(HEADER_CHAR_SET_TYPE);
         oAuthRequest.addBodyParameter("grant_type", AUTHORIZATION_CODE_GRANT_TYPE);
         oAuthRequest.addBodyParameter("code", authorizationCode);
 
         LOGGER.info("send request for access token", TokenServiceImpl.class);
-        DefaultOAuth2AccessToken accessToken = new DefaultOAuth2AccessToken(oAuthRequest.send().getBody());
+        String accessTokenResponce = oAuthRequest.send().getBody();
 
-        if (accessToken != null) {
-            LOGGER.info("successfully received authorization token ");
+        if (accessTokenResponce != null) {
+            LOGGER.info("successfully received authorization token");
             // store accessToken in session context
-            this.accessToken = accessToken;
+            this.accessToken = new DefaultOAuth2AccessToken(new JSONObject(accessTokenResponce).get("access_token").toString());
+            ((DefaultOAuth2AccessToken) this.accessToken).setRefreshToken(new DefaultOAuth2RefreshToken(new JSONObject(accessTokenResponce).get("refresh_token").toString()));
+            ((DefaultOAuth2AccessToken) this.accessToken).setExpiration((new Date(System.currentTimeMillis() + (Long
+                    .valueOf(new JSONObject(accessTokenResponce).get("expires_in").toString()) * 60000))));
+
+            String idToken = new JSONObject(accessTokenResponce).get("id_token").toString();
+            this.userId = PlainJWT.parse(idToken).getPayload().toJSONObject().get("userId").toString();
+
         } else {
-            LOGGER.info("failed to get authorization token", TokenServiceImpl.class);
+            LOGGER.warn("failed to get authorization token", TokenServiceImpl.class);
         }
 
         return accessToken;
+    }
+
+    /**
+     * Obtain a new token by refresh token
+     */
+    @Override
+    public void refreshToken() {
+        if (this.accessToken.getRefreshToken() != null) {
+            OAuthRequest oAuthRequest = new OAuthRequest(Verb.POST, ACCESS_TOKEN_URI);
+            oAuthRequest.addHeader("Content-Type", HEADER_CONTENT_TYPE);
+            oAuthRequest.addHeader("Authorization", HEADER_AUTHORIZATION_TYPE + Base64.encodeBase64String(new String(CLIENT_ID + ":" + CLIENT_SECRET).getBytes()));
+            oAuthRequest.setCharset(HEADER_CHAR_SET_TYPE);
+            oAuthRequest.addBodyParameter("grant_type", REFRESH_TOKEN_GRANT_TYPE);
+            oAuthRequest.addBodyParameter("refresh_token", getAccessTokenFromContext().getRefreshToken().getValue().toString());
+            oAuthRequest.addBodyParameter("scope", CLIENT_ID + "." + propertySources.getTradeshiftAppVersion());
+
+            LOGGER.info("send request for access token by refresh token", TokenServiceImpl.class);
+
+            String accessTokenResponce = oAuthRequest.send().getBody();
+
+            if (accessTokenResponce != null) {
+                LOGGER.info("successfully received authorization token by refresh token");
+                // store accessToken in session context
+                this.accessToken = new DefaultOAuth2AccessToken(new JSONObject(accessTokenResponce).get("access_token").toString());
+                ((DefaultOAuth2AccessToken) this.accessToken).setExpiration((new Date(System.currentTimeMillis() + Long.valueOf(new JSONObject(accessTokenResponce).get("expires_in").toString()))));
+            } else {
+                LOGGER.warn("failed to get authorization token by refresh token", TokenServiceImpl.class);
+            }
+        } else {
+            LOGGER.error("Refresh token doesn't exist", TokenServiceImpl.class);
+        }
+
     }
 
     /**
@@ -128,11 +171,25 @@ public class TokenServiceImpl implements TokenService {
     public HttpEntity getRequestHttpEntityWithAccessToken() {
         LOGGER.info("get HttpEntity with Access Token", TokenServiceImpl.class);
 
+        if (getAccessTokenFromContext().isExpired()) {
+            refreshToken();
+        }
+
         HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.add("Authorization", "Bearer " + new JSONObject(getAccessTokenFromContext().getValue()).get("access_token"));
+        requestHeaders.add("Authorization", "Bearer " + getAccessTokenFromContext().getValue());
         HttpEntity<String> requestEntity = new HttpEntity<String>(requestHeaders);
 
         return requestEntity;
+    }
+
+    /**
+     * Get current user Id from session context
+     *
+     * @return userId
+     */
+    @Override
+    public String getCurrentUserId() {
+        return userId;
     }
 
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 @Controller
 public class TokenController {
@@ -49,7 +50,7 @@ public class TokenController {
      * @throws IOException
      */
     @RequestMapping(value = "/oauth2/code", method = RequestMethod.GET)
-    public String codeResponse(@RequestParam(value = "code", required = true) String code) throws IOException {
+    public String codeResponse(@RequestParam(value = "code", required = true) String code) throws ParseException {
         LOGGER.info("get authorization token by authorization code", TokenController.class);
 
         OAuth2AccessToken accessToken = tokenService.getAccessTokenByAuthCode(code);

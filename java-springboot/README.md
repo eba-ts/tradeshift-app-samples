@@ -24,6 +24,10 @@ This is a sample starter app for third-party applications. Some of the things it
 - Maven 3 or later version
 - Application on Tradeshift App Developer
 
+# Test
+
+Do not forget to set Env variable to test pass.
+
 # Build
 
     Application must be hosted behind HTTPS so that Tradeshift server can pass credentials securely.  When deploying, you need to make sure you host the app using HTTPS.
