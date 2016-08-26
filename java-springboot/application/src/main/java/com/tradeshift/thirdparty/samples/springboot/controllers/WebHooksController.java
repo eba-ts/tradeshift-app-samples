@@ -25,7 +25,18 @@ public class WebHooksController {
     @Autowired
     WebHooksService webHooksService;
 
-
+    /**
+     * Receive document event info from tradeshift webhook when user get new document
+     *
+     * @param id document id
+     * @param tsUserId userId who received the new document
+     * @param tsCompanyAccountId Company Account Id
+     * @param tsUserLanguage selected user language
+     * @param event
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParserConfigurationException
+     */
     @RequestMapping(value = "/receive", method = RequestMethod.POST)
     public void receive(@RequestParam("id") final String id,
                         @RequestParam("tsUserId") final String tsUserId,
@@ -40,8 +51,16 @@ public class WebHooksController {
         webHooksService.addDocumentEvent(tsUserId);
     }
 
+    /**
+     * Send for angularjs UI client message about new received document over WebSocket connection
+     *
+     * @return SseEmitter
+     * @throws IOException
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     */
     @RequestMapping(value = "/eventsStatus", method = RequestMethod.GET)
-    public SseEmitter EventsStatus(HttpServletResponse response) throws IOException, ParserConfigurationException, SAXException {
+    public SseEmitter EventsStatus() throws IOException, ParserConfigurationException, SAXException {
         LOGGER.info("Server sent event");
 
         return webHooksService.sendDocsEvent();

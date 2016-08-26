@@ -98,17 +98,17 @@ public class TokenServiceImpl implements TokenService {
         oAuthRequest.addBodyParameter("code", authorizationCode);
 
         LOGGER.info("send request for access token", TokenServiceImpl.class);
-        String accessTokenResponce = oAuthRequest.send().getBody();
+        String accessTokenResponse = oAuthRequest.send().getBody();
 
-        if (accessTokenResponce != null) {
+        if (accessTokenResponse != null) {
             LOGGER.info("successfully received authorization token");
             // store accessToken in session context
-            this.accessToken = new DefaultOAuth2AccessToken(new JSONObject(accessTokenResponce).get("access_token").toString());
-            ((DefaultOAuth2AccessToken) this.accessToken).setRefreshToken(new DefaultOAuth2RefreshToken(new JSONObject(accessTokenResponce).get("refresh_token").toString()));
+            this.accessToken = new DefaultOAuth2AccessToken(new JSONObject(accessTokenResponse).get("access_token").toString());
+            ((DefaultOAuth2AccessToken) this.accessToken).setRefreshToken(new DefaultOAuth2RefreshToken(new JSONObject(accessTokenResponse).get("refresh_token").toString()));
             ((DefaultOAuth2AccessToken) this.accessToken).setExpiration((new Date(System.currentTimeMillis() + (Long
-                    .valueOf(new JSONObject(accessTokenResponce).get("expires_in").toString()) * 60000))));
+                    .valueOf(new JSONObject(accessTokenResponse).get("expires_in").toString()) * 60000))));
 
-            String idToken = new JSONObject(accessTokenResponce).get("id_token").toString();
+            String idToken = new JSONObject(accessTokenResponse).get("id_token").toString();
             this.userId = PlainJWT.parse(idToken).getPayload().toJSONObject().get("userId").toString();
 
         } else {
@@ -134,13 +134,13 @@ public class TokenServiceImpl implements TokenService {
 
             LOGGER.info("send request for access token by refresh token", TokenServiceImpl.class);
 
-            String accessTokenResponce = oAuthRequest.send().getBody();
+            String accessTokenResponse = oAuthRequest.send().getBody();
 
-            if (accessTokenResponce != null) {
+            if (accessTokenResponse != null) {
                 LOGGER.info("successfully received authorization token by refresh token");
                 // store accessToken in session context
-                this.accessToken = new DefaultOAuth2AccessToken(new JSONObject(accessTokenResponce).get("access_token").toString());
-                ((DefaultOAuth2AccessToken) this.accessToken).setExpiration((new Date(System.currentTimeMillis() + Long.valueOf(new JSONObject(accessTokenResponce).get("expires_in").toString()))));
+                this.accessToken = new DefaultOAuth2AccessToken(new JSONObject(accessTokenResponse).get("access_token").toString());
+                ((DefaultOAuth2AccessToken) this.accessToken).setExpiration((new Date(System.currentTimeMillis() + Long.valueOf(new JSONObject(accessTokenResponse).get("expires_in").toString()))));
             } else {
                 LOGGER.warn("failed to get authorization token by refresh token", TokenServiceImpl.class);
             }
