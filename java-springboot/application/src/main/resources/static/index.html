@@ -7,9 +7,9 @@
   <!--UI Components-->
   <script src="https://d5wfroyti11sa.cloudfront.net/prod/client/ts-6.0.0-alpha.8.min.js"></script>
   <!--AngularJS-->
-  <script src="node_modules/angular/angular.min.js"></script>
-  <script src="node_modules/angular-translate/dist/angular-translate.min.js"></script>
-  <script src="node_modules/angular-translate/dist/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.11.1/angular-translate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate-loader-static-files/2.11.1/angular-translate-loader-static-files.min.js"></script>
   <script src="javascripts/app.js"></script>
   <script src="javascripts/home.controller.js"></script>
 </head>
@@ -18,13 +18,18 @@
 <main data-ts="Main">
   <div data-ts="MainContent">
     <div id="tab1" ng-show="showTab == 1">
+      <div data-ts="Note" class="note">
+        <p> This is data, retrieved from our Node server by accessing '/demo/grid-data'. It uses 'Table' component to display data.</p>
+      </div>
       <div data-ts="Table" id="home-table"></div>
-      <div data-ts="CompanyCard" id="home-card"></div>
       <button data-ts="Button" class="ts-primary" ng-click="checkHealth()">
         <span translate="Buttons.Check server health">Check server health</span>
       </button>
     </div>
     <div id="tab2" ng-show="showTab == 2">
+      <div data-ts="Note" class="note">
+        <p> Simple page demonstrating UI Components' buttons and localization.</p>
+      </div>
       <menu data-ts="Buttons" class="ts-t-t" style="margin-top:10px">
         <li>
           <button class="ts-primary" data-ts.busy="true">
@@ -68,6 +73,9 @@
       </menu>
     </div>
     <div id="tab3" ng-show="showTab == 3">
+      <div data-ts="Note" class="note">
+        <p> Simple page demonstrating UI Components' inputs.</p>
+      </div>
       <form data-ts="Form" ng-submit="submitForm()">
         <fieldset>
           <label>
@@ -132,6 +140,26 @@
         </button>
       </form>
     </div>
+    <div id="tab4" ng-show="showTab == 4">
+      <div data-ts="Note" class="note">
+        <p>Here is your documents list, we get this by calling Tradeshift API: {tradeshiftAPIServerURL} + '/rest/external/documents'.
+          It uses 'Menu' component to display data.</p>
+      </div>
+      <menu data-ts="Menu" style="width: 60%;">
+        <li ng-repeat="doc in documents">
+          <button>
+            <span>{{doc.docReceiverCompanyName}}</span>
+            <br/>
+            <div>
+              <span>{{doc.state}} . {{doc.docType}} . {{doc.docId}} . ISSUE DATE {{doc.docIssueDate}}</span>
+              <span style="float:right">{{doc.docTotal}}  {{doc.docCurrency}}</span>
+            </div>
+          </button>
+        </li>
+      </menu>
+    </div>
+  </div>
+
 </main>
 <aside data-ts="Aside" id="home-aside">
   <div data-ts="Panel">

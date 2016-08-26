@@ -10,27 +10,14 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
 
     $q.all([
       $translate(['Table.ID', 'Table.Character', 'Table.Alignment', // getting our i18n data
-                  'Topbar.Table', 'Topbar.Form', 'Topbar.Buttons',
+                  'Topbar.Table', 'Topbar.Form', 'Topbar.Buttons', 'Topbar.Documents',
                   'Message.Oopsie daisy!', 'Message.Good job!', 'Message.Server is running!']),
-      $req.getAccountData(),
+      $req.getDocuments('invoice'),
       $req.getGridData()
     ]).then(function(response){
       var locale = response[0];
       /***************************/
-      $scope.info = response[1].data['ts:CompanyAccountInfo'];
-      if ($scope.info) {
-        $scope.card.render({
-          id: $scope.info['ts:CompanyAccountId'][0],
-          data: {
-            name: $scope.info['ts:CompanyName'] ? $scope.info['ts:CompanyName'][0] : 'none',
-            location: $scope.info['ts:Country'] ? $scope.info['ts:Country'][0] : 'none',
-            size: $scope.info['ts:Size'][0] ? $scope.info['ts:Size'][0] : 'none',
-            connection: 0,
-            industry: $scope.info['ts:Industry'] ? $scope.info['ts:Industry'][0] : 'none',
-            logo: $scope.info['ts:LogoURL'] ? $scope.info['ts:LogoURL'][0] : 'none'
-          }
-        })
-      }
+      $scope.documents = response[1].data;
       /*************************/
       $scope.data = $scope.getArray(response[2].data);
 
@@ -90,6 +77,16 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
               $scope.$apply();
               scrollTo(0,0);
             }
+          },
+          {
+            label: locale['Topbar.Documents'],
+            icon: 'ts-icon-heart',
+            id: 'tab4',
+            onselect: function() {
+              $scope.showTab = 4;
+              $scope.$apply();
+              scrollTo(0,0);
+            }
           }
         ])
         .green();
@@ -119,7 +116,11 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
     /* Checks if server is up */
     $scope.checkHealth = function(){
       $req.getHealth().then(function(response){
-        ts.ui.Notification.success(response.data);
+        if (typeof response.data === 'object') { // Java returns object
+          ts.ui.Notification.success(response.data.status);
+        } else { // Node returns string
+          ts.ui.Notification.success(response.data);
+        }
       }, function(response){
         ts.ui.Notification.error(response.status + ' ' + response.statusText);
       })

@@ -6,11 +6,11 @@ module.exports = function(config) {
     /* Important to have here all files related to the project.
        Double check your dependencies in Angular module and HTML. */
     files: [
-      'node_modules/angular/angular.min.js',
-      'node_modules/angular-mocks/angular-mocks.js',
-      'node_modules/angular-translate/dist/angular-translate.min.js',
-      'node_modules/angular-translate/dist/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js',
-      'https://d5wfroyti11sa.cloudfront.net/prod/client/ts-5.0.2-beta.2.min.js?internal',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-mocks.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.11.1/angular-translate.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/angular-translate-loader-static-files/2.11.1/angular-translate-loader-static-files.min.js',
+      'https://d5wfroyti11sa.cloudfront.net/prod/client/ts-6.0.0-alpha.8.min.js',
       'https://cdn.jsdelivr.net/lodash/4.14.0/lodash.min.js',
       'javascripts/*.js',
       'tests/*.spec.js'

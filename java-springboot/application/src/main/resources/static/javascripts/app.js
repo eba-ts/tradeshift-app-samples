@@ -28,10 +28,12 @@ app.config(function ($locationProvider, $translateProvider) {
     var url = $location.absUrl(); // setting absolute URL
     return {
       getGridData: function () {
-        return $http.get(url + 'demo/get_grid');
+        return $http.get(url + 'demo/grid-data');
       },
-      getAccountData: function () {
-        return $http.get(url + 'account/info');
+      getDocuments: function (documentType) { // Call to Tradeshift API
+        return $http.get(url + '/document/documents', {
+          params: {documentType: documentType}
+        });
       },
       getHealth: function () {
         return $http.get(url + 'health');
