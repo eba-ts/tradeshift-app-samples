@@ -64,7 +64,7 @@ router.get('/account/info', function(req, res){
   })
 });
 
-router.get('/demo/get_grid', function(req, res){
+router.get('/demo/grid-data', function(req, res){
   res.send([
     {"id":1,"character":"Barbarian Queen","alignment":"Neutral Evil"},
     {"id":2,"character":"Global Senior Vice President of Sales","alignment":"Chaotic Evil"},

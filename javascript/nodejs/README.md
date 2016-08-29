@@ -9,6 +9,15 @@ The app authenticates with Tradeshift server using OAUTH2, and retrieves current
 - [NodeJS](https://nodejs.org/en/) version 4 and higher
 - Application on Tradeshift App Developer
 
+## Back-end REST API
+
+Action          | Request   | URL 
+--------------- | --------- | ---------------- 
+Check health      |   GET     | /health
+Get locale      |   GET     | /locale
+Company info    |   GET     | /account/info
+Demo table      |   GET     | /demo/grid-data
+
 ## Build
 You can build and run project on your local server(`localhost`):
 - Add environment variables shown in `config/config.js`. For more information on adding env vars see [here](https://github.com/lorenwest/node-config/wiki/Environment-Variables)

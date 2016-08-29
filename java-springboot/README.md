@@ -2,15 +2,6 @@
 
 # Description
 
-App modules structure
----------------------
-|- application
-|- sharedlib
-
-1. application module - Holds basic code examples. Shows interacting methods with TradeShift platform.
-2. sharedlib module - Implements main sequence for TradeShift authentication process.
- Can be used as autonomous module for a new App development.
-
 
 This is a sample starter app for third-party applications. Some of the things it demonstrates are:
 
@@ -18,11 +9,17 @@ This is a sample starter app for third-party applications. Some of the things it
 -  OAUTH2 authorization.
 -  Calling Tradeshift API methods to get a list of invoices.
 
+App Modules
+---------------------
+The app is subdivided into two modules: 
+1. *sharedlib module* - Implements main sequence for Tradeshift authorization process.  Packaged separately so it can be easily reused in applications.  
+2. *application module* - Includes sharedlib, and has the code for actual application, including UI.  Shows interacting methods with TradeShift platform.
+
 # Requirements
 
 - Java 8
 - Maven 3 or later version
-- Application on Tradeshift App Developer
+- Once you compile and deploy this server, you will need to configure it in Tradeshift Developer app.  See documentation [here](http://apps.tradeshift.com/developers/documentation/#embedded-app)
 
 # Test
 

@@ -28,7 +28,7 @@ app.config(function ($locationProvider, $translateProvider) {
     var url = $location.absUrl(); // setting absolute URL
     return {
       getGridData: function () {
-        return $http.get(url + 'demo/get_grid');
+        return $http.get(url + 'demo/grid-data');
       },
       getAccountData: function () {
         return $http.get(url + 'account/info');
