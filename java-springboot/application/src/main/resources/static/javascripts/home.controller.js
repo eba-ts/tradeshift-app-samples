@@ -105,7 +105,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                     }
                 }
             ])
-            .green();
+            .dark();
 
         $scope.getNotification = function (type) {
             if (type == 'success') {
