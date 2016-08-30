@@ -37,11 +37,16 @@ Currently, there are three sample apps available:
 | GET /locale/translations | Server-side Translation strings | | | X
 | GET /jwt/id-token | JWT Token Decoded | X |  | 
 
+
+## Installing the Sample Apps 
+
+[Here is a short video](https://drive.google.com/file/d/0Bx2z3BvoWzgtU05QdFludEROZ2c/view) (12 minutes) that shows you how to fully deploy and configure the Java Sample App onto Tradeshift. 
+
 The sample apps all aim to show same things, and the Front-end code talking to different Back-ends is almost identical:
 
-![Screenshot1](php-symfony/screenshots/Sample_App_Table_Documents_Form.png)
+![Screenshot1](screenshots/screenshot1_intro.png)
 
-![Screenshot2](php-symfony/screenshots/Sample_App_Buttons_And_Company_Card.png)
+![Screenshot2](screenshots/screenshot2_jwt.png)
 
 The apps are designed to be hosted on any service. We tested these Apps on Heroku.
 

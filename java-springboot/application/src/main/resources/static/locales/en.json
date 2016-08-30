@@ -4,7 +4,7 @@
     "Table": "Table UI Component",
     "Buttons": "Button and Forms, I18N",
     "Health": "Health Check",
-    "Documents": "Documents",
+    "Documents": "Documents API",
     "JWTTokenInfo": "JWT-Token-Info"
   },
   "Table": {

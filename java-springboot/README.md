@@ -2,19 +2,15 @@
 
 # Description
 
+This is a sample starter app for third-party applications.  See what functionality it supports in the [master README file](../README.md).   
 
-This is a sample starter app for third-party applications. Some of the things it demonstrates are:
+[Here is a short video](https://drive.google.com/file/d/0Bx2z3BvoWzgtU05QdFludEROZ2c/view) (12 minutes) that shows you how to fully deploy and configure the Java Sample App on Tradeshift. 
 
--  Show how to use  [Tradeshift's UI components](http://ui.tradeshift.com)  </a>.
--  Show how to parse info from Tradeshift JWT token
--  OAUTH2 authorization.
--  Calling Tradeshift API methods to get a list of invoices.
-
-App Modules
+Java Maven Modules
 ---------------------
 The app is subdivided into two modules: 
-1. *sharedlib module* - Implements main sequence for Tradeshift authorization process.  Packaged separately so it can be easily reused in applications.  
-2. *application module* - Includes sharedlib, and has the code for actual application, including UI.  Shows interacting methods with TradeShift platform.
+- *sharedlib module* - Implements main sequence for Tradeshift authorization process.  Packaged separately so it can be easily reused in applications.  
+- *application module* - Includes sharedlib, and has the code for actual application, including UI.  Shows interacting methods with TradeShift platform.
 
 # Requirements
 
@@ -24,22 +20,18 @@ The app is subdivided into two modules:
 
 # Test
 
-Do not forget to set Env variable to test pass.
+There is one simple test just to let you add more should you choose to use this project as starter for your own. 
 
 # Build
 
     Application must be hosted behind HTTPS so that Tradeshift server can pass credentials securely.  When deploying, you need to make sure you host the app using HTTPS.
 
-1. Add environment variables **clientID**, **clientSecret**, **redirectUri**, **tradeshiftAPIDomainName** with data you setup or receive from your Tradeshift.Developer app.
+1. Add four environment variables **clientID**, **clientSecret**, **redirectUri**, **tradeshiftAPIDomainName** with information you have set in Tradeshift.Developer app.
 
-    For example :
-
-            clientID = YourTradeshiftClientId
-            clientSecret = b3658f61-d436-445e-949c-3086ccda00e1
-            redirectUri = https://your_app_uri.com/oauth2/code
-            tradeshiftAPIDomainName = https://api-sandbox.tradeshift.com
-
-     ** About 'tradeshiftAPIDomainName' URI please read [Tradeshift developer documentation](http://apps.tradeshift.com/developers/documentation/).
+            clientID = TradeshiftClientId (From Developer App)
+            clientSecret = xxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx (From Developer App)
+            redirectUri = https://your_app_uri.com/oauth2/code (Same as one you configure in Developer App)
+            tradeshiftAPIDomainName = https://api-sandbox.tradeshift.com (this is for sandbox, https://api.tradeshift.com for production)
 
 2. Run from project root directory maven command : ' **mvn clean install** '.
 
@@ -49,7 +41,7 @@ Do not forget to set Env variable to test pass.
 
 5. Health monitoring - Go to the  `https://your_app_uri.com/health`.  If you get 200 and see payload `{"status":"UP"}` that means the app is up and running.
 
-You can easy run and deploy this project on the  , for this purpose do the following steps:
+You can easy run and deploy this project on Heroku, for this purpose do the following steps:
 
 1. Create new app on Heroku.
 
@@ -65,4 +57,4 @@ You can easy run and deploy this project on the  , for this purpose do the follo
 # Notes
 
 - This sample has no database connected. For production level application you would likely to use database.
-- Heroku apps runs under HTTPS automatically.
+- Heroku apps run under HTTPS automatically.
