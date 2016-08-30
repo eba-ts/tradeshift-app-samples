@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="stylesheets/main.css">
     <!--UI Components-->
-    <script src="https://d5wfroyti11sa.cloudfront.net/prod/client/ts-6.0.0-alpha.8.min.js"></script>
+    <script src="https://d5wfroyti11sa.cloudfront.net/prod/client/ts-6.0.0-alpha.10.min.js"></script>
     <!--AngularJS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.11.1/angular-translate.min.js"></script>
@@ -19,17 +19,13 @@
     <div data-ts="MainContent">
         <div id="tab1" ng-show="showTab == 1">
             <div data-ts="Note" class="note">
-                <p> This is data, retrieved from our Node server by accessing '/demo/grid-data'. It uses 'Table'
-                    component to display data.</p>
+                <p> This is mock data, retrieved from App's server by accessing '/demo/grid-data' URI. It uses <a href="https://tradeshift.github.io/Client-Runtime//#components/table/">Table Tradeshift UI component</a> to display the data.</p>
             </div>
-            <div data-ts="Table" id="home-table"></div>
-            <button data-ts="Button" class="ts-secondary" ng-click="checkHealth()">
-                <span translate="Buttons.Check server health">Check server health</span>
-            </button>
+            <div data-ts="UI Components" id="home-table"></div>
         </div>
         <div id="tab2" ng-show="showTab == 2">
             <div data-ts="Note" class="note">
-                <p> Simple page demonstrating UI Components' buttons and localization.</p>
+                <p> Simple page demonstrating <a href="http://ui.tradeshift.com">UI Components</a> buttons and internationalization.</p>
             </div>
             <menu data-ts="Buttons" class="ts-t-t" style="margin-top:10px">
                 <li>
@@ -72,9 +68,8 @@
                     </button>
                 </li>
             </menu>
-        </div>
-        <div id="tab3" ng-show="showTab == 3">
-            <div data-ts="Note" class="note">
+
+           <div data-ts="Note" class="note">
                 <p> Simple page demonstrating UI Components' inputs.</p>
             </div>
             <form data-ts="Form" ng-submit="submitForm()">
@@ -140,12 +135,20 @@
                     <span>Submit</span>
                 </button>
             </form>
+  
+
         </div>
+        <div id="tab3" ng-show="showTab == 3">
+            <div data-ts="Health Check" class="note">
+                <p> Health check is a way Tradeshift can monitor uptime of the third-party app server (this is upcoming feature in Developer app).  This calls '/health' on the server side. </p>
+            </div>
+            <button data-ts="Button" class="ts-primary" ng-click="checkHealth()">
+                <span translate="Buttons.Check server health">Check server health</span>
+            </button>
+       </div>
         <div id="tab4" ng-show="showTab == 4">
             <div data-ts="Note" class="note">
-                <p>Here is your documents list, we get this by calling Tradeshift API: {tradeshiftAPIServerURL} +
-                    '/rest/external/documents'.
-                    It uses 'Menu' component to display data.</p>
+                <p>Below is the documents from your Tradeshift account. The app retrieves it by calling Tradeshift API at: {tradeshiftAPIServerURL} + '/rest/external/documents'.  It uses the 'Menu' Tradeshift UI component to display the data.</p>
             </div>
             <menu data-ts="Menu" style="width: 60%;">
                 <li ng-repeat="doc in documents">

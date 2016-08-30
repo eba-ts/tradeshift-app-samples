@@ -10,7 +10,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
 
     $q.all([
         $translate(['Table.ID', 'Table.Character', 'Table.Alignment', // getting our i18n data
-            'Topbar.Table', 'Topbar.Form', 'Topbar.Buttons', 'Topbar.Documents', 'Topbar.JWTTokenInfo',
+            'Topbar.Table', 'Topbar.Form', 'Topbar.Health', 'Topbar.Documents', 'Topbar.JWTTokenInfo',
             'Message.Oopsie daisy!', 'Message.Good job!', 'Message.Server is running!']),
         $req.getDocuments('invoice'),
         $req.getGridData(),
@@ -75,7 +75,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                     }
                 },
                 {
-                    label: locale['Topbar.Form'],
+                    label: locale['Topbar.Health'],
                     icon: 'ts-icon-code',
                     id: 'tab3',
                     onselect: function () {

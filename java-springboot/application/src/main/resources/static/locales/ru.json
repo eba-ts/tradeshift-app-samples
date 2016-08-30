@@ -2,7 +2,7 @@
   "Topbar": {
     "Table": "Таблица",
     "Buttons": "Кнопки",
-    "Form": "Форма",
+    "Health": "Health Check",
     "Documents": "Документы",
     "JWTTokenInfo": "JWT-Token-Информация"
   },

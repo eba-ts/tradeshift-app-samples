@@ -1,8 +1,8 @@
 {
   "Topbar": {
-    "Table": "Table",
+    "Table": "Table UI Component",
     "Buttons": "Buttons",
-    "Form": "Form",
+    "Health": "Health Check",
     "Documents": "Documents",
     "JWTTokenInfo": "JWT-Token-Info"
   },
