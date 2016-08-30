@@ -6,6 +6,7 @@
 This is a sample starter app for third-party applications. Some of the things it demonstrates are:
 
 -  Show how to use  [Tradeshift's UI components](http://ui.tradeshift.com)  </a>.
+-  Show how to parse info from Tradeshift JWT token
 -  OAUTH2 authorization.
 -  Calling Tradeshift API methods to get a list of invoices.
 

@@ -38,6 +38,9 @@ app.config(function ($locationProvider, $translateProvider) {
       getHealth: function () {
         return $http.get(url + 'health');
       },
+      getJWTInfo: function () {
+        return $http.get(url + '/jwt/id-token');
+      },
       getLocale: function () { // in case if you want to get your locales from server, currently not used
         return $http.get(url + 'locale');
       }

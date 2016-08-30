@@ -23,6 +23,7 @@ Currently, there are three sample apps available:
 | Back-end basic test to get you started  | X | X |
 | Tasks Service Example  | X |  |  
 | Webhooks Example  | X |  |  
+| JWT (id_token) Decoding  | X |  |  
 
 ## Back-end REST API
 
@@ -34,6 +35,7 @@ Currently, there are three sample apps available:
 | GET /health | Healthcheck | X | X | X
 | GET /locale | Server-side i18n| | X | X
 | GET /locale/translations | Server-side Translation strings | | | X
+| GET /jwt/id-token | JWT Token Decoded | X |  | 
 
 The sample apps all aim to show same things, and the Front-end code talking to different Back-ends is almost identical:
 

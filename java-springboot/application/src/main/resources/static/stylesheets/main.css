@@ -11,3 +11,19 @@
 .note {
   margin-top: 20px;
 }
+.inline {
+  float:left;
+  margin-left: 3%;
+}
+
+table {
+  margin: auto;
+}
+th {
+  text-align: left;
+  padding-left: 5%;
+}
+td {
+  padding-left: 5%;
+  width: 5%;
+}

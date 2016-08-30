@@ -1,5 +1,6 @@
 package com.tradeshift.thirdparty.samples.springboot.services;
 
+import com.tradeshift.thirdparty.samples.springboot.domain.dto.JwtDTO;
 import org.springframework.http.HttpEntity;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.stereotype.Service;
@@ -21,4 +22,6 @@ public interface TokenService {
     HttpEntity getRequestHttpEntityWithAccessToken();
 
     String getCurrentUserId() throws ParserConfigurationException;
+
+    JwtDTO JwtDTO();
 }

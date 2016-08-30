@@ -3,7 +3,8 @@
     "Table": "Таблица",
     "Buttons": "Кнопки",
     "Form": "Форма",
-    "Documents": "Документы"
+    "Documents": "Документы",
+    "JWTTokenInfo": "JWT-Token-Информация"
   },
   "Table": {
     "ID": "Идентификатор",

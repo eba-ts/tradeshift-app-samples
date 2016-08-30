@@ -2,6 +2,7 @@ package com.tradeshift.thirdparty.samples.springboot.services.Impl;
 
 import com.nimbusds.jwt.PlainJWT;
 import com.tradeshift.thirdparty.samples.springboot.config.PropertySources;
+import com.tradeshift.thirdparty.samples.springboot.domain.dto.JwtDTO;
 import com.tradeshift.thirdparty.samples.springboot.services.TokenService;
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
@@ -45,6 +46,7 @@ public class TokenServiceImpl implements TokenService {
     private OAuth2AccessToken accessToken;
     private PropertySources propertySources;
     private String userId;
+    private JwtDTO jwtDTO;
 
 
     /**
@@ -109,7 +111,8 @@ public class TokenServiceImpl implements TokenService {
                     .valueOf(new JSONObject(accessTokenResponse).get("expires_in").toString()) * 60000))));
 
             String idToken = new JSONObject(accessTokenResponse).get("id_token").toString();
-            this.userId = PlainJWT.parse(idToken).getPayload().toJSONObject().get("userId").toString();
+            this.jwtDTO = parseJWTToken(idToken);
+            this.userId = this.jwtDTO.getUserId();
 
         } else {
             LOGGER.warn("failed to get authorization token", TokenServiceImpl.class);
@@ -190,6 +193,40 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public String getCurrentUserId() {
         return userId;
+    }
+
+    /**
+     * Get tradeshift JWT token info
+     *
+     * @return JwtDTO
+     */
+    @Override
+    public JwtDTO JwtDTO() {
+        return jwtDTO;
+    }
+
+    /**
+     * Convert tradeshift JWT token to JwtDTO object
+     *
+     * @param idToken Tradeshift JWT token
+     * @return JwtDTO
+     * @throws ParseException
+     */
+    private JwtDTO parseJWTToken(String idToken) throws ParseException {
+        JwtDTO jwtDTO = new JwtDTO();
+
+        net.minidev.json.JSONObject jwtJson = PlainJWT.parse(idToken).getPayload().toJSONObject();
+        jwtDTO.setOriginalJWTToken(idToken);
+        jwtDTO.setUserId(jwtJson.get("userId").toString());
+        jwtDTO.setTradeshiftUserEmail(jwtJson.get("sub").toString());
+        jwtDTO.setAppName(jwtJson.get("aud").toString());
+        jwtDTO.setCompanyId(jwtJson.get("companyId").toString());
+        jwtDTO.setIss(jwtJson.get("iss").toString());
+        jwtDTO.setExpirationTime(Long.valueOf(jwtJson.get("exp").toString()));
+        jwtDTO.setIssuedAtTime(Long.valueOf(jwtJson.get("iat").toString()));
+        jwtDTO.setJwtUniqueIdentifier(jwtJson.get("jti").toString());
+
+        return jwtDTO;
     }
 
 }

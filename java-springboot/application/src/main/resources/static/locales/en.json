@@ -3,7 +3,8 @@
     "Table": "Table",
     "Buttons": "Buttons",
     "Form": "Form",
-    "Documents": "Documents"
+    "Documents": "Documents",
+    "JWTTokenInfo": "JWT-Token-Info"
   },
   "Table": {
       "ID": "ID",
