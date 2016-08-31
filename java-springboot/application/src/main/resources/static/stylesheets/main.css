@@ -11,19 +11,22 @@
 .note {
   margin-top: 20px;
 }
+.note a {
+  color: #20a0e9 !important;
+}
 .inline {
   float:left;
   margin-left: 3%;
 }
 
-table {
+.token-table {
   margin: auto;
 }
-th {
+.token-table th {
   text-align: left;
   padding-left: 5%;
 }
-td {
+.token-table td {
   padding-left: 5%;
   width: 5%;
 }

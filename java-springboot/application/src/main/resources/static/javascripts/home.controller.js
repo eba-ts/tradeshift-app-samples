@@ -33,7 +33,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                 {
                     label: locale['Topbar.Intro'],
                     id: 'tab0',
-                    icon: 'ts-icon-apps',
+                    icon: 'ts-icon-discovery',
                     onselect: function () {
                         $scope.showTab = 0;
                         $scope.$apply();
@@ -52,7 +52,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                 },
                 {
                     label: locale['Topbar.Buttons'],
-                    icon: 'ts-icon-activity',
+                    icon: 'ts-icon-code',
                     id: 'tab2',
                     onselect: function () {
                         $scope.showTab = 2;
@@ -62,7 +62,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                 },
                 {
                     label: locale['Topbar.Health'],
-                    icon: 'ts-icon-code',
+                    icon: 'ts-icon-activity',
                     id: 'tab3',
                     onselect: function () {
                         $scope.showTab = 3;
@@ -72,7 +72,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                 },
                 {
                     label: locale['Topbar.Documents'],
-                    icon: 'ts-icon-heart',
+                    icon: 'ts-icon-alldocuments',
                     id: 'tab4',
                     onselect: function () {
                         $scope.showTab = 4;
@@ -82,7 +82,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                 },
                 {
                     label: locale['Topbar.JWTTokenInfo'],
-                    icon: 'ts-icon-heart',
+                    icon: 'ts-icon-info',
                     id: 'tab5',
                     onselect: function () {
                         $scope.showTab = 5;
@@ -129,7 +129,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
         }
     });
 
-    /* get array of arrays from array of objects */
+    /* Table Component requires [[],[],[]] structure. So we need to make array of arrays from array of objects */
     $scope.getArray = function (data) {
         var result = [];
         data.forEach(function (item) {
