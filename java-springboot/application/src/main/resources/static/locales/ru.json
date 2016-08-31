@@ -1,9 +1,9 @@
 {
   "Topbar": {
-    "Intro": "Introduction",
+    "Intro": "Введение",
     "Table": "Таблица",
     "Buttons": "Кнопки",
-    "Health": "Health Check",
+    "Health": "Проверка сервера",
     "Documents": "Документы",
     "JWTTokenInfo": "JWT-Token-Информация"
   },

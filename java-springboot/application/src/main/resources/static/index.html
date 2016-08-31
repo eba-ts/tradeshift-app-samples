@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="stylesheets/main.css">
     <!--UI Components-->
-    <script src="https://d5wfroyti11sa.cloudfront.net/prod/client/ts-6.0.0-alpha.8.min.js"></script>
+    <script src="//d5wfroyti11sa.cloudfront.net/prod/client/ts-6.0.0-alpha.11.min.js"></script>
     <!--AngularJS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.11.1/angular-translate.min.js"></script>
@@ -18,36 +18,42 @@
 <main data-ts="Main">
     <div data-ts="MainContent">
         <div id="tab0" ng-show="showTab == 0">
-
-<br>
-	<p> Hello. This is the Tradeshift Sample Starter App, original source is at <a href="https://github.com/Tradeshift/tradeshift-app-samples">Github.com</a>
-
-.<p>
-
-<p>The sample showcases some of the capabilities of the Tradeshift Platform and can also work as something to get you started quickly.  The documentation for the platform's features is available <a href="apps.tradeshift.com/documentation">here</a>.  Each tab shows a different aspect of our platform and explains what the app is doing.  You can learn more about the sample app, their source code, and how to install them <a href="https://github.com/Tradeshift/tradeshift-app-samples">here</a>.
-	</p>
-
-	<p>This is the so-called Embedded App. The server-side code runs outside of Tradeshift's data center, and is included into the Tradeshift user interface through an iframe. It uses the <a href="http://ui.tradeshift.com">Tradeshift UI Components</a>, which gives it consistent user experience with the rest of Tradeshift Apps. It was configured through Tradeshift.Developer app.  It calls the <a href="http://api.tradeshift.com/tradeshift/rest/external/doc">Tradeshift API</a>. Open different tabs to see the different features.</p>
-
-	<p> The app's UI is written using Angular.js and Tradeshift UI Components.  
-	</p> 
-
-
-
-
-	</div>
+            <div data-ts="Note" class="note">
+            <p> Hello. This is the Tradeshift Sample Starter App, original source is located at
+                <a href="https://github.com/Tradeshift/tradeshift-app-samples">Github.</a>
+            </p>
+            <p>
+                The sample showcases some of the capabilities of the Tradeshift Platform and can also work as something to get you started quickly.
+                The documentation for the platform's features is available <a href="apps.tradeshift.com/documentation">here</a>.
+                Each tab shows a different aspect of our platform and explains what the app is doing.
+                You can learn more about the sample app, their source code, and how to install them
+                <a href="https://github.com/Tradeshift/tradeshift-app-samples">here</a>.
+            </p>
+            <p>
+                This is the so-called Embedded App. The server-side code runs outside of Tradeshift's data center, and is included into
+                the Tradeshift user interface through an iframe. It uses the <a href="http://ui.tradeshift.com">Tradeshift UI Components</a>,
+                which gives it consistent user experience with the rest of Tradeshift Apps. It was configured through Tradeshift.Developer app.
+                It calls the <a href="http://api.tradeshift.com/tradeshift/rest/external/doc">Tradeshift API</a>. Open different tabs to see the different features.
+            </p>
+            <p> The app's UI is written using Angular.js and Tradeshift UI Components.</p>
+        </div>
       </div>
         <div id="tab1" ng-show="showTab == 1">
             <div data-ts="Note" class="note">
-                <p> This is mock data, retrieved from App's server by accessing '/demo/grid-data' URI. It uses <a href="https://tradeshift.github.io/Client-Runtime//#components/table/">Table Tradeshift UI component</a> to display the data.</p> 
+                <p> This is mock data, retrieved from App's server by accessing '/demo/grid-data' URI. It uses <a href="https://tradeshift.github.io/Client-Runtime//#components/table/">Table Tradeshift UI component</a> to display the data.</p>
             </div>
-            <div data-ts="UI Components" id="home-table"></div>
+            <div data-ts="Table" id="home-table"></div>
         </div>
         <div id="tab2" ng-show="showTab == 2">
             <div data-ts="Note" class="note">
-                <p> Simple page demonstrating <a href="http://ui.tradeshift.com">UI Components</a> buttons and internationalization.</p>
+                <p> Simple page demonstrating <a href="http://ui.tradeshift.com">UI Components</a> such as buttons and form inputs.</p>
             </div>
-            <menu data-ts="Buttons" class="ts-t-t" style="margin-top:10px">
+            <menu data-ts="Buttons" class="ts-t-t ts-buttons" style="margin-top:10px">
+                <li>
+                    <button class="ts-primary" data-ts.busy="true">
+                        <span></span>
+                    </button>
+                </li>
                 <li>
                     <button data-ts="Button" class="ts-secondary" ng-click="aside.open()">
                         <span translate="Buttons.Open Aside">Open Aside</span>
@@ -67,7 +73,6 @@
                 </li>
             </menu>
 
-	    <H1>Form Elements and Submit Button </H1>
             <form data-ts="Form" ng-submit="submitForm()">
                 <fieldset>
                     <label>
@@ -173,7 +178,7 @@
                 <br/><br/>
             </div>
             <div>
-                <table>
+                <table class="token-table">
                     <th>Claim</th>
                     <th>Description</th>
                     <th>Value</th>
