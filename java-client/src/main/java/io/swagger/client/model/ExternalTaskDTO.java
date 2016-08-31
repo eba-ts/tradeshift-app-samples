@@ -82,9 +82,6 @@ public class ExternalTaskDTO   {
   @SerializedName("subjectId")
   private String subjectId = null;
 
-  @SerializedName("context")
-  private List<byte[]> context = new ArrayList<byte[]>();
-
   @SerializedName("assigner")
   private String assigner = null;
 
@@ -211,24 +208,6 @@ public class ExternalTaskDTO   {
     this.subjectId = subjectId;
   }
 
-  public ExternalTaskDTO context(List<byte[]> context) {
-    this.context = context;
-    return this;
-  }
-
-   /**
-   * Get context
-   * @return context
-  **/
-  @ApiModelProperty(example = "null", value = "")
-  public List<byte[]> getContext() {
-    return context;
-  }
-
-  public void setContext(List<byte[]> context) {
-    this.context = context;
-  }
-
   public ExternalTaskDTO assigner(String assigner) {
     this.assigner = assigner;
     return this;
@@ -353,7 +332,6 @@ public class ExternalTaskDTO   {
         Objects.equals(this.state, externalTaskDTO.state) &&
         Objects.equals(this.createdOn, externalTaskDTO.createdOn) &&
         Objects.equals(this.subjectId, externalTaskDTO.subjectId) &&
-        Objects.equals(this.context, externalTaskDTO.context) &&
         Objects.equals(this.assigner, externalTaskDTO.assigner) &&
         Objects.equals(this.assignedOn, externalTaskDTO.assignedOn) &&
         Objects.equals(this.completedBy, externalTaskDTO.completedBy) &&
@@ -364,7 +342,7 @@ public class ExternalTaskDTO   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, handler, groupId, state, createdOn, subjectId, context, assigner, assignedOn, completedBy, completedOn, outcome, assignees);
+    return Objects.hash(id, handler, groupId, state, createdOn, subjectId, assigner, assignedOn, completedBy, completedOn, outcome, assignees);
   }
 
   @Override
@@ -378,7 +356,6 @@ public class ExternalTaskDTO   {
     sb.append("    state: ").append(toIndentedString(state)).append("\n");
     sb.append("    createdOn: ").append(toIndentedString(createdOn)).append("\n");
     sb.append("    subjectId: ").append(toIndentedString(subjectId)).append("\n");
-    sb.append("    context: ").append(toIndentedString(context)).append("\n");
     sb.append("    assigner: ").append(toIndentedString(assigner)).append("\n");
     sb.append("    assignedOn: ").append(toIndentedString(assignedOn)).append("\n");
     sb.append("    completedBy: ").append(toIndentedString(completedBy)).append("\n");
