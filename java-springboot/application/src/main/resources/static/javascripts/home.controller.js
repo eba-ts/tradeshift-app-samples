@@ -6,11 +6,12 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
     $scope.jwtTable = ts.ui.get('#home-table');
     $scope.topbar = ts.ui.get('#home-topbar');
     $scope.card = ts.ui.get('#home-card');
-    $scope.showTab = 1;
+    $scope.intro = ts.ui.get('#home-table');
+    $scope.showTab = 0;
 
     $q.all([
         $translate(['Table.ID', 'Table.Character', 'Table.Alignment', // getting our i18n data
-            'Topbar.Intro', 'Topbar.Table', 'Topbar.Form', 'Topbar.Health', 'Topbar.Documents', 'Topbar.JWTTokenInfo',
+            'Topbar.Intro', 'Topbar.Table', 'Topbar.Buttons', 'Topbar.Health', 'Topbar.Documents', 'Topbar.JWTTokenInfo',
             'Message.Oopsie daisy!', 'Message.Good job!', 'Message.Server is running!']),
         $req.getDocuments('invoice'),
         $req.getGridData(),
@@ -26,32 +27,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
         $scope.jwtInfo.formatedExpTime = new Date($scope.jwtInfo.expirationTime).toUTCString();
         $scope.jwtInfo.formatedIssuedAtTime = new Date($scope.jwtInfo.issuedAtTime).toUTCString();
 
-        /* Table */
-        $scope.table // to load when data ready
-            .selectable()
-            .cols([
-                {
-                    label: locale['Table.ID'], search: {
-                    tip: 'Search by ID',
-                    onidle: function (value) {
-                        $scope.table.search(0, value);
-                    }
-                }
-                },
-                {label: locale['Table.Character'], flex: 2, wrap: true},
-                {label: locale['Table.Alignment'], flex: 2}
-            ])
-            .rows($scope.data)
-            .sortable(function (index, ascending) {
-                $scope.table.sort(index, ascending);
-            })
-            .max(3)
-            .editable(function onedit(ri, ci, value) {
-                this.cell(ri, ci, value);
-            })
-            .sort(0, true);
-
-        /* Topbar */
+                /* Topbar */
         $scope.topbar
             .tabs([
                 {
@@ -116,6 +92,33 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                 }
             ])
             .dark();
+
+
+	/* Table */
+        $scope.table // to load when data ready
+            .selectable()
+            .cols([
+                {
+                    label: locale['Table.ID'], search: {
+                    tip: 'Search by ID',
+                    onidle: function (value) {
+                        $scope.table.search(0, value);
+                    }
+                }
+                },
+                {label: locale['Table.Character'], flex: 2, wrap: true},
+                {label: locale['Table.Alignment'], flex: 2}
+            ])
+            .rows($scope.data)
+            .sortable(function (index, ascending) {
+                $scope.table.sort(index, ascending);
+            })
+            .max(3)
+            .editable(function onedit(ri, ci, value) {
+                this.cell(ri, ci, value);
+            })
+            .sort(0, true);
+
 
         $scope.getNotification = function (type) {
             if (type == 'success') {

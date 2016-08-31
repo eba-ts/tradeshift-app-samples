@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="stylesheets/main.css">
     <!--UI Components-->
-    <script src="https://d5wfroyti11sa.cloudfront.net/prod/client/ts-6.0.0-alpha.10.min.js"></script>
+    <script src="https://d5wfroyti11sa.cloudfront.net/prod/client/ts-6.0.0-alpha.8.min.js"></script>
     <!--AngularJS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-translate/2.11.1/angular-translate.min.js"></script>
@@ -17,15 +17,26 @@
 <header data-ts="TopBar" id="home-topbar"></header>
 <main data-ts="Main">
     <div data-ts="MainContent">
-        <div id="tab1" ng-show="showTab == 0">
-	<p> Hello. This is the Tradeshift Sample Starter App.<p>
+        <div id="tab0" ng-show="showTab == 0">
 
-<p>It is designed to showcase some of the capabilities of the Tradeshift Platform.  Please review the documentation <a href="apps.tradeshift.com/documentation">here</a>.  Each tab shows a different aspect of our platform and explains in yellow what it's doing.  You can find more about the sample app and how to install them <a href="https://github.com/Tradeshift/tradeshift-app-samples">here<a>.  
+<br>
+	<p> Hello. This is the Tradeshift Sample Starter App, original source is at <a href="https://github.com/Tradeshift/tradeshift-app-samples">Github.com</a>
+
+.<p>
+
+<p>The sample showcases some of the capabilities of the Tradeshift Platform and can also work as something to get you started quickly.  The documentation for the platform's features is available <a href="apps.tradeshift.com/documentation">here</a>.  Each tab shows a different aspect of our platform and explains what the app is doing.  You can learn more about the sample app, their source code, and how to install them <a href="https://github.com/Tradeshift/tradeshift-app-samples">here</a>.
 	</p>
 
-	<p> This is the so-called Embedded App. The server-side code runs outside of Tradeshift, and is included into the Tradeshift user interface through an iframe. It uses the <a href="http://ui.tradeshift.com">Tradeshift UI Components</a>, which gives it consistent user experience with the rest of Tradeshift Apps. It was configured through Tradeshift.Developer app.  It calls the <a href="http://api.tradeshift.com/tradeshift/rest/external/doc">Tradeshift API</a>. Open the different tabs to see the different features.<p>
+	<p>This is the so-called Embedded App. The server-side code runs outside of Tradeshift's data center, and is included into the Tradeshift user interface through an iframe. It uses the <a href="http://ui.tradeshift.com">Tradeshift UI Components</a>, which gives it consistent user experience with the rest of Tradeshift Apps. It was configured through Tradeshift.Developer app.  It calls the <a href="http://api.tradeshift.com/tradeshift/rest/external/doc">Tradeshift API</a>. Open different tabs to see the different features.</p>
+
+	<p> The app's UI is written using Angular.js and Tradeshift UI Components.  
+	</p> 
+
+
+
+
 	</div>
- 
+      </div>
         <div id="tab1" ng-show="showTab == 1">
             <div data-ts="Note" class="note">
                 <p> This is mock data, retrieved from App's server by accessing '/demo/grid-data' URI. It uses <a href="https://tradeshift.github.io/Client-Runtime//#components/table/">Table Tradeshift UI component</a> to display the data.</p> 
@@ -37,11 +48,6 @@
                 <p> Simple page demonstrating <a href="http://ui.tradeshift.com">UI Components</a> buttons and internationalization.</p>
             </div>
             <menu data-ts="Buttons" class="ts-t-t" style="margin-top:10px">
-                <li>
-                    <button class="ts-primary" data-ts.busy="true">
-                        <span></span>
-                    </button>
-                </li>
                 <li>
                     <button data-ts="Button" class="ts-secondary" ng-click="aside.open()">
                         <span translate="Buttons.Open Aside">Open Aside</span>
@@ -60,27 +66,8 @@
                     </button>
                 </li>
             </menu>
-            <menu data-ts="Buttons" class="ts-i-i-t ts-join">
-                <li>
-                    <button data-ts="Button" class="ts-tertiary">
-                        <i class="ts-icon-arrowleft"></i>
-                    </button>
-                </li>
-                <li>
-                    <button data-ts="Button" class="ts-tertiary">
-                        <i class="ts-icon-arrowright"></i>
-                    </button>
-                </li>
-                <li>
-                    <button data-ts="Button" class="ts-tertiary">
-                        <span translate="Buttons.Double Icon">Double icon</span>
-                    </button>
-                </li>
-            </menu>
 
-           <div data-ts="Note" class="note">
-                <p> Simple page demonstrating UI Components' inputs.</p>
-            </div>
+	    <H1>Form Elements and Submit Button </H1>
             <form data-ts="Form" ng-submit="submitForm()">
                 <fieldset>
                     <label>
@@ -114,6 +101,7 @@
                     </label>
                     <dl class="ts-info">
                         <dt>Only one option available</dt>
+                    </dl>
                 </fieldset>
                 <fieldset>
                     <span>Which option?</span>
@@ -144,12 +132,10 @@
                     <span>Submit</span>
                 </button>
             </form>
-  
-
         </div>
         <div id="tab3" ng-show="showTab == 3">
-            <div data-ts="Health Check" class="note">
-                <p> Health check is a way Tradeshift can monitor uptime of the third-party app server (this is upcoming feature in Developer app).  This calls '/health' on the server side. </p>
+            <div data-ts="Note" class="note">
+                <p> Health check is a way Tradeshift can monitor uptime of the third-party app server (this is an upcoming feature in Developer app).  The button '/health' on the server side and displays the result to the user. We recommend that you also implement some monitoring for uptime of your Tradeshift app</p>
             </div>
             <button data-ts="Button" class="ts-primary" ng-click="checkHealth()">
                 <span translate="Buttons.Check server health">Check server health</span>
@@ -157,7 +143,7 @@
        </div>
         <div id="tab4" ng-show="showTab == 4">
             <div data-ts="Note" class="note">
-                <p>Below is the documents from your Tradeshift account. The app retrieves it by calling Tradeshift API at: {tradeshiftAPIServerURL} + '/rest/external/documents'.  It uses the 'Menu' Tradeshift UI component to display the data.</p>
+                <p>This example demonstrates calling Tradeshift API.  Below are the documents (if any present) from your Tradeshift account. The app retrieves it by calling Tradeshift API at: {tradeshiftAPIServerURL} + '/rest/external/documents'.  The page uses the <a href="https://tradeshift.github.io/Client-Runtime//#components/menus/">Menu</a> Tradeshift UI component to display the data.</p>
             </div>
             <menu data-ts="Menu" style="width: 60%;">
                 <li ng-repeat="doc in documents">
@@ -174,7 +160,7 @@
         </div>
         <div id="tab5" ng-show="showTab == 5">
             <div data-ts="Note" class="note">
-                <p>Here is your Tradeshift JWT token Information, we get this from id_token that you get when getting access_tokenadn refresh_token. It passes useful information about Tradeshift company and current user to your app.  More info about this <a href="http://apps.tradeshift.com/developers/documentation/#identity_passing">here</a>
+                <p>In this tab, we show you an example of identity information we pass to your application.  When you first authorize with Tradeshift using OAuth2, along with access tokena and refresh token we pass in id_token, which is a JSON Web Token encoding some information about the company and user that's activating your app. You can then use this information to let your app know which user is using the app, and save any mappings between Tradeshift namespace and yours. More info about this <a href="http://apps.tradeshift.com/developers/documentation/#identity_passing">here</a>
                 </p>
             </div>
             <div class="inline" style="width: 100%;">
