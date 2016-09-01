@@ -6,6 +6,7 @@
     "Health": "Health Check",
     "Documents": "Documents API",
     "JWTTokenInfo": "JWT-Token-Info"
+    "TaskList": "Task List"
   },
   "Table": {
       "ID": "ID",

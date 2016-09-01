@@ -11,11 +11,12 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
 
     $q.all([
         $translate(['Table.ID', 'Table.Character', 'Table.Alignment', // getting our i18n data
-            'Topbar.Intro', 'Topbar.Table', 'Topbar.Buttons', 'Topbar.Health', 'Topbar.Documents', 'Topbar.JWTTokenInfo',
+            'Topbar.Intro', 'Topbar.Table', 'Topbar.Buttons', 'Topbar.Health', 'Topbar.Documents', 'Topbar.JWTTokenInfo', 'Topbar.TaskList',
             'Message.Oopsie daisy!', 'Message.Good job!', 'Message.Server is running!']),
         $req.getDocuments('invoice'),
         $req.getGridData(),
-        $req.getJWTInfo()
+        $req.getJWTInfo(),
+        $req.getTasksPage()
     ]).then(function (response) {
         var locale = response[0];
         /***************************/
@@ -26,6 +27,9 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
         $scope.jwtInfo = response[3].data;
         $scope.jwtInfo.formatedExpTime = new Date($scope.jwtInfo.expirationTime).toUTCString();
         $scope.jwtInfo.formatedIssuedAtTime = new Date($scope.jwtInfo.issuedAtTime).toUTCString();
+        $scope.tasks = response[4].data;
+
+        taskDateTimeToDate($scope.tasks);
 
                 /* Topbar */
         $scope.topbar
@@ -89,6 +93,16 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                         $scope.$apply();
                         scrollTo(0, 0);
                     }
+                },
+                {
+                    label: locale['Topbar.TaskList'],
+                    icon: 'ts-icon-heart',
+                    id: 'tab6',
+                    onselect: function () {
+                        $scope.showTab = 6;
+                        $scope.$apply();
+                        scrollTo(0, 0);
+                    }
                 }
             ])
             .dark();
@@ -126,8 +140,35 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
             } else if (type == 'alert') {
                 return ts.ui.Notification.error(locale['Message.Oopsie daisy!']);
             }
-        }
+        };
+
+        $scope.completeTask = function (taskId) {
+            $req.completeTask(taskId).then(function () {
+                $req.getTasksPage().then(function (response) {
+                    $scope.tasks = response.data;
+                    taskDateTimeToDate($scope.tasks);
+                })
+            })
+        };
+
+        $scope.createTask = function () {
+            $req.createTask().then(function () {
+                $req.getTasksPage().then(function (response) {
+                    $scope.tasks = response.data;
+                    taskDateTimeToDate($scope.tasks);
+                })
+            })
+        };
     });
+
+    var taskDateTimeToDate = function (tasks) {
+        tasks.forEach(function (task, i) {
+            tasks[i].createdOn = new Date(task.createdOn.millis).toUTCString();
+            if (tasks[i].completedOn != null) {
+                tasks[i].completedOn = new Date(tasks[i].completedOn.millis).toUTCString();
+            }
+        });
+    }
 
     /* Table Component requires [[],[],[]] structure. So we need to make array of arrays from array of objects */
     $scope.getArray = function (data) {

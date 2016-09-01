@@ -25,17 +25,23 @@ Currently, there are three sample apps available:
 | Webhooks Example  | X |  |  
 | JWT (id_token) Decoding  | X |  |  
 
+
 ## Back-end REST API
 
 | Request | Description | Java Spring.boot | Node.js | PHP
 | --------|------- | ---- | ---- | ----
-| GET /document/documents | invoice documents (calls TS API) | X | | X
-| GET /account/info | company info (calls TS API) | | X | X
-| GET /demo/grid-data | sample data for table | X | X | X
-| GET /health | Healthcheck | X | X | X
-| GET /locale | Server-side i18n| | X | X
-| GET /locale/translations | Server-side Translation strings | | | X
-| GET /jwt/id-token | JWT Token Decoded | X |  | 
+| GET  /document/documents | invoice documents (calls TS API) | X | | X
+| GET  /account/info | company info (calls TS API) | | X | X
+| GET  /demo/grid-data | sample data for table | X | X | X
+| GET  /locale | Server-side i18n| | X | X
+| GET  /locale/translations | Server-side i18n | | | X
+| GET  /jwt/id-token | JWT Token Decoded | X |  |
+| GET  /tasks | current user's tasks list (calls TS API)| X |  |
+| POST /tasks | Create task (calls TS API) | X |  |
+| PUT  /tasks/{id}?action=complete | Complete task (calls TS API) | X |  |
+| GET  /webhooks/eventsStatus | Server notifies UI of webhook received | X |  | 
+| POST /webhooks | (Public API) Receive event from Tradeshift webhook  | X |  |
+| GET  /health | (Public) Health check | X | X | X
 
 
 ## Installing the Sample Apps 
