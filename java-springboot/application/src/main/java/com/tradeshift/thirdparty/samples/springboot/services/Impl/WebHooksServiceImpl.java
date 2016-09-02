@@ -1,6 +1,7 @@
 package com.tradeshift.thirdparty.samples.springboot.services.Impl;
 
 
+import com.tradeshift.thirdparty.samples.springboot.domain.dto.DocumentEventDTO;
 import com.tradeshift.thirdparty.samples.springboot.services.TokenService;
 import com.tradeshift.thirdparty.samples.springboot.services.WebHooksService;
 import org.slf4j.Logger;
@@ -12,8 +13,10 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -25,7 +28,7 @@ public class WebHooksServiceImpl implements WebHooksService {
     @Autowired
     TokenService tokenService;
 
-    private final Map<String, Integer> messages = Collections.synchronizedMap(new HashMap<String, Integer>());
+    private final Map<String, List<DocumentEventDTO>> messages = Collections.synchronizedMap(new HashMap<String, List<DocumentEventDTO>>());
 
     /**
      * Send message to angularjs client
@@ -37,11 +40,11 @@ public class WebHooksServiceImpl implements WebHooksService {
      */
     @Override
     public SseEmitter sendDocsEvent() throws ParserConfigurationException, SAXException, IOException {
-        Integer newDocsCount = messages.get(tokenService.getCurrentUserId());
+        List<DocumentEventDTO> eventDTOList = messages.get(tokenService.getCurrentUserId());
         SseEmitter emitter = new SseEmitter(60000L);
 
-        if (newDocsCount != null) {
-            new Thread(new RunProcess("You received " + messages.size() + " new  documents", emitter, tokenService.getCurrentUserId())).start();
+        if (eventDTOList != null) {
+            new Thread(new RunProcess(eventDTOList , emitter, tokenService.getCurrentUserId())).start();
         }
 
         return emitter;
@@ -50,19 +53,25 @@ public class WebHooksServiceImpl implements WebHooksService {
     /**
      * Add to messages new document event
      *
-     * @param userId UUID user from tradeshift webhook who received new document
+     * @param id event id
+     * @param tsUserId user Id who received the new event
+     * @param tsCompanyAccountId Company Account Id
+     * @param tsUserLanguage selected user language
+     * @param event event type
      * @throws ParserConfigurationException
      * @throws SAXException
      * @throws IOException
      */
     @Override
-    public void addDocumentEvent(String userId) throws ParserConfigurationException, SAXException, IOException {
+    public void addDocumentEvent(String id, String tsUserId, String tsCompanyAccountId, String tsUserLanguage, String event) throws ParserConfigurationException, SAXException, IOException {
         LOGGER.info("add document event", WebHooksServiceImpl.class);
         synchronized (messages) {
-            if (!messages.containsKey(userId)) {
-                messages.put(userId, 1);
+            if (!messages.containsKey(tsUserId)) {
+                List<DocumentEventDTO> documentEventDTOs = new ArrayList<DocumentEventDTO>();
+                documentEventDTOs.add(new DocumentEventDTO(id, tsUserId, tsCompanyAccountId, tsUserLanguage, event));
+                messages.put(tsUserId, documentEventDTOs);
             } else {
-                messages.put(userId, messages.get(userId) + 1);
+                messages.get(tsUserId).add(new DocumentEventDTO(id, tsUserId, tsCompanyAccountId, tsUserLanguage, event));
             }
         }
     }
@@ -70,10 +79,10 @@ public class WebHooksServiceImpl implements WebHooksService {
     private class RunProcess implements Runnable {
 
         private SseEmitter sseEmitter;
-        private String message;
+        private List<DocumentEventDTO> message;
         private String userId;
 
-        RunProcess(String message, SseEmitter sseEmitter, String userId) {
+        RunProcess(List<DocumentEventDTO> message, SseEmitter sseEmitter, String userId) {
             this.message = message;
             this.sseEmitter = sseEmitter;
             this.userId = userId;
