@@ -41,6 +41,16 @@ There is one simple test just to let you add more should you choose to use this 
 
 5. Health monitoring - Go to the  `https://your_app_uri.com/health`.  If you get 200 and see payload `{"status":"UP"}` that means the app is up and running.
 
+6. For webhooks work correctly, you have to configure settings in your Tradeshift app.
+    More info about this [here](http://apps.tradeshift.com/developers/documentation/#webhooks)
+    
+    For example :
+
+          NAME    sample.app.com                                your app domain name
+          URL     "https://sample.app.com/webhooks/receive"     your URL that receive events from tadeshift webhooks 
+          EVENTS  choose events that you want hanle(Before document receive,  After document receive, etc.)
+      
+
 You can easy run and deploy this project on Heroku, for this purpose do the following steps:
 
 1. Create new app on Heroku.
