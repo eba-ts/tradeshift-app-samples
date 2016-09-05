@@ -10,8 +10,8 @@ import java.io.IOException;
 @Service
 public interface WebHooksService {
 
-    SseEmitter sendDocsEvent() throws ParserConfigurationException, SAXException, IOException;
+    SseEmitter sendWebhookEvent() throws ParserConfigurationException, SAXException, IOException;
 
-    void addDocumentEvent(String id, String tsUserId, String tsCompanyAccountId, String tsUserLanguage, String event)
+    void addWebhookEvent(String id, String tsUserId, String tsCompanyAccountId, String tsUserLanguage, String event)
                                                         throws ParserConfigurationException, SAXException, IOException;
 }

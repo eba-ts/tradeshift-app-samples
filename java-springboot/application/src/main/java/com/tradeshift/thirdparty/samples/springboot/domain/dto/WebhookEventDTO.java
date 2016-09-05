@@ -1,18 +1,19 @@
 package com.tradeshift.thirdparty.samples.springboot.domain.dto;
 
 
-public class DocumentEventDTO {
+public class WebhookEventDTO {
+
     private String id;
     private String tsUserId;
     private String tsCompanyAccountId;
     private String tsUserLanguage;
     private String event;
 
-    public DocumentEventDTO() {
+    public WebhookEventDTO() {
         super();
     }
 
-    public DocumentEventDTO(String id, String tsUserId, String tsCompanyAccountId, String tsUserLanguage, String event) {
+    public WebhookEventDTO(String id, String tsUserId, String tsCompanyAccountId, String tsUserLanguage, String event) {
         this.id = id;
         this.tsUserId = tsUserId;
         this.tsCompanyAccountId = tsCompanyAccountId;
@@ -62,7 +63,7 @@ public class DocumentEventDTO {
 
     @Override
     public String toString() {
-        return "DocumentEventDTO{" +
+        return "WebhookEventDTO{" +
                 "id='" + id + '\'' +
                 ", tsUserId='" + tsUserId + '\'' +
                 ", tsCompanyAccountId='" + tsCompanyAccountId + '\'' +

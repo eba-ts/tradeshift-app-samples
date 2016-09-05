@@ -26,7 +26,7 @@ public class WebHooksController {
     WebHooksService webHooksService;
 
     /**
-     * Receive document event info from tradeshift webhook when user get new document
+     * Receive webhook event info from tradeshift webhook when user get new document
      *
      * @param id event id
      * @param tsUserId userId who received the new event
@@ -49,11 +49,11 @@ public class WebHooksController {
         LOGGER.info("Document Id " + id + ", User id +" + tsUserId + ", CompanyAccountId "
                                 + tsCompanyAccountId + ", User " + "Language " + tsUserLanguage);
 
-        webHooksService.addDocumentEvent(id, tsUserId, tsCompanyAccountId, tsUserLanguage, event);
+        webHooksService.addWebhookEvent(id, tsUserId, tsCompanyAccountId, tsUserLanguage, event);
     }
 
     /**
-     * Send for angularjs UI client message about new received document over WebSocket connection
+     * Send for angularjs UI client message about new received webhook event over WebSocket connection
      *
      * @return SseEmitter
      * @throws IOException
@@ -64,6 +64,6 @@ public class WebHooksController {
     public SseEmitter EventsStatus() throws IOException, ParserConfigurationException, SAXException {
         LOGGER.info("Server sent event");
 
-        return webHooksService.sendDocsEvent();
+        return webHooksService.sendWebhookEvent();
     }
 }

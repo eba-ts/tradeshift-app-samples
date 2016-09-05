@@ -1,7 +1,7 @@
 package com.tradeshift.thirdparty.samples.springboot.services.Impl;
 
 
-import com.tradeshift.thirdparty.samples.springboot.domain.dto.DocumentEventDTO;
+import com.tradeshift.thirdparty.samples.springboot.domain.dto.WebhookEventDTO;
 import com.tradeshift.thirdparty.samples.springboot.services.TokenService;
 import com.tradeshift.thirdparty.samples.springboot.services.WebHooksService;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class WebHooksServiceImpl implements WebHooksService {
     @Autowired
     TokenService tokenService;
 
-    private final Map<String, List<DocumentEventDTO>> messages = Collections.synchronizedMap(new HashMap<String, List<DocumentEventDTO>>());
+    private final Map<String, List<WebhookEventDTO>> messages = Collections.synchronizedMap(new HashMap<String, List<WebhookEventDTO>>());
 
     /**
      * Send message to angularjs client
@@ -39,8 +39,8 @@ public class WebHooksServiceImpl implements WebHooksService {
      * @throws IOException
      */
     @Override
-    public SseEmitter sendDocsEvent() throws ParserConfigurationException, SAXException, IOException {
-        List<DocumentEventDTO> eventDTOList = messages.get(tokenService.getCurrentUserId());
+    public SseEmitter sendWebhookEvent() throws ParserConfigurationException, SAXException, IOException {
+        List<WebhookEventDTO> eventDTOList = messages.get(tokenService.getCurrentUserId());
         SseEmitter emitter = new SseEmitter(60000L);
 
         if (eventDTOList != null) {
@@ -51,7 +51,7 @@ public class WebHooksServiceImpl implements WebHooksService {
     }
 
     /**
-     * Add to messages new document event
+     * Add to messages new webhook event
      *
      * @param id event id
      * @param tsUserId user Id who received the new event
@@ -63,15 +63,15 @@ public class WebHooksServiceImpl implements WebHooksService {
      * @throws IOException
      */
     @Override
-    public void addDocumentEvent(String id, String tsUserId, String tsCompanyAccountId, String tsUserLanguage, String event) throws ParserConfigurationException, SAXException, IOException {
+    public void addWebhookEvent(String id, String tsUserId, String tsCompanyAccountId, String tsUserLanguage, String event) throws ParserConfigurationException, SAXException, IOException {
         LOGGER.info("add document event", WebHooksServiceImpl.class);
         synchronized (messages) {
             if (!messages.containsKey(tsUserId)) {
-                List<DocumentEventDTO> documentEventDTOs = new ArrayList<DocumentEventDTO>();
-                documentEventDTOs.add(new DocumentEventDTO(id, tsUserId, tsCompanyAccountId, tsUserLanguage, event));
-                messages.put(tsUserId, documentEventDTOs);
+                List<WebhookEventDTO> webhookEventDTOs = new ArrayList<WebhookEventDTO>();
+                webhookEventDTOs.add(new WebhookEventDTO(id, tsUserId, tsCompanyAccountId, tsUserLanguage, event));
+                messages.put(tsUserId, webhookEventDTOs);
             } else {
-                messages.get(tsUserId).add(new DocumentEventDTO(id, tsUserId, tsCompanyAccountId, tsUserLanguage, event));
+                messages.get(tsUserId).add(new WebhookEventDTO(id, tsUserId, tsCompanyAccountId, tsUserLanguage, event));
             }
         }
     }
@@ -79,10 +79,10 @@ public class WebHooksServiceImpl implements WebHooksService {
     private class RunProcess implements Runnable {
 
         private SseEmitter sseEmitter;
-        private List<DocumentEventDTO> message;
+        private List<WebhookEventDTO> message;
         private String userId;
 
-        RunProcess(List<DocumentEventDTO> message, SseEmitter sseEmitter, String userId) {
+        RunProcess(List<WebhookEventDTO> message, SseEmitter sseEmitter, String userId) {
             this.message = message;
             this.sseEmitter = sseEmitter;
             this.userId = userId;
