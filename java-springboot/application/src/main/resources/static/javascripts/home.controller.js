@@ -11,8 +11,8 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
 
     $q.all([
         $translate(['Table.ID', 'Table.Character', 'Table.Alignment', // getting our i18n data
-            'Topbar.Intro', 'Topbar.Table', 'Topbar.Buttons', 'Topbar.Health', 'Topbar.Documents', 'Topbar.JWTTokenInfo', 'Topbar.TaskList',
-            'Message.Oopsie daisy!', 'Message.Good job!', 'Message.Server is running!']),
+            'Topbar.Intro', 'Topbar.Table', 'Topbar.Buttons', 'Topbar.Health', 'Topbar.Documents', 'Topbar.JWTTokenInfo',
+            'Topbar.TaskList', 'Topbar.WebHooks','Message.Oopsie daisy!', 'Message.Good job!', 'Message.Server is running!']),
         $req.getDocuments('invoice'),
         $req.getGridData(),
         $req.getJWTInfo(),
@@ -20,6 +20,8 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
     ]).then(function (response) {
         var locale = response[0];
         /***************************/
+        $scope.eventList = null;
+
         $scope.documents = response[1].data;
         /*************************/
         $scope.data = $scope.getArray(response[2].data);
@@ -100,6 +102,16 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                     id: 'tab6',
                     onselect: function () {
                         $scope.showTab = 6;
+                        $scope.$apply();
+                        scrollTo(0, 0);
+                    }
+                },
+                {
+                    label: locale['Topbar.WebHooks'],
+                    icon: 'ts-icon-heart',
+                    id: 'tab7',
+                    onselect: function () {
+                        $scope.showTab = 7;
                         $scope.$apply();
                         scrollTo(0, 0);
                     }
@@ -195,4 +207,26 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
             ts.ui.Notification.error(response.status + ' ' + response.statusText);
         })
     };
+
+    if (!!window.EventSource) {
+        console.log("Event source available");
+        var source = new EventSource('/webhooks/eventsStatus');
+        source.addEventListener('message', function (e) {
+            console.log(e.data);
+            $scope.eventList = JSON.parse(e.data);
+            $scope.$apply();
+            ts.ui.Notification.success("You received " + $scope.eventList.length +" new event");
+        });
+
+        source.addEventListener('open', function (e) {
+            console.log("Connection was opened.");
+        }, false);
+
+        source.addEventListener('error', function (e) {
+            console.log("Connection was closed.");
+        }, false);
+    } else {
+        console.log("No SSE available");
+    }
+
 });

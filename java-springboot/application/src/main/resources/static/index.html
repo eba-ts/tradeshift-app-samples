@@ -266,6 +266,26 @@
                 <br/>
             </table>
         </div>
+        <div id="tab7" ng-show="showTab == 7">
+            <div data-ts="Note" class="note">
+                <p>This tab demonstrated with the Event List. Events data received from Tradeshift webhooks. More info about this <a href="http://apps.tradeshift.com/developers/documentation/#webhooks">here</a>
+                </p>
+            </div>
+            <table class="webhook-table">
+                <th>Event ID</th>
+                <th>Tradeshift User ID</th>
+                <th>Tradeshift Company Account ID</th>
+                <th>Tradeshift User Language</th>
+                <th>Event Type</th>
+                <tr ng-repeat="event in eventList">
+                    <td>{{event.id}}</td>
+                    <td style="width: 22%">{{event.tsUserId}}</td>
+                    <td>{{event.tsCompanyAccountId}}</td>
+                    <td style="width: 10%;">{{event.tsUserLanguage}}</td>
+                    <td>{{event.event}}</td>
+                </tr>
+             </table>
+        </div>
     </div>
 </main>
 <aside data-ts="Aside" id="home-aside">

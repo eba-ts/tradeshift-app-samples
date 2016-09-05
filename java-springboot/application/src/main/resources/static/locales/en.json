@@ -5,8 +5,9 @@
     "Buttons": "Button and Forms, I18N",
     "Health": "Health Check",
     "Documents": "Documents API",
-    "JWTTokenInfo": "JWT-Token-Info"
-    "TaskList": "Task List"
+    "JWTTokenInfo": "JWT-Token-Info",
+    "TaskList": "Task List",
+    "WebHooks": "WebHooks"
   },
   "Table": {
       "ID": "ID",

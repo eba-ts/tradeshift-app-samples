@@ -59,24 +59,3 @@ app.config(function ($locationProvider, $translateProvider) {
         }
     });
 
-    if (!!window.EventSource) {
-        console.log("Event source available");
-        var source = new EventSource('/webhooks/eventsStatus');
-        source.addEventListener('message', function (e) {
-            console.log(e.data);
-            ts.ui.Notification.success(e.data);
-            $docs.getData('invoice').then(function (response) {
-                $scope.documents = response.data;
-            })
-        });
-
-        source.addEventListener('open', function (e) {
-            console.log("Connection was opened.");
-        }, false);
-
-        source.addEventListener('error', function (e) {
-            console.log("Connection was closed.");
-        }, false);
-    } else {
-        console.log("No SSE available");
-    }

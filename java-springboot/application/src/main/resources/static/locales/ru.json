@@ -6,7 +6,8 @@
     "Health": "Проверка сервера",
     "Documents": "Документы",
     "JWTTokenInfo": "JWT-Token-Информация",
-    "TaskList": "Список Задач"
+    "TaskList": "Список Задач",
+    "WebHooks": "WebHooks"
   },
   "Table": {
     "ID": "Идентификатор",
