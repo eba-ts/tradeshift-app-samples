@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.common.exceptions.InvalidRequestExcep
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
+import org.xml.sax.SAXParseException;
 
 @ControllerAdvice
 public class ControllerExceptionTranslator {
@@ -77,6 +78,13 @@ public class ControllerExceptionTranslator {
         LOGGER.error(e.getMessage(), e, ControllerExceptionTranslator.class);
 
         return new ResponseEntity(new JSONObject().put("message", e.getMessage()).toString(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(value = SAXParseException.class)
+    public ResponseEntity SAXParseExceptionHandler(SAXParseException e) {
+        LOGGER.error(e.getMessage(), e, ControllerExceptionTranslator.class);
+
+        return new ResponseEntity(new JSONObject().put("message", e.getMessage()).toString(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
