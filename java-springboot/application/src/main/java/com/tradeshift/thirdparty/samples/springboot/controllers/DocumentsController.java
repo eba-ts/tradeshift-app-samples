@@ -35,7 +35,6 @@ public class DocumentsController {
     /**
      * Get documents by document type from remote server by call to rest service
      *
-     *
      * @param response
      * @return List of documents by document type from remote server
      * @throws ParserConfigurationException
@@ -43,22 +42,14 @@ public class DocumentsController {
      * @throws SAXException
      */
     @RequestMapping(value = "/documents", method = RequestMethod.GET)
-    public ResponseEntity<?> getDocument(@RequestParam("documentType") final String documentType, final HttpServletResponse response)
-                                                                        throws ParserConfigurationException, IOException, SAXException {
+    public ResponseEntity getDocument(@RequestParam("documentType") final String documentType, final HttpServletResponse response)
+            throws ParserConfigurationException, IOException, SAXException {
 
         LOGGER.info("get list of documents by document type", DocumentsController.class);
 
-        if (tokenService.getAccessTokenFromContext() != null) {
-            LOGGER.info("succeed in to get list of documents by document type", DocumentsController.class);
-            List<BaseTradeshiftDocumentDTO> result = tradeshiftDocumentRetrievalService.getDocuments(documentType);
+        List<BaseTradeshiftDocumentDTO> result = tradeshiftDocumentRetrievalService.getDocuments(documentType);
 
-            return new ResponseEntity(result, HttpStatus.OK);
-        } else {
-            LOGGER.info("failed to get list of documents by document type, access token doesn't exist", DocumentsController.class);
-            response.sendRedirect(tokenService.getAuthorizationCodeURL());
-
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-        }
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 
 }

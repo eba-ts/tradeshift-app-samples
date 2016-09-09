@@ -8,36 +8,40 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
     $scope.card = ts.ui.get('#home-card');
     $scope.intro = ts.ui.get('#home-table');
     $scope.showTab = 0;
+    $scope.locale;
+    $translate(['Table.ID', 'Table.Character', 'Table.Alignment', // getting our i18n data
+        'Topbar.Intro', 'Topbar.Table', 'Topbar.Buttons', 'Topbar.Health', 'Topbar.Documents', 'Topbar.JWTTokenInfo',
+        'Topbar.TaskList', 'Topbar.WebHooks', 'Topbar.Errors', 'Message.Oopsie daisy!', 'Message.Good job!', 'Message.Server is' +
+        ' running!', 'ErrorMessage.AuthFailed', 'ErrorMessage.Undefined', 'ErrorMessage.NotFound']).then(function (response) {
 
+        $scope.locale = response;
+
+    })
     $q.all([
-        $translate(['Table.ID', 'Table.Character', 'Table.Alignment', // getting our i18n data
-            'Topbar.Intro', 'Topbar.Table', 'Topbar.Buttons', 'Topbar.Health', 'Topbar.Documents', 'Topbar.JWTTokenInfo',
-            'Topbar.TaskList', 'Topbar.WebHooks','Message.Oopsie daisy!', 'Message.Good job!', 'Message.Server is running!']),
         $req.getDocuments('invoice'),
         $req.getGridData(),
         $req.getJWTInfo(),
         $req.getTasksPage()
     ]).then(function (response) {
-        var locale = response[0];
         /***************************/
         $scope.eventList = null;
 
-        $scope.documents = response[1].data;
+        $scope.documents = response[0].data;
         /*************************/
-        $scope.data = $scope.getArray(response[2].data);
+        $scope.data = $scope.getArray(response[1].data);
         /*************************/
-        $scope.jwtInfo = response[3].data;
+        $scope.jwtInfo = response[2].data;
         $scope.jwtInfo.formatedExpTime = new Date($scope.jwtInfo.expirationTime).toUTCString();
         $scope.jwtInfo.formatedIssuedAtTime = new Date($scope.jwtInfo.issuedAtTime).toUTCString();
-        $scope.tasks = response[4].data;
+        $scope.tasks = response[3].data;
 
         taskDateTimeToDate($scope.tasks);
 
-                /* Topbar */
+        /* Topbar */
         $scope.topbar
             .tabs([
                 {
-                    label: locale['Topbar.Intro'],
+                    label: $scope.locale['Topbar.Intro'],
                     id: 'tab0',
                     icon: 'ts-icon-discovery',
                     onselect: function () {
@@ -47,7 +51,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                     }
                 },
                 {
-                    label: locale['Topbar.Table'],
+                    label: $scope.locale['Topbar.Table'],
                     id: 'tab1',
                     icon: 'ts-icon-apps',
                     onselect: function () {
@@ -57,7 +61,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                     }
                 },
                 {
-                    label: locale['Topbar.Buttons'],
+                    label: $scope.locale['Topbar.Buttons'],
                     icon: 'ts-icon-code',
                     id: 'tab2',
                     onselect: function () {
@@ -67,7 +71,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                     }
                 },
                 {
-                    label: locale['Topbar.Health'],
+                    label: $scope.locale['Topbar.Health'],
                     icon: 'ts-icon-activity',
                     id: 'tab3',
                     onselect: function () {
@@ -77,7 +81,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                     }
                 },
                 {
-                    label: locale['Topbar.Documents'],
+                    label: $scope.locale['Topbar.Documents'],
                     icon: 'ts-icon-alldocuments',
                     id: 'tab4',
                     onselect: function () {
@@ -87,7 +91,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                     }
                 },
                 {
-                    label: locale['Topbar.JWTTokenInfo'],
+                    label: $scope.locale['Topbar.JWTTokenInfo'],
                     icon: 'ts-icon-info',
                     id: 'tab5',
                     onselect: function () {
@@ -97,7 +101,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                     }
                 },
                 {
-                    label: locale['Topbar.TaskList'],
+                    label: $scope.locale['Topbar.TaskList'],
                     icon: 'ts-icon-heart',
                     id: 'tab6',
                     onselect: function () {
@@ -107,11 +111,21 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                     }
                 },
                 {
-                    label: locale['Topbar.WebHooks'],
+                    label: $scope.locale['Topbar.WebHooks'],
                     icon: 'ts-icon-heart',
                     id: 'tab7',
                     onselect: function () {
                         $scope.showTab = 7;
+                        $scope.$apply();
+                        scrollTo(0, 0);
+                    }
+                },
+                {
+                    label: $scope.locale['Topbar.Errors'],
+                    icon: 'ts-icon-heart',
+                    id: 'tab8',
+                    onselect: function () {
+                        $scope.showTab = 8;
                         $scope.$apply();
                         scrollTo(0, 0);
                     }
@@ -120,20 +134,20 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
             .dark();
 
 
-	/* Table */
+        /* Table */
         $scope.table // to load when data ready
             .selectable()
             .cols([
                 {
-                    label: locale['Table.ID'], search: {
+                    label: $scope.locale['Table.ID'], search: {
                     tip: 'Search by ID',
                     onidle: function (value) {
                         $scope.table.search(0, value);
                     }
                 }
                 },
-                {label: locale['Table.Character'], flex: 2, wrap: true},
-                {label: locale['Table.Alignment'], flex: 2}
+                {label: $scope.locale['Table.Character'], flex: 2, wrap: true},
+                {label: $scope.locale['Table.Alignment'], flex: 2}
             ])
             .rows($scope.data)
             .sortable(function (index, ascending) {
@@ -148,9 +162,9 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
 
         $scope.getNotification = function (type) {
             if (type == 'success') {
-                return ts.ui.Notification.success(locale['Message.Good job!']);
+                return ts.ui.Notification.success($scope.locale['Message.Good job!']);
             } else if (type == 'alert') {
-                return ts.ui.Notification.error(locale['Message.Oopsie daisy!']);
+                return ts.ui.Notification.error($scope.locale['Message.Oopsie daisy!']);
             }
         };
 
@@ -159,8 +173,12 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                 $req.getTasksPage().then(function (response) {
                     $scope.tasks = response.data;
                     taskDateTimeToDate($scope.tasks);
-                })
-            })
+                }, function (response) {
+                    $scope.showError(response);
+                });
+            }, function (response) {
+                $scope.showError(response);
+            });
         };
 
         $scope.createTask = function () {
@@ -169,8 +187,12 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                     $scope.tasks = response.data;
                     taskDateTimeToDate($scope.tasks);
                 })
-            })
+            }, function (response) {
+                $scope.showError(response);
+            });
         };
+    }, function (response) {
+        $scope.showError(response);
     });
 
     var taskDateTimeToDate = function (tasks) {
@@ -180,6 +202,26 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
                 tasks[i].completedOn = new Date(tasks[i].completedOn.millis).toUTCString();
             }
         });
+    }
+
+    $scope.showError = function (response) {
+        console.error("error : " + response.data.message);
+        switch (response.status)
+        {
+            case 401:
+            case 403:
+                ts.ui.Notification.error($scope.locale['ErrorMessage.AuthFailed']);
+                break;
+            case 404:
+                ts.ui.Notification.error($scope.locale['ErrorMessage.NotFound']);
+                break;
+            case 422:
+                ts.ui.Notification.error(response.data.message);
+                break;
+            default:
+                ts.ui.Notification.error($scope.locale['ErrorMessage.Undefined']);
+                break;
+        }
     }
 
     /* Table Component requires [[],[],[]] structure. So we need to make array of arrays from array of objects */
@@ -215,7 +257,7 @@ app.controller('HomeCtrl', function ($scope, $req, $window, $translate, $q) {
             console.log(e.data);
             $scope.eventList = JSON.parse(e.data);
             $scope.$apply();
-            ts.ui.Notification.success("You received " + $scope.eventList.length +" new event");
+            ts.ui.Notification.success("You received " + $scope.eventList.length + " new event");
         });
 
         source.addEventListener('open', function (e) {

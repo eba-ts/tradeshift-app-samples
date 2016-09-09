@@ -65,13 +65,13 @@ public class TradeshiftDocumentRetrievalServiceImpl implements TradeshiftDocumen
      * @throws ParserConfigurationException
      */
     public List<BaseTradeshiftDocumentDTO> getDocuments(String documentType) throws IOException, SAXException,
-            ParserConfigurationException {
+                                                                                    ParserConfigurationException {
 
         LOGGER.info("get List of documents by document type " + documentType, TradeshiftDocumentRetrievalServiceImpl.class);
 
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<String> requestEntity = tokenService.getRequestHttpEntityWithAccessToken();
-        ResponseEntity<?> responseEntity = restTemplate.exchange(URI_LIST_DOCUMENTS, HttpMethod.GET,
+        ResponseEntity responseEntity = restTemplate.exchange(URI_LIST_DOCUMENTS, HttpMethod.GET,
                                                         requestEntity, String.class, documentType, 25, 0);
 
         return parseDocuments(responseEntity);

@@ -5,10 +5,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.exceptions.InvalidRequestException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -30,7 +32,7 @@ public class TokenController {
      * @throws IOException
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getAuthorizationCode() throws IOException {
+    public String getAuthorizationCode() throws IOException, HttpClientErrorException, InvalidRequestException {
         if (tokenService.getAccessTokenFromContext() == null) {
             LOGGER.info("redirect to the authorization server", TokenController.class);
 

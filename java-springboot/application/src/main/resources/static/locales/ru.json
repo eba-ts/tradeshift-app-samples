@@ -7,7 +7,8 @@
     "Documents": "Документы",
     "JWTTokenInfo": "JWT-Token-Информация",
     "TaskList": "Список Задач",
-    "WebHooks": "WebHooks"
+    "WebHooks": "WebHooks",
+    "Errors" : "Ошибки"
   },
   "Table": {
     "ID": "Идентификатор",
@@ -26,5 +27,10 @@
     "Oopsie daisy!": "Ой-ой-ой!",
     "Good job!": "Хорошая работа",
     "Server is running!": "Сервер работает!"
+  },
+  "ErrorMessage": {
+    "AuthFailed": "Авторизация на удаленный сервер не удалась",
+    "Undefined" : "Приносим извенения, страница не доступна",
+    "NotFound" : "Приносим извенения, данное действие не доступно"
   }
 }

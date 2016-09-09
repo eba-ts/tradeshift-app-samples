@@ -7,7 +7,8 @@
     "Documents": "Documents API",
     "JWTTokenInfo": "JWT-Token-Info",
     "TaskList": "Task List",
-    "WebHooks": "WebHooks"
+    "WebHooks": "WebHooks",
+    "Errors" : "Errors"
   },
   "Table": {
       "ID": "ID",
@@ -26,5 +27,10 @@
     "Oopsie daisy!": "Oopsie daisy!",
     "Good job!": "Good job!",
     "Server is running!": "Server is running!"
+  },
+  "ErrorMessage": {
+    "AuthFailed": "Authentication to remote server failed",
+    "Undefined" : "We're sorry, but this page is not accessible.",
+    "NotFound" : "We're sorry, but this action is not accessible."
   }
 }
