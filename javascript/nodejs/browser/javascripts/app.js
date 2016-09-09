@@ -27,17 +27,37 @@ app.config(function ($locationProvider, $translateProvider) {
   .factory('$req', function ($http, $location) {
     var url = $location.absUrl(); // setting absolute URL
     return {
+      getAccountData: function () {
+        return $http.get(url + 'account/info');
+      },
       getGridData: function () {
         return $http.get(url + 'demo/grid-data');
       },
-      getAccountData: function () {
-        return $http.get(url + 'account/info');
+      getDocuments: function (documentType) { // Call to Tradeshift API
+        return $http.get(url + '/document/documents', {
+          params: {documentType: documentType}
+        });
       },
       getHealth: function () {
         return $http.get(url + 'health');
       },
+      getJWTInfo: function () {
+        return $http.get(url + '/jwt/id-token');
+      },
+      getTasksPage: function () {
+        return $http.get(url + '/tasks?limit=25&pageNumber=0');
+      },
       getLocale: function () { // in case if you want to get your locales from server, currently not used
         return $http.get(url + 'locale');
+      },
+      completeTask: function (taskId) { // in case if you want to get your locales from server, currently not used
+        return $http.put(url + 'tasks/complete/' + taskId,                                       // 1. url
+          {},
+          {params: {action: "complete"}}
+        );
+      },
+      createTask: function () { // in case if you want to get your locales from server, currently not used
+        return $http.post(url + 'tasks');
       }
     }
   });

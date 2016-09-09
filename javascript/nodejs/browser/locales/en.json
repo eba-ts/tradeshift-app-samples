@@ -1,15 +1,19 @@
 {
   "Topbar": {
-    "Table": "Table",
-    "Buttons": "Buttons",
-    "Form": "Form",
-    "Documents": "Documents",
-    "CompanyCard": "Company Card"
+    "Intro": "Introduction",
+    "Table": "Table UI Component",
+    "Buttons": "Button and Forms, I18N",
+    "Health": "Health Check",
+    "Documents": "Documents API",
+    "JWTTokenInfo": "JWT-Token-Info",
+    "TaskList": "Task List",
+    "CompanyCard": "Company Card",
+    "WebHooks": "WebHooks"
   },
   "Table": {
-      "ID": "ID",
-      "Character": "Character",
-      "Alignment": "Alignment"
+    "ID": "ID",
+    "Character": "Character",
+    "Alignment": "Alignment"
   },
   "Buttons": {
     "Success": "Success",
