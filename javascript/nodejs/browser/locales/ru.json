@@ -1,9 +1,13 @@
 {
   "Topbar": {
+    "Intro": "Введение",
     "Table": "Таблица",
     "Buttons": "Кнопки",
-    "Form": "Форма",
+    "Health": "Проверка сервера",
     "Documents": "Документы",
+    "JWTTokenInfo": "JWT-Token-Информация",
+    "TaskList": "Список Задач",
+    "WebHooks": "Вебхуки",
     "CompanyCard": "Карта компании"
   },
   "Table": {
