@@ -29,15 +29,8 @@ router.use(session({ // Initialize session middleware so we can store there our 
 router.get('/', function(req, res) {
   if (!req.session.access_token) {
     throwError({tradeshiftAPIServerURL: config.tradeshiftAPIServerURL, clientId: config.clientId, redirectUri: config.redirectUri}); //check config variables
-    request.get({
-      url: config.tradeshiftAPIServerURL + 'auth/login',
-      qs: {
-        response_type: 'code',
-        client_id: config.clientId,
-        redirect_uri: config.redirectUri,
-        scope: 'offline'
-      }
-    });
+    res.redirect(config.tradeshiftAPIServerURL + 'auth/login?response_type=code&client_id=' +
+      config.clientId + '&redirect_uri=' + config.redirectUri + '&scope=offline');
   }
   res.render('index');
 });
