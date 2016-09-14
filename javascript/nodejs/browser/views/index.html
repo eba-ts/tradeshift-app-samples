@@ -40,7 +40,10 @@
     </div>
     <div id="tab1" ng-show="showTab == 1">
       <div data-ts="Note" class="note">
-        <p> This is mock data, retrieved from App's server by accessing '/demo/grid-data' URI. It uses <a href="https://tradeshift.github.io/Client-Runtime//#components/table/">Table Tradeshift UI component</a> to display the data.</p>
+        <p> This is mock data, retrieved from App's server by accessing '/demo/grid-data' URI. It uses
+          <a href="https://tradeshift.github.io/Client-Runtime//#components/table/">Table Tradeshift UI component</a>
+          to display the data.
+        </p>
       </div>
       <div data-ts="Table" id="home-table"></div>
     </div>
@@ -140,7 +143,10 @@
     </div>
     <div id="tab3" ng-show="showTab == 3">
       <div data-ts="Note" class="note">
-        <p> Health check is a way Tradeshift can monitor uptime of the third-party app server (this is an upcoming feature in Developer app).  The button '/health' on the server side and displays the result to the user. We recommend that you also implement some monitoring for uptime of your Tradeshift app</p>
+        <p> Health check is a way Tradeshift can monitor uptime of the third-party app server (this is an upcoming
+          feature in Developer app).  The button '/health' on the server side and displays the result to the user.
+          We recommend that you also implement some monitoring for uptime of your Tradeshift app.
+        </p>
       </div>
       <button data-ts="Button" class="ts-primary" ng-click="checkHealth()">
         <span translate="Buttons.Check server health">Check server health</span>
@@ -148,7 +154,11 @@
     </div>
     <div id="tab4" ng-show="showTab == 4">
       <div data-ts="Note" class="note">
-        <p>This example demonstrates calling Tradeshift API.  Below are the documents (if any present) from your Tradeshift account. The app retrieves it by calling Tradeshift API at: {tradeshiftAPIServerURL}/rest/external/documents.  The page uses the <a href="https://tradeshift.github.io/Client-Runtime//#components/menus/">Menu</a> Tradeshift UI component to display the data.</p>
+        <p>This example demonstrates calling Tradeshift API.  Below are the documents (if any present) from your Tradeshift account.
+          The app retrieves it by calling Tradeshift API at: {tradeshiftAPIServerURL}/rest/external/documents.
+          The page uses the <a href="https://tradeshift.github.io/Client-Runtime//#components/menus/">Menu</a>
+          Tradeshift UI component to display the data.
+        </p>
       </div>
       <menu data-ts="Menu" style="width: 60%;">
         <li ng-repeat="doc in documents">
@@ -165,7 +175,12 @@
     </div>
     <div id="tab5" ng-show="showTab == 5">
       <div data-ts="Note" class="note">
-        <p>In this tab, we show you an example of identity information we pass to your application.  When you first authorize with Tradeshift using OAuth2, along with access token and refresh token we pass in id_token, which is a JSON Web Token encoding some information about the company and user that's activating your app. You can then use this information to let your app know which user is using the app, and save any mappings between Tradeshift namespace and yours. More info about this <a href="http://apps.tradeshift.com/developers/documentation/#identity_passing">here</a>
+        <p>In this tab, we show you an example of identity information we pass to your application.
+          When you first authorize with Tradeshift using OAuth2, along with access token and refresh token we pass in id_token,
+          which is a JSON Web Token encoding some information about the company and user that's activating your app.
+          You can then use this information to let your app know which user is using the app, and save any mappings
+          between Tradeshift namespace and yours. More info about this
+          <a href="http://apps.tradeshift.com/developers/documentation/#identity_passing">here</a>
         </p>
       </div>
       <div class="inline" style="width: 100%;">
@@ -267,7 +282,8 @@
     </div>
     <div id="tab7" ng-show="showTab == 7">
       <div data-ts="Note" class="note">
-        <p>This tab demonstrated with the Event List. Events data received from Tradeshift webhooks. More info about this <a href="http://apps.tradeshift.com/developers/documentation/#webhooks">here</a>
+        <p>This tab demonstrates Event List. Event data is received from Tradeshift webhooks.
+          More info about this <a href="http://apps.tradeshift.com/developers/documentation/#webhooks">here</a>
         </p>
       </div>
       <table class="webhook-table">
@@ -286,6 +302,12 @@
       </table>
     </div>
     <div id="tab8" ng-show="showTab == 8">
+      <div data-ts="Note" class="note">
+        <p>
+          This tab represents your company data using <a href="https://tradeshift.github.io/Client-Runtime//#components/companycards/">CompanyCard</a>
+          UI Component. We're accessing this by calling Tradeshift API: /account/info.
+        </p>
+      </div>
       <div data-ts="CompanyCard" id="home-card"></div>
     </div>
   </div>
