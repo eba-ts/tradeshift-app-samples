@@ -2,60 +2,25 @@ var express = require('express');
 var router = express.Router();
 var config = require('../config/config');
 var request = require('request');
-var base64 = require('base-64');
 var xml2js = require('xml2js');
 var session = require('express-session');
 var i18n = require('i18n');
-
-/* Function which checks config variables */
-var throwError = function(variables){
-  if (variables instanceof Object && !(variables instanceof Array)){
-    for(key in variables) {
-      if (!variables[key]) throw new Error('No ' + key + ' provided.Please set it into your config variable.');
-    }
-  } else {
-    throw new Error('Wrong argument in throwError(). Please, make sure that you pass an object.');
-  }
-};
-
-throwError({clientSecret: config.clientSecret}); // check if user has specified a client secret
-router.use(session({ // Initialize session middleware so we can store there our token
-  secret: config.clientSecret,
-  resave: false,
-  saveUninitialized: true
-}));
+var passport = require('passport');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  if (!req.session.access_token) {
-    throwError({tradeshiftAPIServerURL: config.tradeshiftAPIServerURL, clientId: config.clientId, redirectUri: config.redirectUri}); //check config variables
-    res.redirect(config.tradeshiftAPIServerURL + 'auth/login?response_type=code&client_id=' +
-      config.clientId + '&redirect_uri=' + config.redirectUri + '&scope=offline');
+  if (!req.user) { // If not authorized
+    return res.redirect('/auth');
   }
   res.render('index');
 });
 
-/* Get config code */
-router.get('/oauth2/code', function(req, res){ // if no token, redirecting here
-  request.post({ // request access_token upon code retrieval
-    url: config.tradeshiftAPIServerURL + 'auth/token',
-    headers: {
-      Authorization: 'Basic ' + base64.encode(config.clientId + ':' + config.clientSecret) 
-    },
-    formData: {
-      code: req.query.code,
-      grant_type: 'authorization_code'
-    }
-  }, function(error, response, body){
-      if (error) throw error;
-        body = JSON.parse(body);
-        req.session.access_token = body.access_token; // setting to session received access_token
-        request = request.defaults({ // setting default auth header with provided token
-          headers: { Authorization: 'Bearer ' + req.session.access_token }
-        });
-        res.redirect('/');
-    }
-  )
+router.get('/auth', passport.authenticate('tradeshift', {scope: 'offline'}));
+router.get('/oauth2/code', passport.authenticate('tradeshift'), function(req, res){
+  request = request.defaults({ // setting default auth header with received token
+    headers: { Authorization: 'Bearer ' + req.user.access_token }
+  });
+  res.redirect('/');
 });
 
 /* Get current account information */
