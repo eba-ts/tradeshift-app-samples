@@ -80,6 +80,12 @@ public class ControllerExceptionTranslator {
         return new ResponseEntity(new JSONObject().put("message", e.getMessage()).toString(), HttpStatus.UNAUTHORIZED);
     }
 
+    /**
+     * Handle SAXParseException
+     *
+     * @param e
+     * @return
+     */
     @ExceptionHandler(value = SAXParseException.class)
     public ResponseEntity SAXParseExceptionHandler(SAXParseException e) {
         LOGGER.error(e.getMessage(), e, ControllerExceptionTranslator.class);

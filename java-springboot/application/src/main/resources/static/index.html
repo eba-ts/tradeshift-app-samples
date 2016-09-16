@@ -288,9 +288,69 @@
         </div>
         <div id="tab8" ng-show="showTab == 8">
             <div data-ts="Note" class="note">
-                <p>This tab demonstrated Error messages>here
-                </p>
+                <p>This tab demonstrated Error messages that you can see during  use this app</p>
             </div>
+            <br/>
+            <table style="width: 100%;">
+                <thead>
+                <th>
+                  Error Messages
+                </th>
+                <th>
+                    Description
+                </th>
+                </thead>
+                <tr>
+                    <td style="width: 40%">
+                        "Authentication to remote server failed"
+                    </td>
+                    <td>
+                        "You can see this message when authentication to the tradeshift server failed,
+                        access token does not valid or expired"
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        "Client Secret must not be null"
+                    </td>
+                    <td>
+                        "clientSecret system environment variable doesn't exist"
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        "Redirect URI must not be null"
+                    </td>
+                    <td>
+                        "redirectUri system environment variable doesn't exist"
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        "Client ID must not be null"
+                    </td>
+                    <td>
+                        "clientID system environment variable doesn't exist"
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        "We're sorry, but this action is not accessible."
+                    </td>
+                    <td>
+                        "You can see this message when something going wrong in that moment when you try create,
+                         complete task, etc. Bad credentials, bad internet conection etc."
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        "We're sorry, but this page is not accessible."
+                    </td>
+                    <td>
+                        "Requested Page or resource doesn't exist, or unauthorized"
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </main>
