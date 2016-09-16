@@ -2,8 +2,10 @@ var passport = require('passport');
 var OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 var base64 = require('base-64');
 var config = require('../config/config');
-var authToken = base64.encode(config.clientId + ':' + config.clientSecret);
 var jwt = require('jwt-simple');
+
+/* Authorization token for getting Tradeshift access_token */
+var authToken = base64.encode(config.clientId + ':' + config.clientSecret);
 
 /* Function which checks config variables */
 function checkConfig(config) {
@@ -16,9 +18,9 @@ function checkConfig(config) {
   }
 }
 
-checkConfig(config); // throw errors if config vars not specified
+checkConfig(config); // throw errors if config vars are not defined
 
-/* Specifying new OAuth 2.0 strategy */
+/* Specifying new OAuth 2.0 strategy. For more info visit http://passportjs.org/docs */
 var oauthStrategy = new OAuth2Strategy({
   authorizationURL: config.tradeshiftAPIServerURL + 'auth/login',
   tokenURL: config.tradeshiftAPIServerURL + 'auth/token',
@@ -26,7 +28,7 @@ var oauthStrategy = new OAuth2Strategy({
   clientSecret: config.clientSecret,
   callbackURL: config.redirectUri
 }, function(accessToken, refreshToken, profile, done){
-    done(null, {access_token: accessToken, refresh_token: refreshToken}); // upon success return object containing tokens
+    done(null, {access_token: accessToken, refresh_token: refreshToken}); // return object containing tokens upon success
 });
 
 passport.serializeUser(function (user, done) {
@@ -37,6 +39,7 @@ passport.deserializeUser(function (user, done) {
   done(null, jwt.decode(user, config.clientSecret));
 });
 
+/* Setting custom Authorization header */
 oauthStrategy._oauth2.setAuthMethod('Basic');
 oauthStrategy._oauth2._customHeaders = { Authorization: oauthStrategy._oauth2.buildAuthHeader(authToken)};
 passport.use('tradeshift', oauthStrategy);

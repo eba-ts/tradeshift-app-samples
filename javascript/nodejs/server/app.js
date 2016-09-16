@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var auth = require('./lib/auth');
 var config = require('./config/config');
 
+/* Configuring server-side locales */
 i18n.configure({
     locales: ['en', 'ru'],
     directory: __dirname + '/locales',
@@ -19,7 +20,7 @@ i18n.configure({
 if (process.env.NODE_ENV === 'development') {
   app.use(errorHandler())
 }
-// view engine setup
+/* view engine setup */
 app.set('views', path.join(__dirname, '../browser/views'));
 app.engine('html', engine.mustache);
 app.set('view engine', 'html');

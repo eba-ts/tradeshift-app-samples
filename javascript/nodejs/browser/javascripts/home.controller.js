@@ -39,6 +39,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
       /* Account info */
       $scope.info = response[2].data['ts:CompanyAccountInfo'];
       if ($scope.info) {
+        /* Here we are rendering CompanyCard UI Component */
         $scope.card.render({
           id: $scope.info['ts:CompanyAccountId'][0],
           data: {
@@ -61,7 +62,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
           }
         };
 
-      /* Topbar */
+      /* Initializing topbar tabs */
       $scope.topbar
         .tabs([
           {
@@ -195,15 +196,15 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
 
     /* get array of arrays from array of objects */
     $scope.getArray = function(data){
-  var result = [];
-  data.forEach(function(item){
-    var array = [];
-    for (p in item){
-      array.push(item[p] + ''); // here we get array of strings
-    }
-    result.push(array);
-  });
-  return result; // array of arrays
+      var result = [];
+      data.forEach(function(item){
+        var array = [];
+        for (p in item){
+          array.push(item[p] + ''); // here we get array of strings
+        }
+        result.push(array);
+      });
+      return result; // array of arrays
 };
     /* Checks if server is up */
     $scope.checkHealth = function(){

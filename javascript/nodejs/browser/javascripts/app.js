@@ -23,8 +23,9 @@ app.config(function ($locationProvider, $translateProvider) {
       }
       return preferredLanguage;
     });
-})
-  .factory('$req', function ($http, $location) {
+});
+
+app.factory('$req', function ($http, $location) {
     var url = $location.absUrl(); // setting absolute URL
     return {
       getAccountData: function () {
@@ -33,7 +34,7 @@ app.config(function ($locationProvider, $translateProvider) {
       getGridData: function () {
         return $http.get(url + 'demo/grid-data');
       },
-      getDocuments: function (documentType) { // Call to Tradeshift API
+      getDocuments: function (documentType) { // Calling Tradeshift documents
         return $http.get(url + '/document/documents', {
           params: {documentType: documentType}
         });
@@ -44,19 +45,28 @@ app.config(function ($locationProvider, $translateProvider) {
       getJWTInfo: function () {
         return $http.get(url + '/jwt/id-token');
       },
-      getTasksPage: function () {
-        return $http.get(url + '/tasks?limit=25&pageNumber=0');
-      },
-      getLocale: function () { // in case if you want to get your locales from server, currently not used
+
+      /* in case if you want to get your locales from server, currently not used */
+      getLocale: function () {
         return $http.get(url + 'locale');
       },
-      completeTask: function (taskId) { // in case if you want to get your locales from server, currently not used
-        return $http.put(url + 'tasks/complete/' + taskId,                                       // 1. url
+
+      /* Tasks API */
+      getTasksPage: function () {
+        return $http.get(url + '/tasks', {
+          params: {
+            limit: 25,
+            pageNumber: 0
+          }
+        });
+      },
+      completeTask: function(taskId) {
+        return $http.put(url + 'tasks/complete/' + taskId,
           {},
           {params: {action: "complete"}}
         );
       },
-      createTask: function () { // in case if you want to get your locales from server, currently not used
+      createTask: function() {
         return $http.post(url + 'tasks');
       }
     }

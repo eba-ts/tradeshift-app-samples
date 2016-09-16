@@ -15,9 +15,10 @@ router.get('/', function(req, res) {
   res.render('index');
 });
 
+/* Use passport to authenticate with Tradeshift */
 router.get('/auth', passport.authenticate('tradeshift', {scope: 'offline'}));
 router.get('/oauth2/code', passport.authenticate('tradeshift'), function(req, res){
-  request = request.defaults({ // setting default auth header with received token
+  request = request.defaults({ // setting default auth header with received access_token token
     headers: { Authorization: 'Bearer ' + req.user.access_token }
   });
   res.redirect('/');
@@ -37,6 +38,7 @@ router.get('/account/info', function(req, res){
     })
 });
 
+/* Get mock data from server */
 router.get('/demo/grid-data', function(req, res){
   res.send([
     {"id":1,"character":"Barbarian Queen","alignment":"Neutral Evil"},
