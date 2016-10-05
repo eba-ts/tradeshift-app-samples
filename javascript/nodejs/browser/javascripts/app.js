@@ -1,5 +1,5 @@
 var app = angular.module('tradeshiftApp', ['pascalprecht.translate']);
-app.config(function ($locationProvider, $translateProvider) {
+app.config(function($locationProvider, $translateProvider){
   $locationProvider.html5Mode({enabled: true, requireBase: false});
   $translateProvider
     .useStaticFilesLoader({ // load our locales
@@ -25,34 +25,34 @@ app.config(function ($locationProvider, $translateProvider) {
     });
 });
 
-app.factory('$req', function ($http, $location) {
+app.factory('$req', function($http, $location){
     var url = $location.absUrl(); // setting absolute URL
     return {
-      getAccountData: function () {
+      getAccountData: function(){
         return $http.get(url + 'account/info');
       },
-      getGridData: function () {
+      getGridData: function(){
         return $http.get(url + 'demo/grid-data');
       },
-      getDocuments: function (documentType) { // Calling Tradeshift documents
+      getDocuments: function(documentType){ // Calling Tradeshift documents
         return $http.get(url + '/document/documents', {
           params: {documentType: documentType}
         });
       },
-      getHealth: function () {
+      getHealth: function(){
         return $http.get(url + 'health');
       },
-      getJWTInfo: function () {
+      getJWTInfo: function(){
         return $http.get(url + '/jwt/id-token');
       },
 
       /* in case if you want to get your locales from server, currently not used */
-      getLocale: function () {
+      getLocale: function(){
         return $http.get(url + 'locale');
       },
 
       /* Tasks API */
-      getTasksPage: function () {
+      getTasksPage: function(){
         return $http.get(url + '/tasks', {
           params: {
             limit: 25,
@@ -60,13 +60,13 @@ app.factory('$req', function ($http, $location) {
           }
         });
       },
-      completeTask: function(taskId) {
+      completeTask: function(taskId){
         return $http.put(url + 'tasks/complete/' + taskId,
           {},
           {params: {action: "complete"}}
         );
       },
-      createTask: function() {
+      createTask: function(){
         return $http.post(url + 'tasks');
       }
     }

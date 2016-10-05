@@ -1,10 +1,10 @@
 var request = require('supertest');
 var app = require('../app');
 
-describe('testing API', function () {
+describe('testing API', function(){
   var server = app.listen(3000);
 
-  it('responds to /', function testSlash(done) {
+  it('responds to /', function testSlash(done){
     request(server)
       .get('/')
       .expect(302)
@@ -13,7 +13,7 @@ describe('testing API', function () {
         done();
       })
   });
-  it('404 on /url', function testPath(done) {
+  it('404 on /url', function testPath(done){
     request(server)
       .get('/url')
       .expect(404)

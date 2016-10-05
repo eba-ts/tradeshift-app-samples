@@ -8,8 +8,8 @@ var i18n = require('i18n');
 var passport = require('passport');
 
 /* GET home page. */
-router.get('/', function(req, res) {
-  if (!req.user) { // If not authorized
+router.get('/', function(req, res){
+  if (!req.user){ // If not authorized
     return res.redirect('/auth');
   }
   res.render('index');
@@ -28,8 +28,8 @@ router.get('/oauth2/code', passport.authenticate('tradeshift'), function(req, re
 router.get('/account/info', function(req, res){
   request.get({url: config.tradeshiftAPIServerURL + 'rest/external/account/info'},
     function(error, response, body){
-       if (!error) {
-         xml2js.parseString(body, function(err, result) { // Parse XML
+       if (!error){
+         xml2js.parseString(body, function(err, result){ // Parse XML
            res.json(result);
          })
        }  else {

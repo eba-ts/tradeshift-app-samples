@@ -17,7 +17,7 @@ i18n.configure({
     defaultLocale: 'en'
 });
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development'){
   app.use(errorHandler())
 }
 /* view engine setup */

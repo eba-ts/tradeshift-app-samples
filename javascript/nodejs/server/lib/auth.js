@@ -7,10 +7,10 @@ var jwt = require('jwt-simple');
 /* Authorization token for getting Tradeshift access_token */
 var authToken = base64.encode(config.clientId + ':' + config.clientSecret);
 
-/* Function which checks config variables */
-function checkConfig(config) {
-  if (config instanceof Object) {
-    for(key in config) {
+/* functionwhich checks config variables */
+function checkConfig(config){
+  if (config instanceof Object){
+    for (key in config){
       if (!config[key]) throw new Error('No ' + key + ' provided.Please set it into your config variable.');
     }
   } else {
@@ -31,11 +31,11 @@ var oauthStrategy = new OAuth2Strategy({
     done(null, {access_token: accessToken, refresh_token: refreshToken}); // return object containing tokens upon success
 });
 
-passport.serializeUser(function (user, done) {
+passport.serializeUser(function(user, done){
   done(null, jwt.encode(user, config.clientSecret));
 });
 
-passport.deserializeUser(function (user, done) {
+passport.deserializeUser(function(user, done){
   done(null, jwt.decode(user, config.clientSecret));
 });
 
