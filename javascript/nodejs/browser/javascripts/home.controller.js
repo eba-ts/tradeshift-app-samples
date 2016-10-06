@@ -7,6 +7,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q){
     $scope.topbar = ts.ui.get('#home-topbar');
     $scope.card = ts.ui.get('#home-card');
     $scope.showTab = 0;
+    $scope.eventList = [];
 
     $q.all([
       $translate(['Table.ID', 'Table.Character', 'Table.Alignment', // getting our i18n data
@@ -71,7 +72,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q){
             icon: 'ts-icon-discovery',
             onselect: function(){
               $scope.showTab = 0;
-              $scope.$apply();
+              $scope.$digest();
               scrollTo(0, 0);
             }
           },
@@ -81,7 +82,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q){
             icon: 'ts-icon-apps',
             onselect : function(){
               $scope.showTab = 1;
-              $scope.$apply();
+              $scope.$digest();
               scrollTo(0,0);
             }
           },
@@ -91,7 +92,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q){
             id: 'tab2',
             onselect: function(){
               $scope.showTab = 2;
-              $scope.$apply(); // executing outside of angular
+              $scope.$digest(); // executing outside of angular
               scrollTo(0,0);
             }
           },
@@ -101,7 +102,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q){
             id: 'tab3',
             onselect: function(){
               $scope.showTab = 3;
-              $scope.$apply();
+              $scope.$digest();
               scrollTo(0,0);
             }
           },
@@ -111,7 +112,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q){
           //   id: 'tab4',
           //   onselect: function(){
           //     $scope.showTab = 4;
-          //     $scope.$apply();
+          //     $scope.$digest();
           //     scrollTo(0, 0);
           //   }
           // },
@@ -121,7 +122,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q){
           //   id: 'tab5',
           //   onselect: function(){
           //     $scope.showTab = 5;
-          //     $scope.$apply();
+          //     $scope.$digest();
           //     scrollTo(0, 0);
           //   }
           // },
@@ -131,27 +132,27 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q){
           //   id: 'tab6',
           //   onselect: function(){
           //     $scope.showTab = 6;
-          //     $scope.$apply();
+          //     $scope.$digest();
           //     scrollTo(0, 0);
           //   }
           // },
-          // {
-          //   label: locale['Topbar.WebHooks'],
-          //   icon: 'ts-icon-heart',
-          //   id: 'tab7',
-          //   onselect: function(){
-          //     $scope.showTab = 7;
-          //     $scope.$apply();
-          //     scrollTo(0, 0);
-          //   }
-          // },
+          {
+            label: locale['Topbar.WebHooks'],
+            icon: 'ts-icon-reset',
+            id: 'tab7',
+            onselect: function () {
+              $scope.showTab = 7;
+              $scope.$digest();
+              scrollTo(0, 0);
+            }
+          },
           {
             label: locale['Topbar.CompanyCard'],
             icon: 'ts-icon-favorites',
             id: 'tab8',
             onselect: function(){
               $scope.showTab = 8;
-              $scope.$apply();
+              $scope.$digest();
               scrollTo(0,0);
             }
           },
@@ -231,5 +232,17 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q){
       $req.sendFailingRequest(status).catch(function(response){
         ts.ui.Notification.error(response.status + ' ' + response.statusText);
       })
-    }
+    };
+
+  if (window.EventSource) { // Check if browser supports ES
+    var es = new EventSource('/sse');
+    es.onmessage = function(e){ // handler when we receive message from server
+      $scope.eventList.push(JSON.parse(e.data));
+      $scope.$digest();
+    };
+  } else {
+    console.warn("No SSE available");
+  }
   });
+
+

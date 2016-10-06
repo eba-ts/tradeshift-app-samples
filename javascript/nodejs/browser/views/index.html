@@ -287,17 +287,19 @@
         </p>
       </div>
       <table class="webhook-table">
-        <th>Event ID</th>
-        <th>Tradeshift User ID</th>
-        <th>Tradeshift Company Account ID</th>
-        <th>Tradeshift User Language</th>
-        <th>Event Type</th>
+        <tr>
+          <th>Event ID</th>
+          <th>Tradeshift User ID</th>
+          <th>Tradeshift Company Account ID</th>
+          <th>Tradeshift User Language</th>
+          <th>Event Type</th>
+        </tr>
         <tr ng-repeat="event in eventList">
-          <td>{{event.id}}</td>
-          <td style="width: 22%">{{event.tsUserId}}</td>
-          <td>{{event.tsCompanyAccountId}}</td>
-          <td style="width: 10%;">{{event.tsUserLanguage}}</td>
-          <td>{{event.event}}</td>
+          <td ng-bind="event.id"></td>
+          <td style="width: 22%" ng-bind="event.tsUserId"></td>
+          <td ng-bind="event.tsCompanyAccountId"></td>
+          <td style="width: 10%;" ng-bind="event.tsUserLanguage"></td>
+          <td ng-bind="event.event"></td>
         </tr>
       </table>
     </div>
