@@ -1,5 +1,5 @@
 
-describe('HomeCtrl', function() {
+describe('HomeCtrl', function(){
   var $controller, $scope = {};
   // Make sure that you load all dependencies in a correct order
   beforeEach(module('tradeshiftApp'), module('pascalprecht.translate'));
@@ -8,7 +8,7 @@ describe('HomeCtrl', function() {
     $controller = _$controller_;
   }));
 
-  it('checks controller', function() {
+  it('checks controller', function(){
     var controller = $controller('HomeCtrl', { $scope: $scope });
     expect(controller).not.toBe(undefined);
   });

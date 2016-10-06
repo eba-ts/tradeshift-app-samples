@@ -1,5 +1,5 @@
 
-app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
+app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q){
 
     $scope.ui = ts.ui; // So that we can access UIC from our template
     $scope.aside = ts.ui.get('#home-aside');
@@ -38,7 +38,8 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
 
       /* Account info */
       $scope.info = response[2].data['ts:CompanyAccountInfo'];
-      if ($scope.info) {
+      if ($scope.info){
+        /* Here we are rendering CompanyCard UI Component */
         $scope.card.render({
           id: $scope.info['ts:CompanyAccountId'][0],
           data: {
@@ -61,14 +62,14 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
           }
         };
 
-      /* Topbar */
+      /* Initializing topbar tabs */
       $scope.topbar
         .tabs([
           {
             label: locale['Topbar.Intro'],
             id: 'tab0',
             icon: 'ts-icon-discovery',
-            onselect: function () {
+            onselect: function(){
               $scope.showTab = 0;
               $scope.$apply();
               scrollTo(0, 0);
@@ -78,7 +79,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
             label: locale['Topbar.Table'],
             id: 'tab1',
             icon: 'ts-icon-apps',
-            onselect : function() {
+            onselect : function(){
               $scope.showTab = 1;
               $scope.$apply();
               scrollTo(0,0);
@@ -88,7 +89,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
             label: locale['Topbar.Buttons'],
             icon: 'ts-icon-activity',
             id: 'tab2',
-            onselect: function() {
+            onselect: function(){
               $scope.showTab = 2;
               $scope.$apply(); // executing outside of angular
               scrollTo(0,0);
@@ -98,7 +99,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
             label: locale['Topbar.Health'],
             icon: 'ts-icon-code',
             id: 'tab3',
-            onselect: function() {
+            onselect: function(){
               $scope.showTab = 3;
               $scope.$apply();
               scrollTo(0,0);
@@ -108,7 +109,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
           //   label: locale['Topbar.Documents'],
           //   icon: 'ts-icon-alldocuments',
           //   id: 'tab4',
-          //   onselect: function () {
+          //   onselect: function(){
           //     $scope.showTab = 4;
           //     $scope.$apply();
           //     scrollTo(0, 0);
@@ -118,7 +119,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
           //   label: locale['Topbar.JWTTokenInfo'],
           //   icon: 'ts-icon-info',
           //   id: 'tab5',
-          //   onselect: function () {
+          //   onselect: function(){
           //     $scope.showTab = 5;
           //     $scope.$apply();
           //     scrollTo(0, 0);
@@ -128,7 +129,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
           //   label: locale['Topbar.TaskList'],
           //   icon: 'ts-icon-heart',
           //   id: 'tab6',
-          //   onselect: function () {
+          //   onselect: function(){
           //     $scope.showTab = 6;
           //     $scope.$apply();
           //     scrollTo(0, 0);
@@ -138,7 +139,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
           //   label: locale['Topbar.WebHooks'],
           //   icon: 'ts-icon-heart',
           //   id: 'tab7',
-          //   onselect: function () {
+          //   onselect: function(){
           //     $scope.showTab = 7;
           //     $scope.$apply();
           //     scrollTo(0, 0);
@@ -148,7 +149,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
             label: locale['Topbar.CompanyCard'],
             icon: 'ts-icon-favorites',
             id: 'tab8',
-            onselect: function() {
+            onselect: function(){
               $scope.showTab = 8;
               $scope.$apply();
               scrollTo(0,0);
@@ -164,7 +165,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
           {
             label: locale['Table.ID'], search: {
             tip: 'Search by ID',
-            onidle: function (value) {
+            onidle: function(value){
               $scope.table.search(0, value);
             }}
           },
@@ -172,11 +173,11 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
           {label: locale['Table.Alignment'], flex: 2}
         ])
         .rows($scope.data)
-        .sortable(function (index, ascending) {
+        .sortable(function(index, ascending){
           $scope.table.sort(index, ascending);
         })
         .max(3)
-        .editable(function onedit(ri, ci, value) {
+        .editable(function onedit(ri, ci, value){
           this.cell(ri, ci, value);
         })
         .sort(0, true);
@@ -184,10 +185,10 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
       console.log(err);
     });
 
-    var taskDateTimeToDate = function(tasks) {
-      tasks.forEach(function (task, i) {
+    var taskDateTimeToDate = function(tasks){
+      tasks.forEach(function(task, i){
         tasks[i].createdOn = new Date(task.createdOn.millis).toUTCString();
-        if (tasks[i].completedOn != null) {
+        if (tasks[i].completedOn !== null){
           tasks[i].completedOn = new Date(tasks[i].completedOn.millis).toUTCString();
         }
       });
@@ -195,15 +196,15 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q) {
 
     /* get array of arrays from array of objects */
     $scope.getArray = function(data){
-  var result = [];
-  data.forEach(function(item){
-    var array = [];
-    for (p in item){
-      array.push(item[p] + ''); // here we get array of strings
-    }
-    result.push(array);
-  });
-  return result; // array of arrays
+      var result = [];
+      data.forEach(function(item){
+        var array = [];
+        for (p in item){
+          array.push(item[p] + ''); // here we get array of strings
+        }
+        result.push(array);
+      });
+      return result; // array of arrays
 };
     /* Checks if server is up */
     $scope.checkHealth = function(){
