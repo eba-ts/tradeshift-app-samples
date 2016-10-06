@@ -68,6 +68,13 @@ app.factory('$req', function($http, $location){
       },
       createTask: function(){
         return $http.post(url + 'tasks');
+      },
+      sendFailingRequest: function(status) {
+        if (status === 404){
+          return $http.get(url + 'random-url'); // Simulate request on non existing url
+        } else if (status === 400){
+          return $http.get(url + 'demo/grid-data?fail=1'); // Simulate bad request
+        }
       }
     }
   });
