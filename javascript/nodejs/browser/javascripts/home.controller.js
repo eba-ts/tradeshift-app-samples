@@ -10,7 +10,7 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q){
 
     $q.all([
       $translate(['Table.ID', 'Table.Character', 'Table.Alignment', // getting our i18n data
-        'Topbar.Intro', 'Topbar.Table', 'Topbar.Buttons', 'Topbar.Health', 'Topbar.Documents', 'Topbar.JWTTokenInfo',
+        'Topbar.Intro', 'Topbar.Table', 'Topbar.Buttons', 'Topbar.Health', 'Topbar.Documents', 'Topbar.JWTTokenInfo', 'Topbar.Error',
         'Topbar.TaskList', 'Topbar.WebHooks', 'Topbar.CompanyCard', 'Message.Oopsie daisy!', 'Message.Good job!', 'Message.Server is running!']),
       // $req.getDocuments('invoice'),
       $req.getGridData(),
@@ -154,6 +154,16 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q){
               $scope.$apply();
               scrollTo(0,0);
             }
+          },
+          {
+            label: locale['Topbar.Error'],
+            icon: 'ts-icon-error',
+            id: 'tab9',
+            onselect: function() {
+              $scope.showTab = 9;
+              $scope.$apply();
+              scrollTo(0,0);
+            }
           }
         ])
         .dark();
@@ -205,7 +215,8 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q){
         result.push(array);
       });
       return result; // array of arrays
-};
+    };
+
     /* Checks if server is up */
     $scope.checkHealth = function(){
       $req.getHealth().then(function(response){
@@ -214,4 +225,11 @@ app.controller('HomeCtrl', function($scope, $req, $window, $translate, $q){
         ts.ui.Notification.error(response.status + ' ' + response.statusText);
       })
     };
+
+    /* For error handling */
+    $scope.sendFailingRequest = function(status){
+      $req.sendFailingRequest(status).catch(function(response){
+        ts.ui.Notification.error(response.status + ' ' + response.statusText);
+      })
+    }
   });

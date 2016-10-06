@@ -8,7 +8,8 @@
     "JWTTokenInfo": "JWT-Token-Информация",
     "TaskList": "Список Задач",
     "WebHooks": "Вебхуки",
-    "CompanyCard": "Карта компании"
+    "CompanyCard": "Карта компании",
+    "Error": "Ошибки"
   },
   "Table": {
     "ID": "Идентификатор",

@@ -40,6 +40,9 @@ router.get('/account/info', function(req, res){
 
 /* Get mock data from server */
 router.get('/demo/grid-data', function(req, res){
+  if (req.query.fail){ // Simulating bad request for error handling
+    return res.sendStatus(400);
+  }
   res.send([
     {"id":1,"character":"Barbarian Queen","alignment":"Neutral Evil"},
     {"id":2,"character":"Global Senior Vice President of Sales","alignment":"Chaotic Evil"},
