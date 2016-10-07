@@ -22,7 +22,7 @@ Currently, there are three sample apps available:
 | Front-end basic test to get you started  | X | X | X
 | Back-end basic test to get you started  | X | X |
 | Tasks Service Example  | X |  |  
-| Webhooks Example  | X |  |  
+| Webhooks Example  | X | X |  
 | JWT (id_token) Decoding  | X |  |  
 
 
@@ -40,7 +40,7 @@ Currently, there are three sample apps available:
 | POST /tasks | Create task (calls TS API) | X |  |
 | PUT  /tasks/{id}?action=complete | Complete task (calls TS API) | X |  |
 | GET  /webhooks/eventsStatus | Server notifies UI of webhook received | X |  | 
-| POST /webhooks | (Public API) Receive event from Tradeshift webhook  | X |  |
+| POST /webhooks | (Public API) Receive event from Tradeshift webhook  | X | X |
 | GET  /health | (Public) Health check | X | X | X
 
 

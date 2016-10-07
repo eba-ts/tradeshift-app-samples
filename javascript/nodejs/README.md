@@ -17,6 +17,7 @@ Check health      |   GET     | /health
 Get locale      |   GET     | /locale
 Company info    |   GET     | /account/info
 Demo table      |   GET     | /demo/grid-data
+Webhook listener | POST | /webhooks
 
 ## Build
 You can build and run project on your local server(`localhost`):
@@ -46,5 +47,5 @@ Project uses Karma/Jasmine for testing Angular app and Mocha/Supertest for testi
 - By default, the app points to Tradeshift's sandbox, if you want to change it to production - change `SERVER_URL` (see `tradeshiftAPIServerURL` in `config/config.js`)
 - This sample has no persistence, only small config file. For production level application you will likely need to add database of your choice. 
 - For internationalization, we implemented both on client and server-side, but by default use client-side. Working sample API is provided. For client side we've used [`angular-translate` module](https://angular-translate.github.io/)
-- For authorization, we used [Passport.js](http://passportjs.org/) which allows us easily auth with Tradeshift using OAuth 2.0
+- For authorization, we used [Passport.js](http://passportjs.org/) which allows us to authenticate easily with Tradeshift using OAuth 2.0
 
