@@ -1,8 +1,8 @@
 package com.tradeshift.thirdparty.samples.springboot.services.Impl;
 
-import com.tradeshift.thirdparty.samples.springboot.config.PropertySources;
 import com.tradeshift.thirdparty.samples.springboot.services.TaskService;
-import com.tradeshift.thirdparty.samples.springboot.services.TokenService;
+import com.tradeshift.thirdparty.springboot.samples.config.PropertySources;
+import com.tradeshift.thirdparty.springboot.samples.services.TokenService;
 import io.swagger.client.ApiClient;
 import io.swagger.client.ApiException;
 import io.swagger.client.api.DefaultApi;

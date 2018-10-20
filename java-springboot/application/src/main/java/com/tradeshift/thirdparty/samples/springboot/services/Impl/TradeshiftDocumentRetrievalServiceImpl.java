@@ -1,9 +1,9 @@
 package com.tradeshift.thirdparty.samples.springboot.services.Impl;
 
-import com.tradeshift.thirdparty.samples.springboot.config.PropertySources;
 import com.tradeshift.thirdparty.samples.springboot.domain.dto.BaseTradeshiftDocumentDTO;
-import com.tradeshift.thirdparty.samples.springboot.services.TokenService;
 import com.tradeshift.thirdparty.samples.springboot.services.TradeshiftDocumentRetrievalService;
+import com.tradeshift.thirdparty.springboot.samples.config.PropertySources;
+import com.tradeshift.thirdparty.springboot.samples.services.TokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

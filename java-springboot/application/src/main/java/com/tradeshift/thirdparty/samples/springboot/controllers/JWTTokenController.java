@@ -1,6 +1,6 @@
 package com.tradeshift.thirdparty.samples.springboot.controllers;
 
-import com.tradeshift.thirdparty.samples.springboot.services.TokenService;
+import com.tradeshift.thirdparty.springboot.samples.services.TokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
